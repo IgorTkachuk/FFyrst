@@ -1,4 +1,5 @@
 {
+  "name": "fyrst",
   "private": true,
   "engines": {
     "node": "14.x.x",
