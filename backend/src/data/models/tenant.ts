@@ -21,7 +21,9 @@ const createTenantModel = (orm: Sequelize): ModelCtor<TenantInstance> => {
     domain_url: {
       type: DataTypes.STRING,
       allowNull: false,
-    }
+    },
+    createdAt: DataTypes.DATE,
+    updatedAt: DataTypes.DATE
   }, {
     tableName: 'tenants',
   })
