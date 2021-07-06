@@ -1,21 +1,21 @@
-// import { userRepository } from '~/data/repositories';
-import { IUser } from '~/common/interfaces';
+import { tenantRepository } from '~/data/repositories';
+import { ITenant } from '~/common/interfaces';
 
 class TenantService {
-  public getAllTenants(): string{
-      return 'getAllTenants'
+  public getAllTenants():Promise<ITenant[]>{
+    return tenantRepository.getAll()
   }
-  public getTenantById(id:string): string{
-      return id
+  public getTenantById(id:string):Promise<ITenant | null>{
+    return tenantRepository.getById(id)
   }
-  public createNewTenant(user:IUser): IUser{
-      return user
+  public createNewTenant(user:ITenant):Promise<ITenant>{
+    return tenantRepository.createTenant(user)
   }
-  public async updateTenant(id:string, data:IUser): Promise<IUser>{
-      return data
+  public async updateTenant(id:string, data:ITenant):Promise<ITenant[]>{
+    return tenantRepository.updateById(id, data)
   }
-  public deleteTenant(id:string): number{
-      return Number(id)
+  public deleteTenant(id:string):Promise<number>{
+    return tenantRepository.deleteById(id)
   }
 }
 
