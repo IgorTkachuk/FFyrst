@@ -3,6 +3,7 @@ import { AppAsyncStorage } from '~/common/types';
 import { AsyncLocalStorage } from './async-storage/async-storage.service';
 import { Logger } from './logger/logger.service';
 import { UserService } from './user-service/user-service.service';
+import { MailService } from './mail-service/mail-service.setvice';
 
 const appAsyncStorage = new AsyncLocalStorage<AppAsyncStorage>();
 
@@ -13,4 +14,6 @@ const logger = new Logger({
 
 const userService = new UserService();
 
-export { appAsyncStorage, logger, userService };
+const mailService = new MailService();
+
+export { appAsyncStorage, logger, userService, mailService };
