@@ -7,9 +7,14 @@ module.exports = {
         '128': '32rem',
       },
     },
+    fontFamily: {
+      'roboto': ['Roboto', 'sans-serif'],
+    },
   },
   variants: {
-    extend: {},
+    extend: {
+      scale: ['active', 'hover'],
+    },
   },
   plugins: [],
 };

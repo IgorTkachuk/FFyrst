@@ -3,28 +3,39 @@ import './button.css';
 
 interface ButtonProps {
   color: 'blue' | 'red' | 'green';
-  size?: 'small' | 'medium' | 'large';
+  size?: 'small' | 'medium' | 'big';
   label: string;
   onClick?: () => void;
 }
 
 const BTN_COLORS = {
-  blue: '#666',
-  red:  '#888',
-  green: '#123'
-}
+  blue: 'bg-blue-500',
+  red: 'bg-red-500',
+  green: 'bg-green-500',
+};
+
+const BTN_COLORS_ON_HOVER = {
+  blue: 'bg-blue-400',
+  red: 'bg-red-400',
+  green: 'bg-green-400',
+};
+
+const BTN_SIZES = {
+  small: 'text-sm',
+  medium: 'text-lg',
+  big: 'text-2xl',
+};
 
 export const Button = ({
   size = 'medium',
-  color,
+  color = 'green',
   label,
   ...props
 }: ButtonProps) => {
   return (
     <button
       type="button"
-      className={['storybook-button', `storybook-button--${size}`].join(' ')}
-      style={{ backgroundColor: BTN_COLORS[color] }}
+      className={`${BTN_COLORS[color]} ${BTN_SIZES[size]} transform active:scale-95 font-roboto  text-white font-bold py-2 px-4 rounded active:  hover:${BTN_COLORS_ON_HOVER[color]}`}
       {...props}
     >
       {label}
