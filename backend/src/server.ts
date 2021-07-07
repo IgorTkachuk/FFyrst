@@ -6,7 +6,7 @@ import { logger } from '~/services/services';
 import { setTraceId, logRequest, handleError } from '~/middlewares';
 import { DbConnectionError } from '~/exceptions';
 import { sequelize } from '~/data/db/connection';
-import {database,dialect} from "../config/db.config"
+
 const app = express();
 
 sequelize
@@ -25,13 +25,11 @@ app.use(urlencoded({ extended: true }));
 
 initApi(app);
 
-
-// app.use(express.static(join(__dirname, '../public')));
-// app.use('*', (_req, res) => {
-//   return res.sendFile(join(__dirname, '../public', 'index.html'));
-// });
+app.use(express.static(join(__dirname, '../public')));
+app.use('*', (_req, res) => {
+  return res.sendFile(join(__dirname, '../public', 'index.html'));
+});
 app.use(handleError);
-
 
 const server = app.listen(ENV.APP.SERVER_PORT, () => {
   logger.log(`Listening to connections on port — ${ENV.APP.SERVER_PORT}`);

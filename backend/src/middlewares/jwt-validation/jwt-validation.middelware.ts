@@ -14,7 +14,7 @@ const jwtValidation: RequestHandler = (req, res, next) => {
       return res.status(HttpCode.UNAUTHORIZED).json({ message: ResponseMessages.NOT_AUTHORIZED });
     }
     const decoded = jwt.verify(token, secret as Secret);
-    req.body.user = decoded; // all req.body.user = {userId:id}
+    req.user = decoded;
     next();
   } catch {
     res.status(HttpCode.UNAUTHORIZED).json({ message: ResponseMessages.NOT_AUTHORIZED });

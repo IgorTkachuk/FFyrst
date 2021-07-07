@@ -1,10 +1,9 @@
 import jwt, { Secret } from 'jsonwebtoken';
 import { expire, secret } from '../../../../config/jwt.config';
 
-const createJWT = () => { // id: string
+const createJWT = (id: string) => {
   return jwt.sign(
-    // {userId: id}, can add id to decode from jwt
-    {},
+    { userId: id },
     secret as Secret,
     { expiresIn: expire },
   );
