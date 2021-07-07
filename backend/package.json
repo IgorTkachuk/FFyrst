@@ -14,6 +14,7 @@
     "build": "npm run build:ts && npm run build:copy"
   },
   "dependencies": {
+    "cookie-parser": "^1.4.5",
     "dotenv": "8.2.0",
     "express": "4.17.1",
     "nanoid": "3.1.20",
@@ -25,6 +26,7 @@
     "ts-node": "9.1.1"
   },
   "devDependencies": {
+    "@types/cookie-parser": "^1.4.2",
     "@types/express": "4.17.11",
     "@types/node": "14.14.31",
     "@types/pino": "6.3.6",
