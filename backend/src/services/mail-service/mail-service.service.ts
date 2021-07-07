@@ -3,7 +3,7 @@ import { Transporter } from 'nodemailer';
 const pug = require('pug');
 const nodemailer = require('nodemailer');
 
-type dataT = {
+type mailOptions = {
   mailTheme: string;
   data: {
     link: string;
@@ -24,13 +24,13 @@ class MailService {
     });
   }
   //type: check enum emailType  email: example@gmail.com
-  async sendMail(type: any, email: string, options: dataT) {
+  async sendMail(type: any, email: string, options: mailOptions) {
     await this.transporter.sendMail(
       {
         from: user,
         to: email,
         subject: options?.mailTheme,
-        html: pug.compileFile(`${__dirname}/templates/${type + 'Msg'}.pug`, {
+        html: pug.compileFile(`${__dirname}/templates/${type}.pug`, {
           ...options?.data,
         })(),
       },
