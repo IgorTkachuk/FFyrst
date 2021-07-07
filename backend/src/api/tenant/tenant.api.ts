@@ -7,48 +7,48 @@ const initTenantApi = (apiRouter: Router): Router => {
 
   apiRouter.use(ApiPath.TENANTS, tenantRouter);
 
-  tenantRouter.get(TenantsApiPath.ROOT, async (_req, res) => {
+  tenantRouter.get(TenantsApiPath.ROOT, async (_req, res, next) => {
     try {
       const tenants = await tenantService.getAllTenants();
       res.status(HttpCode.OK).json(tenants);
     } catch(error) {
-      res.status(HttpCode.NOT_FOUND).json(error);
+      next(error);
     }
   });
 
-  tenantRouter.get(TenantsApiPath.$ID, async (_req, res) => {
+  tenantRouter.get(TenantsApiPath.$ID, async (_req, res, next) => {
     try {
       const user = await tenantService.getTenantById(_req.params.id);
       res.status(HttpCode.OK).json(user);
     } catch(error) {
-      res.status(HttpCode.NOT_FOUND).json(error);
+      next(error);
     }
   });
 
-  tenantRouter.post(TenantsApiPath.ROOT, async (_req, res) => {
+  tenantRouter.post(TenantsApiPath.ROOT, async (_req, res, next) => {
     try {
       const user = await tenantService.createNewTenant(_req.body);
       res.status(HttpCode.OK).json(user);
     } catch(error) {
-      res.status(HttpCode.BAD_REQUEST).json(error);
+      next(error);
     }
   });
 
-  tenantRouter.put(TenantsApiPath.$ID, async (_req, res) => {
+  tenantRouter.put(TenantsApiPath.$ID, async (_req, res, next) => {
     try {
       const user = await tenantService.updateTenant(_req.params.id, _req.body);
       res.status(HttpCode.OK).json(user);
     } catch(error) {
-      res.status(HttpCode.BAD_REQUEST).json(error);
+      next(error);
     }
   });
 
-  tenantRouter.delete(TenantsApiPath.$ID, async (_req, res) => {
+  tenantRouter.delete(TenantsApiPath.$ID, async (_req, res, next) => {
     try {
       await tenantService.deleteTenant(_req.params.id);
       res.status(HttpCode.NO_CONTENT).json();
     } catch(error) {
-      res.status(HttpCode.BAD_REQUEST).json(error);
+      next(error);
     }
   });
 
