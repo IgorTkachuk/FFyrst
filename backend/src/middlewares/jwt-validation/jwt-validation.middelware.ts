@@ -1,7 +1,7 @@
 import { RequestHandler } from 'express';
 import { secret } from '../../../config/jwt.config';
 import { HttpCode } from '~/common/enums';
-import { ResponseMessages } from '~/common/enums/messages/rerponse-messages.enum';
+import { ResponseMessages } from '~/common/enums/messages/response-messages.enum';
 import jwt, { Secret } from 'jsonwebtoken';
 
 const jwtValidation: RequestHandler = (req, res, next) => {

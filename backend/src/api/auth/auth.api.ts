@@ -3,7 +3,7 @@ import { ApiPath, AuthApiPath, HttpCode } from '~/common/enums';
 import { userService } from '~/services/services';
 import { isMatchPassword } from '~/helpers/bcrypt';
 import { createJWT } from '~/helpers/jwt';
-import { ResponseMessages } from '~/common/enums/messages/rerponse-messages.enum';
+import { ResponseMessages } from '~/common/enums/messages/response-messages.enum';
 import { jwtValidation } from '~/middlewares/jwt-validation/jwt-validation.middelware';
 
 

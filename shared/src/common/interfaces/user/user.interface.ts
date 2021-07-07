@@ -8,7 +8,7 @@ export interface IUser {
   birthdate: Date
   sex: UserSex
   type: UserType
-  phone: string
+  phone: string;
   email: string
   password: string
   imagePath: string
