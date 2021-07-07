@@ -2,11 +2,22 @@ import * as React from 'react';
 import { Formik } from 'formik';
 import { FormError } from './common/types';
 
-const Login: React.FC = () => (
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState } from 'common/types';
+import { UserActionCreator } from 'store/slices';
+
+const Login: React.FC = () => {
+  const { email, password } = useSelector(({ user }: RootState) => ({
+    email: user.email,
+    password: user.password,
+  }));
+  const dispatch = useDispatch();
+
+  return (
   <div className="container mx-auto h-screen flex justify-center items-center">
     <div className="w-full max-w-xs">
       <Formik
-        initialValues={{ email: '', password: '' }}
+        initialValues={{ email, password }}
         validate={(values) => {
           const errors: FormError = {};
           if (!values.email) {
@@ -19,10 +30,9 @@ const Login: React.FC = () => (
           return errors;
         }}
         onSubmit={(values, { setSubmitting }) => {
-          setTimeout(() => {
-            alert(JSON.stringify(values, null, 2));
-            setSubmitting(false);
-          }, 400);
+          alert(JSON.stringify(values, null, 2));
+          dispatch(UserActionCreator.set(values));
+          setSubmitting(false);
         }}
       >
         {({
@@ -104,6 +114,7 @@ const Login: React.FC = () => (
       </p>
     </div>
   </div>
-);
+)
+};
 
 export default Login;
