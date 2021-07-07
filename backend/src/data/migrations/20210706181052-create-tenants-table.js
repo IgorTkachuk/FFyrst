@@ -7,24 +7,23 @@ module.exports = {
     queryInterface.createTable('tenants', {
       id: {
         allowNull: false,
-        autoIncrement: false,
+        autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.UUID,
-        defaultValue: Sequelize.literal('gen_random_uuid()')
+        type: Sequelize.INTEGER,
       },
       name: {
         allowNull: false,
         type: Sequelize.STRING
       },
-      logo_url: {
+      logoUrl: {
         allowNull: false,
         type: Sequelize.STRING
       },
-      legal_address: {
+      legalAddress: {
         allowNull: false,
         type: Sequelize.STRING
       },
-      domain_url: {
+      domainUrl: {
         allowNull: false,
         type: Sequelize.STRING
       },

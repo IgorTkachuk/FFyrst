@@ -10,15 +10,15 @@ const createTenantModel = (orm: Sequelize): ModelCtor<TenantInstance> => {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    logo_url: {
+    logoUrl: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    legal_address: {
+    legalAddress: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    domain_url: {
+    domainUrl: {
       type: DataTypes.STRING,
       allowNull: false,
     },
