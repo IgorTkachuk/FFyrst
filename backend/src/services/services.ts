@@ -19,5 +19,3 @@ const tenantService = new TenantService();
 const mailService = new MailService();
 
 export { appAsyncStorage, logger, userService, tenantService, mailService };
-
-
