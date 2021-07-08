@@ -2,11 +2,10 @@ import { Router } from 'express';
 import { ApiPath, AuthApiPath, HttpCode } from '~/common/enums';
 import { userService } from '~/services/services';
 import { isMatchPassword } from '~/helpers/bcrypt';
-import { createJWT } from '~/helpers/jwt';
 import { ResponseMessages } from '~/common/enums/messages/response-messages.enum';
 import { jwtValidation } from '~/middlewares/jwt-validation/jwt-validation.middelware';
-import { createRefreshToken } from '~/helpers/jwt/create-refresh-token/create-refresh-token.helper';
 import { refreshTokenValidation } from '~/middlewares/jwt-validation/refresh-validation.middelware';
+import { getTokens } from '~/helpers';
 
 const initAuthApi = (apiRouter: Router): Router => {
   const authRouter = Router();
@@ -16,26 +15,25 @@ const initAuthApi = (apiRouter: Router): Router => {
     try {
       const { email, password } = req.body;
       const user = await userService.getUserByEmail(email);
-      console.log(user);
+
       if (!user) {
-        res
+        return res
           .status(HttpCode.UNAUTHORIZED)
           .json({ message: ResponseMessages.NON_EXIST_EMAIL });
       } else {
         const isMatch = await isMatchPassword(password, user.password);
-        if (!isMatch)
-          res
+
+        if (!isMatch) {
+          return res
             .status(HttpCode.UNAUTHORIZED)
             .json({ message: ResponseMessages.NON_MATCH_PASSWORDS });
-
-        const accessToken = createJWT(user.id);
-        const refreshToken = await createRefreshToken(user.id);
+        }
+        const tokens = await getTokens(user.id);
 
         // accessToken and refreshToken should be saved on client side
-        res.status(HttpCode.OK).json({ accessToken, refreshToken });
+        res.status(HttpCode.OK).json(tokens);
       }
     } catch (error) {
-      console.log('error= ', error);
       res.status(HttpCode.BAD_REQUEST).json(error);
     }
   });
@@ -47,9 +45,8 @@ const initAuthApi = (apiRouter: Router): Router => {
     AuthApiPath.REFRESH_TOKEN,
     refreshTokenValidation,
     async (req, res) => {
-      const accessToken = createJWT(req.body.userId);
-      const refreshToken = await createRefreshToken(req.body.userId);
-      res.status(HttpCode.OK).json({ accessToken, refreshToken });
+      const tokens = await getTokens(req.body.userId);
+      res.status(HttpCode.OK).json(tokens);
     },
   );
 
