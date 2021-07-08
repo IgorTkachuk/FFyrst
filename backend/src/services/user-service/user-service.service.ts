@@ -1,5 +1,6 @@
 import { userRepository } from '~/data/repositories';
 import { IUser } from '~/common/interfaces';
+import { mailService } from '../services';
 
 class UserService {
   public getAllUsers(): Promise<IUser[]> {
@@ -10,7 +11,10 @@ class UserService {
     return userRepository.getById(id);
   }
 
-  public createNewUser(user: IUser): Promise<IUser> {
+  public async createNewUser(user: IUser): Promise<IUser> {
+    const mailData = await mailService.sendActivationMail(user.email);
+    console.log(mailData);
+    return user;
     return userRepository.createUser(user);
   }
 

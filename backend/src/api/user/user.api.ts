@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { ApiPath, HttpCode, UsersApiPath } from '~/common/enums';
-import { userService } from '~/services/services';
+import { userService, mailService } from '~/services/services';
 
 const initUserApi = (apiRouter: Router): Router => {
   const userRouter = Router();
@@ -25,12 +25,12 @@ const initUserApi = (apiRouter: Router): Router => {
     }
   });
 
-  userRouter.post(UsersApiPath.ROOT, async (_req, res) => {
+  userRouter.post(UsersApiPath.ROOT, async (_req, res, next) => {
     try {
       const user = await userService.createNewUser(_req.body);
       res.status(HttpCode.OK).json(user);
     } catch(error) {
-      res.status(HttpCode.BAD_REQUEST).json(error);
+      next(error);
     }
   });
 
