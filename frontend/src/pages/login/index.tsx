@@ -30,8 +30,8 @@ const Login: React.FC = () => {
           return errors;
         }}
         onSubmit={(values, { setSubmitting }) => {
-          alert(JSON.stringify(values, null, 2));
           dispatch(UserActionCreator.set(values));
+          dispatch(UserActionCreator.login(values));
           setSubmitting(false);
         }}
       >
