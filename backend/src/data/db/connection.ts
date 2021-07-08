@@ -8,6 +8,7 @@ import {
   dialect,
 } from '../../../config/db.config';
 
+
 const sequelize = new Sequelize({
   port: Number(port),
   dialect: dialect as Dialect,
@@ -17,5 +18,7 @@ const sequelize = new Sequelize({
   host,
   logging: false,
 });
+
+
 
 export { sequelize };
