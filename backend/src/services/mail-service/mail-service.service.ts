@@ -1,17 +1,12 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 import { host, port, user, pass } from 'config/email.config';
 import { emailType } from '~/common/enums';
 import { Transporter } from 'nodemailer';
-import { Request } from 'express';
-import { getFullUrl } from '~/helpers';
+import { MailOptions } from '~/common/types';
+import { getFullUrl, createMail } from '~/helpers';
+
 const pug = require('pug');
 const nodemailer = require('nodemailer');
-
-type mailOptions = {
-  mailTheme: string;
-  data: {
-    link: string;
-  };
-};
 
 class MailService {
   transporter: Transporter;
@@ -37,7 +32,7 @@ class MailService {
     });
   }
   //type: check enum emailType  email: example@gmail.com
-  async sendMail(type: string, email: string, options: mailOptions):Promise<Transporter> {
+  async sendMail(type: string, email: string, options: MailOptions):Promise<Transporter> {
     return this.transporter.sendMail(
       {
         from: user,
@@ -56,12 +51,10 @@ class MailService {
       // },
     );
   }
-  async sendActivationMail(_req: Request): Promise<Transporter>{
-    return await this.sendMail(emailType.ACTIVATION, _req.body, {
-      mailTheme: 'Confirm registration',
-      data: {
-        link: getFullUrl(_req.originalUrl),
-    }});
+  async sendActivationMail(email: string): Promise<Transporter>{
+    const link = getFullUrl('/email-activation/cbakfhuhk3484bc8743bc83');
+    const mailOptions = createMail('Confirm registration', link)
+    return await this.sendMail(emailType.ACTIVATION, email, mailOptions);
   }
 }
 
