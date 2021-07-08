@@ -4,6 +4,7 @@ import { emailType } from '~/common/enums';
 import { Transporter } from 'nodemailer';
 import { MailOptions } from '~/common/types';
 import { getFullUrl, createMail } from '~/helpers';
+import { hashPassword } from '~/helpers/bcrypt';
 
 const pug = require('pug');
 const nodemailer = require('nodemailer');
@@ -11,16 +12,6 @@ const nodemailer = require('nodemailer');
 class MailService {
   transporter: Transporter;
   constructor() {
-    // this.transporter = nodemailer.createTransport({
-    //   host: 'smtp.ethereal.email',
-    //   port: 587,
-    //   auth: {
-    //       user: 'emma68@ethereal.email',
-    //       pass: 'Qgtk3UCAC4uuqa61eG'
-    //   }
-    // }, {
-    //   from: 'emma68@ethereal.email',
-    // })
     this.transporter = nodemailer.createTransport({
       host,
       port,
@@ -52,7 +43,8 @@ class MailService {
     );
   }
   async sendActivationMail(email: string): Promise<Transporter>{
-    const link = getFullUrl('/email-activation/cbakfhuhk3484bc8743bc83');
+    const tokenHash = await hashPassword(Date.now().toString());
+    const link = getFullUrl(`/email-activation/${tokenHash}`);
     const mailOptions = createMail('Confirm registration', link)
     return await this.sendMail(emailType.ACTIVATION, email, mailOptions);
   }

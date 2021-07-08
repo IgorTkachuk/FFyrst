@@ -1,6 +1,7 @@
 import { userRepository } from '~/data/repositories';
 import { IUser } from '~/common/interfaces';
 import { mailService } from '../services';
+import { hashPassword } from '~/helpers/bcrypt';
 
 class UserService {
   public getAllUsers(): Promise<IUser[]> {
@@ -12,10 +13,13 @@ class UserService {
   }
 
   public async createNewUser(user: IUser): Promise<IUser> {
-    const mailData = await mailService.sendActivationMail(user.email);
-    console.log(mailData);
-    return user;
-    return userRepository.createUser(user);
+    const {email, password} = user;
+    const passwordHash = await hashPassword(password);
+    await mailService.sendActivationMail(email);
+    return userRepository.createUser({
+      ...user,
+      password: passwordHash
+    });
   }
 
   public async updateUser(id: string, data: IUser): Promise<IUser[]> {
