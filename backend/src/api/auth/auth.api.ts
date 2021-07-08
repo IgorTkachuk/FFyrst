@@ -9,11 +9,13 @@ import { ILogin, IVerPassword } from 'shared';
 import { comparePasswords, createMail } from '~/helpers';
 import { MailService } from '~/services/mail-service/mail-service.service';
 import { link } from 'config/email.config';
+import { yupValidation } from '~/middlewares/yup-validation/yup-validation.middelware';
+import { verifySchema, resetSchema, loginSchema } from 'shared';
 
 const initAuthApi = (apiRouter: Router): Router => {
   const authRouter = Router();
   apiRouter.use(ApiPath.AUTH, authRouter);
-  authRouter.post(AuthApiPath.LOGIN, async (_req, res) => {
+  authRouter.post(AuthApiPath.LOGIN, yupValidation(loginSchema), async (_req, res) => {
     try {
       const { email, password } = _req.body as ILogin;
       const user = await userService.getUserByEmail(email);
@@ -38,7 +40,7 @@ const initAuthApi = (apiRouter: Router): Router => {
     res.json(_req.user.userId);
   });
 
-  authRouter.post(AuthApiPath.RESET_PASSWORD, async (_req, res) => {
+  authRouter.post(AuthApiPath.RESET_PASSWORD, yupValidation(resetSchema), async (_req, res) => {
     try {
       const { email } = _req.body;
       const mailService = new MailService();
@@ -56,7 +58,7 @@ const initAuthApi = (apiRouter: Router): Router => {
       res.status(HttpCode.BAD_REQUEST).json(error);
     }
   });
-  authRouter.post(AuthApiPath.VERIFY_PASSWORD, async (_req, res) => {
+  authRouter.post(AuthApiPath.VERIFY_PASSWORD, yupValidation(verifySchema), async (_req, res) => {
     try {
       const { password, verifiedPassword, email } = _req.body as IVerPassword;
       const isCompare = comparePasswords(password, verifiedPassword);
