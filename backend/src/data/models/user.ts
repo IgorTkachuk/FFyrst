@@ -32,6 +32,17 @@ const createUserModel = (orm:Sequelize): ModelCtor<UserInstance> => {
         type: DataTypes.STRING,
         unique: true
       },
+      isActive: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false
+      },
+      expiryDate: {
+        type: DataTypes.DATE,
+        defaultValue: Date.now() + 1000 * 60 * 60
+      },
+      activationToken: {
+        type: DataTypes.STRING,
+      },
       createdAt: DataTypes.DATE,
       updatedAt: DataTypes.DATE
     },
