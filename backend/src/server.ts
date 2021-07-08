@@ -6,7 +6,6 @@ import { logger } from '~/services/services';
 import { setTraceId, logRequest, handleError } from '~/middlewares';
 import { DbConnectionError } from '~/exceptions';
 import { sequelize } from '~/data/db/connection';
-import cookieParser from 'cookie-parser';
 
 const app = express();
 
@@ -23,7 +22,6 @@ app.use(setTraceId);
 app.use(logRequest);
 app.use(json());
 app.use(urlencoded({ extended: true }));
-app.use(cookieParser());
 
 initApi(app);
 
