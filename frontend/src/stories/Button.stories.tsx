@@ -1,6 +1,5 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
-
 import { Button } from './Button';
 
 export default {
@@ -45,4 +44,3 @@ Big.args = {
   size: 'big',
   label: 'Button',
 };
-
