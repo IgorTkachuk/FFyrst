@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { ApiPath, HttpCode, UsersApiPath } from '~/common/enums';
 import { userService } from '~/services/services';
+import { userSchema } from './user.schema';
 
 const initUserApi = (apiRouter: Router): Router => {
   const userRouter = Router();
@@ -27,6 +28,7 @@ const initUserApi = (apiRouter: Router): Router => {
 
   userRouter.post(UsersApiPath.ROOT, async (_req, res, next) => {
     try {
+      await userSchema.validate(_req.body, { context: { required: true } });
       const user = await userService.createNewUser(_req.body);
       res.status(HttpCode.OK).json(user);
     } catch(error) {
@@ -36,6 +38,7 @@ const initUserApi = (apiRouter: Router): Router => {
 
   userRouter.put(UsersApiPath.$ID, async (_req, res) => {
     try {
+      await userSchema.validate(_req.body);
       const user = await userService.updateUser(_req.params.id, _req.body);
       res.status(HttpCode.OK).json(user);
     } catch(error) {
