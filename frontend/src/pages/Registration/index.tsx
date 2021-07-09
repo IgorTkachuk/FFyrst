@@ -1,13 +1,15 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
 import { Formik, Field, Form } from 'formik';
 import * as Yup from 'yup';
 import 'yup-phone';
 
 import '../../stories/button.css';
+import { SignUpActionCreator } from 'store/slices';
 
 // make a separate component
 const FormField = (props: any) => {
-  const { id, label, placeholder, form, classes } = props;
+  const { id, label, placeholder, form } = props;
   return (
     <>
       <div className="mt-6 sm:mt-5 md:mt-6 lg:mt-6 flex items-center flex-col justify-between">
@@ -59,6 +61,7 @@ const validRegSchema = Yup.object().shape({
 });
 
 const Registration = () => {
+  const dispatch = useDispatch();
   return (
     <>
       <Formik
@@ -71,8 +74,8 @@ const Registration = () => {
           confirmPassword: '',
         }}
         validationSchema={validRegSchema}
-        onSubmit={(values) => {
-          alert(JSON.stringify(values, null, 2));
+        onSubmit={(data) => {
+          dispatch(SignUpActionCreator.reg(data));
         }}
         render={(form) => (
           <Form className="mt-4 flex items-center justify-center">
@@ -83,7 +86,6 @@ const Registration = () => {
                 id="firstName"
                 label="First Name"
                 placeholder="Doe"
-                classes="mt-10"
               />
               <FormField
                 form={form}

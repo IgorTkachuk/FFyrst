@@ -1,4 +1,4 @@
 export {
-  reducer as counterReducer,
-  CounterActionCreator,
-} from './counter/counter.slice';
+  reducer as signUpReducer,
+  SignUpActionCreator,
+} from './signUp/signUp.slice';
