@@ -1,6 +1,7 @@
 enum UsersApiPath {
   ROOT = '/',
-  $ID = '/:id'
+  $ID = '/:id',
+  $ACTIVATION = '/activation/:token'
 }
 
 export { UsersApiPath };

@@ -4,7 +4,6 @@ import { emailType } from '~/common/enums';
 import { Transporter } from 'nodemailer';
 import { MailOptions } from '~/common/types';
 import { getFullUrl, createMail } from '~/helpers';
-import { hashPassword } from '~/helpers/bcrypt';
 
 const pug = require('pug');
 const nodemailer = require('nodemailer');
@@ -42,9 +41,8 @@ class MailService {
       // },
     );
   }
-  async sendActivationMail(email: string): Promise<Transporter>{
-    const tokenHash = await hashPassword(Date.now().toString());
-    const link = getFullUrl(`/email-activation/${tokenHash}`);
+  async sendActivationMail(email: string, token: string): Promise<Transporter>{
+    const link = getFullUrl(`/email-activation/${token}`);
     const mailOptions = createMail('Confirm registration', link)
     return await this.sendMail(emailType.ACTIVATION, email, mailOptions);
   }

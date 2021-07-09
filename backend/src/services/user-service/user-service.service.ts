@@ -1,7 +1,8 @@
 import { userRepository } from '~/data/repositories';
-import { IUser } from '~/common/interfaces';
+import { IUser, IActivationMessage } from 'shared/common/interfaces';
 import { mailService } from '../services';
-import { hashPassword } from '~/helpers/bcrypt';
+import { hashPassword, hashToken } from '~/helpers/bcrypt';
+import { createMessage } from '~/helpers';
 
 class UserService {
   public getAllUsers(): Promise<IUser[]> {
@@ -14,11 +15,13 @@ class UserService {
 
   public async createNewUser(user: IUser): Promise<IUser> {
     const {email, password} = user;
+    const tokenHash = hashToken(Date.now().toString());
     const passwordHash = await hashPassword(password);
-    await mailService.sendActivationMail(email);
+    await mailService.sendActivationMail(email, tokenHash);
     return userRepository.createUser({
       ...user,
-      password: passwordHash
+      password: passwordHash,
+      activationToken: tokenHash
     });
   }
 
@@ -32,6 +35,26 @@ class UserService {
 
   public getUserByEmail(email: string): Promise<IUser | null> {
     return userRepository.getByEmail(email);
+  }
+
+  public getUserByToken(token: string): Promise<IUser | null> {
+    return userRepository.getByToken(token);
+  }
+
+  public async activateUser(token: string): Promise<IActivationMessage> {
+    const user = await this.getUserByToken(token);
+    if(!user) {
+      return createMessage('User not found.');
+    }
+    if(user.expiryDate < new Date(Date.now())) {
+      return createMessage('Activation time expired.');
+    }
+    const data = {
+      isActive: true,
+      activationToken: ''
+    }
+    userRepository.activateUser(token, {...user, ...data});
+    return createMessage('Successful activation.', true, user.email);
   }
 }
 
