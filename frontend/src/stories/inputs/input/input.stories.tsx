@@ -34,3 +34,8 @@ export const InputError = Template.bind({});
 InputError.args = {
   meta: { touched: true, error: 'error message' },
 };
+
+export const InputWithTitle = Template.bind({});
+InputWithTitle.args = {
+  title: 'Test title',
+};
