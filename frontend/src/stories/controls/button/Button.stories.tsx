@@ -45,4 +45,3 @@ Big.args = {
   size: 'big',
   label: 'Button',
 };
-
