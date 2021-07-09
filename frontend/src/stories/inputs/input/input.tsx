@@ -23,7 +23,7 @@ export const Input = ({
 }: InputProps) => {
   return (
     <input
-      className={`${INPUT_SIZES[size]} shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline`}
+      className={`${INPUT_SIZES[size]} shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-blue-300`}
       type={type}
       placeholder={placeholder}
       {...props}
