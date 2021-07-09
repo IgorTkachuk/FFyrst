@@ -37,5 +37,5 @@ InputError.args = {
 
 export const InputWithTitle = Template.bind({});
 InputWithTitle.args = {
-  title: 'Test title',
+  title: 'Test',
 };
