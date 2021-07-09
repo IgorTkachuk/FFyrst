@@ -29,3 +29,8 @@ export const WidthAuto = Template.bind({});
 WidthAuto.args = {
   size: 'widthAuto',
 };
+
+export const InputError = Template.bind({});
+InputError.args = {
+  meta: { touched: true, error: 'error message' },
+};
