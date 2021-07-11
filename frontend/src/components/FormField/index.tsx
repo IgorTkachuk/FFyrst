@@ -1,35 +1,47 @@
 import React from 'react';
-import { Field } from 'formik';
+import { Field, FieldProps } from 'formik';
 
-const FormField = (props: any) => {
+interface IFormField {
+  id: string;
+  label: string;
+  placeholder: string;
+  form: any;
+  type?: string;
+}
+
+const FormField: React.FC<IFormField> = (props) => {
   const { id, label, placeholder, form } = props;
   return (
     <>
-      <div className="mt-6 sm:mt-5 md:mt-6 lg:mt-6 flex items-center flex-col justify-between">
+      <div className="mt-6 xs:mt-3 sm:mt-5 md:mt-6 lg:mt-6 flex items-center flex-col justify-between">
         <div className="w-96 flex items-center justify-between ">
-          <label className="w-40 text-left text-lg" htmlFor={id}>
+          <label
+            className="text-left text-md text-gray-700 font-bold"
+            htmlFor={id}
+          >
             {label}
           </label>
           <Field
-            className={`w-48 sm:w-60 md:w-48 lg:w-48 px-4 py-2 rounded-md bg-blue-200 focus:outline-none  ${
+            className={`w-60 sm:w-56 md:w-50 lg:w-50 px-4 py-2 rounded-md bg-blue-50 focus:outline-none  ${
               form.errors[id] && form.touched[id]
-                ? 'text-red-600 focus:ring-red-400 focus:ring-2 '
-                : 'text-green-600 focus:ring-green-400 focus:ring-2 '
+                ? 'text-red-500 focus:ring-red-300 focus:ring-1 '
+                : 'text-green-500 focus:ring-green-300 focus:ring-1 '
             }`}
             id={id}
             name={id}
             placeholder={placeholder}
-            {...props}
+            type={props?.type}
           />
         </div>
         {form.errors[id] && form.touched[id] && (
-          <div className="w-full mt-1.5 rounded-md bg-red-200 text-red-500 text-lg italic">
-            <label className="text-red-600">{form.errors[id]}</label>
+          <div className="w-full mt-1.5 text-center rounded-md bg-red-50 ">
+            <label className="text-red-400 text-md italic font-medium">
+              {form.errors[id]}
+            </label>
           </div>
         )}
       </div>
     </>
   );
 };
-
 export default FormField;

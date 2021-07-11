@@ -2,33 +2,37 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { Formik, Form } from 'formik';
 
+import { AppRoute } from 'common/enums';
+import { Link } from 'components/common';
+
 import { SignUpActionCreator } from 'store/slices';
+
 import { FormField } from 'components';
 import { SignUpSchema } from './common/validations';
 
-// its will be better if I take out this schema in shared ???
-
-const Registration = () => {
+const Registration: React.FC = () => {
   const dispatch = useDispatch();
+
   return (
     <>
-      <Formik
-        initialValues={{
-          firstName: '',
-          lastName: '',
-          email: '',
-          phoneNumber: '',
-          password: '',
-          confirmPassword: '',
-        }}
-        validationSchema={SignUpSchema}
-        onSubmit={(data) => {
-          dispatch(SignUpActionCreator.reg(data));
-        }}
-        render={(form) => (
-          <Form className="mt-4 flex items-center justify-center">
-            <div className="w-4/5 sm:w-4/5 md:w-3/5 lg:w-2/5 bg-gradient-to-r from-green-400 to-blue-500 rounded-lg flex flex-col items-center justify-center">
-              {/* render field with map */}
+      <div className="container mx-auto h-full flex flex-col items-center justify-center">
+        <Formik
+          initialValues={{
+            firstName: '',
+            lastName: '',
+            email: '',
+            phoneNumber: '',
+            password: '',
+            confirmPassword: '',
+          }}
+          validationSchema={SignUpSchema}
+          onSubmit={(data) => {
+            // dispatch(UserActionCreator.reg(data));
+          }}
+        >
+          {(form) => (
+            <Form className="mx-auto bg-white shadow-sm sm:shadow-lg px-8 pt-6 pb-8 mb-4 rounded-lg flex flex-col items-center justify-center">
+              {/* render field with map ??? */}
               <FormField
                 form={form}
                 id="firstName"
@@ -57,29 +61,34 @@ const Registration = () => {
                 form={form}
                 id="password"
                 label="Password"
-                placeholder="Pass$123"
+                placeholder="********"
                 type="password"
               />
               <FormField
                 form={form}
                 id="confirmPassword"
                 label="Confirm Password"
-                placeholder="Pass$123"
+                placeholder="********"
                 type="password"
               />
-              <button
-                className="my-7 px-8 py-3 rounded-lg bg-green-400 hover:bg-green-500"
-                type="submit"
-              >
-                Sign Up
-              </button>
-            </div>
-          </Form>
-        )}
-      ></Formik>
-      <p className="text-center text-gray-500 text-xs">
-        &copy;2021 Radency. All rights reserved.
-      </p>
+              <div className="h-20 mt-6 flex flex-col justify-between">
+                <button
+                  className="px-8 py-3 rounded-lg bg-blue-500 hover:bg-blue-700 text-white font-bold focus:outline-none focus:shadow-outline"
+                  type="submit"
+                >
+                  Sign Up
+                </button>
+                <div className="cursor-pointer text-center text-blue-500 font-bold hover:text-blue-700">
+                  <Link to={AppRoute.SIGN_IN}>Sign In</Link>
+                </div>
+              </div>
+            </Form>
+          )}
+        </Formik>
+        <p className="text-center text-gray-500 text-xs">
+          &copy;2021 Radency. All rights reserved.
+        </p>
+      </div>
     </>
   );
 };

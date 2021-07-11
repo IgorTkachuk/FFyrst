@@ -5,6 +5,7 @@ import { AppRoute } from 'common/enums';
 import { Link } from 'components/common';
 
 import { Login, Registration } from 'pages';
+import './assets/styles/index.css';
 
 const App: React.FC = () => {
   return (
@@ -12,7 +13,7 @@ const App: React.FC = () => {
       <div className="App">
         {/* It's a temp navigation, I will delete it in the future */}
         <div>
-          <ul className="App-navigation-list">
+          <ul className="w-96 mx-auto flex flex-row items-center justify-between">
             <li>
               <Link to={AppRoute.ROOT}>Root</Link>
             </li>
