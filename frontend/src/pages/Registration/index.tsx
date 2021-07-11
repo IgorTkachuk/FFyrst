@@ -1,64 +1,12 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { Formik, Field, Form } from 'formik';
-import * as Yup from 'yup';
-import 'yup-phone';
+import { Formik, Form } from 'formik';
 
-import '../../stories/button.css';
 import { SignUpActionCreator } from 'store/slices';
-
-// make a separate component
-const FormField = (props: any) => {
-  const { id, label, placeholder, form } = props;
-  return (
-    <>
-      <div className="mt-6 sm:mt-5 md:mt-6 lg:mt-6 flex items-center flex-col justify-between">
-        <div className="w-96 flex items-center justify-between ">
-          <label className="w-40 text-left text-lg" htmlFor={id}>
-            {label}
-          </label>
-          <Field
-            className={`w-48 sm:w-60 md:w-48 lg:w-48 px-4 py-2 rounded-md bg-blue-200 focus:outline-none  ${
-              form.errors[id] && form.touched[id]
-                ? 'text-red-600 focus:ring-red-400 focus:ring-2 '
-                : 'text-green-600 focus:ring-green-400 focus:ring-2 '
-            }`}
-            id={id}
-            name={id}
-            placeholder={placeholder}
-            {...props}
-          />
-        </div>
-        {form.errors[id] && form.touched[id] && (
-          <div className="w-full mt-1.5 rounded-md bg-red-200 text-red-500 text-lg italic">
-            <label className="text-red-600">{form.errors[id]}</label>
-          </div>
-        )}
-      </div>
-    </>
-  );
-};
+import { FormField } from 'components';
+import { SignUpSchema } from './common/validations';
 
 // its will be better if I take out this schema in shared ???
-const validRegSchema = Yup.object().shape({
-  firstName: Yup.string().required('First Name is required'),
-  lastName: Yup.string().required('Last Name is required'),
-  email: Yup.string().email('Email is invalid').required('Email is required'),
-  phoneNumber: Yup.string()
-    .phone('', false, 'Phone Number is invalid')
-    .required('Phone Number is required'),
-  password: Yup.string()
-    //working fine
-    // .matches(
-    //   /^(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.*[0-9])/,
-    //   'Password Must Contain at least 6 Characters, One Uppercase, One Number, and One Special Character',
-    // )
-    .min(6, 'Password Must Contain 6 Characters')
-    .required('Password is required'),
-  confirmPassword: Yup.string()
-    .oneOf([Yup.ref('password'), null], 'Passwords must match')
-    .required('Confirm Password is required'),
-});
 
 const Registration = () => {
   const dispatch = useDispatch();
@@ -73,7 +21,7 @@ const Registration = () => {
           password: '',
           confirmPassword: '',
         }}
-        validationSchema={validRegSchema}
+        validationSchema={SignUpSchema}
         onSubmit={(data) => {
           dispatch(SignUpActionCreator.reg(data));
         }}

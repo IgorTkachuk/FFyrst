@@ -9,8 +9,8 @@ const sagaMiddleware = createSagaMiddleware();
 
 const store = configureStore({
   reducer: {
-    [ReducerName.REG]: signUpReducer,
-    // [ReducerName.USER]: userReducer,
+    // [ReducerName.REG]: signUpReducer,
+    [ReducerName.USER]: userReducer,
   },
   middleware: (cdm) => cdm().concat(sagaMiddleware),
 });
