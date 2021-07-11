@@ -1,8 +1,8 @@
-import { ObjectSchema } from 'yup';
-import { emailYupCustomSchema, passwordYupCustomSchema } from '~/common/schemas/yup-cutom-types';
+import { ObjectSchema, StringSchema } from 'yup';
+import { passwordYupCustomSchema } from '~/common/schemas/yup-cutom-types';
 
 export const verifySchema = new ObjectSchema({
-  email: emailYupCustomSchema(),
+  token: new StringSchema().required(),
   password: passwordYupCustomSchema(),
   verifiedPassword: passwordYupCustomSchema(),
 });
