@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { ApiPath, HttpCode, UsersApiPath } from '~/common/enums';
 import { userService } from '~/services/services';
+import { userSchema } from './user.schema';
 
 const initUserApi = (apiRouter: Router): Router => {
   const userRouter = Router();
@@ -25,17 +26,20 @@ const initUserApi = (apiRouter: Router): Router => {
     }
   });
 
-  userRouter.post(UsersApiPath.ROOT, async (_req, res) => {
+  userRouter.post(UsersApiPath.ROOT, async (_req, res, next) => {
     try {
+      await userSchema.validate(_req.body, { context: { required: true } });
       const user = await userService.createNewUser(_req.body);
-      res.status(HttpCode.OK).json(user);
+      const userToActivate = await userService.setUserActivation(user)
+      res.status(HttpCode.OK).json(userToActivate);
     } catch(error) {
-      res.status(HttpCode.BAD_REQUEST).json(error);
+      next(error);
     }
   });
 
   userRouter.put(UsersApiPath.$ID, async (_req, res) => {
     try {
+      await userSchema.validate(_req.body);
       const user = await userService.updateUser(_req.params.id, _req.body);
       res.status(HttpCode.OK).json(user);
     } catch(error) {
@@ -49,6 +53,28 @@ const initUserApi = (apiRouter: Router): Router => {
       res.status(HttpCode.NO_CONTENT).json();
     } catch(error) {
       res.status(HttpCode.BAD_REQUEST).json(error);
+    }
+  });
+
+  userRouter.put(UsersApiPath.ACTIVATION_REQUEST, async (_req, res, next) => {
+    try {
+      const user = await userService.getUserByEmail(_req.body.email);
+      if(user) {
+        const userToActivate = await userService.setUserActivation(user);
+        res.status(HttpCode.OK).json(userToActivate);
+      }
+      res.status(HttpCode.NOT_FOUND).json('User not found.')
+    } catch(error) {
+      next(error)
+    }
+  });
+
+  userRouter.put(UsersApiPath.$ACTIVATION, async (_req, res, next) => {
+    try {
+      const outcome = await userService.activateUser(_req.params.token);
+      return res.json(outcome)
+    } catch(error) {
+      next(error)
     }
   });
 
