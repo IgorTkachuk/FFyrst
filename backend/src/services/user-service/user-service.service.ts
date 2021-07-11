@@ -15,15 +15,24 @@ class UserService {
   }
 
   public async createNewUser(user: IUser): Promise<IUser> {
-    const {email, password} = user;
-    const tokenHash = hashToken(Date.now().toString());
+    const { password } = user;
     const passwordHash = await hashPassword(password);
-    await mailService.sendActivationMail(email, tokenHash);
+
     return userRepository.createUser({
       ...user,
       password: passwordHash,
-      activationToken: tokenHash
     });
+  }
+
+  public async setUserActivation(data: IUser): Promise<IUser[]> {
+    const {id, email} = data;
+    const tokenHash = hashToken(Date.now().toString());
+    await mailService.sendActivationMail(email, tokenHash);
+    return await this.updateUser(id, {
+      ...data,
+      activationToken: tokenHash,
+      expiryDate: new Date(Date.now() + 1000 * 60 * 60)
+    })
   }
 
   public async updateUser(id: string, data: IUser): Promise<IUser[]> {
