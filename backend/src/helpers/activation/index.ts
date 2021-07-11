@@ -1,1 +1,1 @@
-export * from './create-message/create-message.helper';
+export * from './create-activation-message/create-activation-message.helper';

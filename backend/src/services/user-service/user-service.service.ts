@@ -3,6 +3,7 @@ import { IUser, IActivationMessage } from 'shared/common/interfaces';
 import { mailService } from '../services';
 import { hashPassword, hashToken } from '~/helpers/bcrypt';
 import { createMessage } from '~/helpers';
+import { ActivationStatus } from 'shared/common/enums'
 
 class UserService {
   public getAllUsers(): Promise<IUser[]> {
@@ -44,17 +45,17 @@ class UserService {
   public async activateUser(token: string): Promise<IActivationMessage> {
     const user = await this.getUserByToken(token);
     if(!user) {
-      return createMessage('User not found.');
+      return createMessage(ActivationStatus.NOT_FOUND, 'User not found.');
     }
     if(user.expiryDate < new Date(Date.now())) {
-      return createMessage('Activation time expired.');
+      return createMessage(ActivationStatus.EXPIRED, 'Activation time expired.', user.email);
     }
     const data = {
       isActive: true,
       activationToken: ''
     }
     userRepository.activateUser(token, {...user, ...data});
-    return createMessage('Successful activation.', true, user.email);
+    return createMessage(ActivationStatus.SUCCESS, 'Successful activation.');
   }
 }
 

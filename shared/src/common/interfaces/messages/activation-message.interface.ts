@@ -1,5 +1,7 @@
+import {ActivationStatus} from '~/common/enums/activation'
+
 export interface IActivationMessage {
-  success: boolean
+  status: ActivationStatus
   message: string
   email: string | null
 }
