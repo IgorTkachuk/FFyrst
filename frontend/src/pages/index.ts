@@ -1,2 +1,2 @@
 export { default as Registration } from './Registration';
-export { default as Login } from './login';
+import { default as Login } from './login';

@@ -4,8 +4,9 @@ import './button.css';
 interface ButtonProps {
   color: 'blue' | 'red' | 'green';
   size?: 'small' | 'medium' | 'big';
-  label: string;
+  label?: string;
   onClick?: () => void;
+  props?: Record<string, unknown>;
 }
 
 const BTN_COLORS = {
@@ -29,7 +30,7 @@ const BTN_SIZES = {
 export const Button = ({
   size = 'medium',
   color = 'green',
-  label,
+  label = '',
   ...props
 }: ButtonProps) => {
   return (

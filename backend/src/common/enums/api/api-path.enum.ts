@@ -4,4 +4,4 @@ enum ApiPath {
   AUTH = '/auth',
 }
 
-export { ApiPath }
+export { ApiPath };
