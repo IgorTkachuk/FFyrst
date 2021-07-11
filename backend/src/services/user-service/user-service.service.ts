@@ -2,7 +2,7 @@ import { userRepository } from '~/data/repositories';
 import { IUser, IActivationMessage } from 'shared/common/interfaces';
 import { mailService } from '../services';
 import { hashPassword, hashToken } from '~/helpers/bcrypt';
-import { createMessage } from '~/helpers';
+import { createactivationMessage as message } from '~/helpers';
 import { ActivationStatus } from 'shared/common/enums'
 
 class UserService {
@@ -45,17 +45,17 @@ class UserService {
   public async activateUser(token: string): Promise<IActivationMessage> {
     const user = await this.getUserByToken(token);
     if(!user) {
-      return createMessage(ActivationStatus.NOT_FOUND, 'User not found.');
+      return message(ActivationStatus.NOT_FOUND, 'User not found.');
     }
     if(user.expiryDate < new Date(Date.now())) {
-      return createMessage(ActivationStatus.EXPIRED, 'Activation time expired.', user.email);
+      return message(ActivationStatus.EXPIRED, 'Activation time expired.', user.email);
     }
     const data = {
       isActive: true,
       activationToken: ''
     }
     userRepository.activateUser(token, {...user, ...data});
-    return createMessage(ActivationStatus.SUCCESS, 'Successful activation.');
+    return message(ActivationStatus.SUCCESS, 'Successful activation.');
   }
 }
 
