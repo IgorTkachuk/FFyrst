@@ -6,7 +6,7 @@ import { logger } from '~/services/services';
 import { setTraceId, logRequest, handleError } from '~/middlewares';
 import { DbConnectionError } from '~/exceptions';
 import { sequelize } from '~/data/db/connection';
-
+import cors from "cors"
 const app = express();
 
 sequelize
@@ -22,7 +22,7 @@ app.use(setTraceId);
 app.use(logRequest);
 app.use(json());
 app.use(urlencoded({ extended: true }));
-
+app.use(cors())
 initApi(app);
 
 app.use(express.static(join(__dirname, '../public')));

@@ -1,9 +1,9 @@
 import { all } from 'redux-saga/effects';
-import loginSaga from './login';
+import authSagaWatcher from './auth';
 
-// eslint-disable-next-line
+
 function* rootSaga() {
-  yield all([loginSaga()]);
+  yield all([authSagaWatcher()]);
 }
 
 export default rootSaga;

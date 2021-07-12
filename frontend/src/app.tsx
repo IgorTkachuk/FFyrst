@@ -1,43 +1,32 @@
 import * as React from 'react';
-import { Switch, Route } from 'react-router-dom';
-
-import { AppRoute } from 'common/enums';
-import { Link } from 'components/common';
-
-import { Login, Registration } from 'pages';
-import './assets/styles/index.css';
+import useRoute from './routes';
+import { useTypedSelector } from './hooks/useTypedSelector';
+import { UserActionCreator } from './store/slices';
+import { useEffect } from 'react';
+import LocalstorageService from './services/localstorage/localstorage.service';
+import { LocalstorageKeys } from './common/enums';
+import { useDispatch } from 'react-redux';
 
 const App: React.FC = () => {
+  const localstorageService = new LocalstorageService();
+  const { authState, refreshToken, accessToken } = useTypedSelector(state => state.user);
+  const dispatch = useDispatch();
+  const routes = useRoute(authState);
+  useEffect(() => {
+    if (authState) {
+      localstorageService.setItem(LocalstorageKeys.AUTH, { refreshToken, accessToken });
+    }
+    const auth = localstorageService.getItem(LocalstorageKeys.AUTH);
+    if (auth) {
+      dispatch(UserActionCreator.loginSucceed(auth));
+    }
+  }, [authState]);
   return (
-    <>
-      <div className="App">
-        {/* It's a temp navigation, I will delete it in the future */}
-        <div>
-          <ul className="w-96 mx-auto flex flex-row items-center justify-between">
-            <li>
-              <Link to={AppRoute.ROOT}>Root</Link>
-            </li>
-            <li>
-              <Link to={AppRoute.SIGN_IN}>Sign in</Link>
-            </li>
-            <li>
-              <Link to={AppRoute.SIGN_UP}>Sign up</Link>
-            </li>
-          </ul>
-        </div>
-
-        {/* Make router component */}
-        <Switch>
-          <Route path={'/' + AppRoute.SIGN_IN}>
-            <Login />
-          </Route>
-          <Route path={'/' + AppRoute.SIGN_UP}>
-            <Registration />
-          </Route>
-          <Route path={'/' + AppRoute.ROOT}>Root Page</Route>
-        </Switch>
+    <div className='w-full min-h-screen bg-gray-50'>
+      <div className='max-w-page-content mx-auto'>
+        {routes}
       </div>
-    </>
+    </div>
   );
 };
 
