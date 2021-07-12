@@ -116,4 +116,4 @@ const VerifyRefresh = () => {
   );
 };
 
-export default VerifyRefresh;
+export { VerifyRefresh };

@@ -2,7 +2,7 @@ import { userRepository } from '~/data/repositories';
 import { IUser, IActivationMessage } from 'shared/common/interfaces';
 import { mailService } from '../services';
 import { hashPassword, hashToken } from '~/helpers/bcrypt';
-import { createactivationMessage as message } from '~/helpers';
+import { createActivationMessage as message } from '~/helpers';
 import { ActivationStatus } from 'shared/common/enums'
 
 class UserService {

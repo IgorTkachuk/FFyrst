@@ -2,7 +2,7 @@ import { ActivationStatus } from 'shared/common/enums';
 import { IActivationMessage } from 'shared/common/interfaces';
 
 
-const createactivationMessage = (
+const createActivationMessage = (
   status: ActivationStatus,
   message: string,
   email: string | null = null
@@ -12,4 +12,4 @@ const createactivationMessage = (
   email
 });
 
-export { createactivationMessage };
+export { createActivationMessage };

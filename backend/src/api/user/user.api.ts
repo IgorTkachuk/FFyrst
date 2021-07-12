@@ -1,5 +1,7 @@
 import { Router } from 'express';
+import { ActivationStatus } from 'shared';
 import { ApiPath, HttpCode, UsersApiPath } from '~/common/enums';
+import { createActivationMessage } from '~/helpers';
 import { userService } from '~/services/services';
 import { userSchema } from './user.schema';
 
@@ -60,8 +62,9 @@ const initUserApi = (apiRouter: Router): Router => {
     try {
       const user = await userService.getUserByEmail(_req.body.email);
       if(user) {
-        const userToActivate = await userService.setUserActivation(user);
-        res.status(HttpCode.OK).json(userToActivate);
+        await userService.setUserActivation(user);
+        const message = createActivationMessage(ActivationStatus.SENT, 'Mail was sent');
+        res.status(HttpCode.OK).json(message);
       }
       res.status(HttpCode.NOT_FOUND).json('User not found.')
     } catch(error) {

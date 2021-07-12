@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import * as H from 'history';
 
 import { useSelector, useDispatch } from 'react-redux';
@@ -6,51 +6,74 @@ import { useParams, useHistory } from 'react-router-dom';
 import { RootState } from 'common/types';
 import { ActivationActionCreator } from 'store/slices';
 import { ActivationStatus } from 'shared/common/enums';
-
-// export interface RouteComponentProps<Params extends { [K in keyof Params]?: string } = {}, C extends StaticContext = StaticContext, S = H.LocationState> {
-//   history: H.History;
-//   location: H.Location<S>;
-//   match: match<Params>;
-//   staticContext?: C;
-// }
-
-const ACTION_BUTTONS = {
-  [ActivationStatus.SUCCESS]: {
-    label: 'Login',
-    onClick: (history: H.History) => history.push('/login'),
-  },
-  [ActivationStatus.EXPIRED]: {
-    label: 'Send Link again',
-    onClick: (history: H.History, destination: string) => history.push(destination),
-  },
-  [ActivationStatus.NOT_FOUND]: {
-    label: 'Sign Up',
-    onClick: (history: H.History) => history.push('/sign-up'),
-  }
-}
+import { Button } from 'stories/controls/button/Button';
 
 const EmailActivation: React.FC = () => {
   const dispatch = useDispatch();
-  const activationStatus = useSelector((state: RootState) => state.activation);
   const history = useHistory();
+
+  const activationStatus = useSelector((state: RootState) => state.activation);
   const { token } = useParams<{token: string}>();
+
+  const [message, setMessage] = useState('');
+  const [label, setLabel] = useState('');
+  const [email, setEmail] = useState<string | null>(null);
+
+  const BUTTONS_OPTIONS = {
+    [ActivationStatus.SUCCESS]: {
+      label: 'Login',
+      onClick: () => history.push('/login'),
+    },
+    [ActivationStatus.EXPIRED]: {
+      label: 'Send Link again',
+      onClick: () => {
+        dispatch(ActivationActionCreator.request(email))
+      },
+    },
+    [ActivationStatus.NOT_FOUND]: {
+      label: 'Sign Up',
+      onClick: () => history.push('/sign-up'),
+    },
+    [ActivationStatus.SENT]: {
+      label: '',
+      onClick: () => ''
+    }
+  }
+
+  const handler = () => {
+    const { status } = activationStatus;
+    const { onClick } = BUTTONS_OPTIONS[status];
+    onClick()
+  }
 
   useEffect(() => {
     dispatch(ActivationActionCreator.activate(token))
-    console.log(ACTION_BUTTONS);
-
   }, [])
 
   useEffect(() => {
-    console.log(activationStatus);
+    const { status, message, email } = activationStatus;
+    const { label } = BUTTONS_OPTIONS[status];
+    setMessage(message);
+    setLabel(label);
+    setEmail(email);
   }, [activationStatus])
 
   return (
-    <div className="container mx-auto h-screen flex justify-center items-center">
-      Activate Account
-      <h2>{JSON.stringify(activationStatus, null, 2)}</h2>
+    <div className="container mx-auto flex justify-center items-center">
+      <h1>{message}</h1>
+      <div className="mx-auto">
+      <Button
+        size="medium"
+        color="blue"
+        label={label}
+        onClick={handler}
+        props={{
+          disabled: activationStatus.status === ActivationStatus.SENT
+        }}
+      />
+      </div>
     </div>
   );
 };
 
-export default EmailActivation;
+export { EmailActivation };

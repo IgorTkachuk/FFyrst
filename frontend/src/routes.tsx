@@ -1,22 +1,22 @@
 import React from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
-import Login from './pages/auth/login';
-import Refresh from './pages/auth/refresh';
-import VerifyRefresh from './pages/auth/verify-refresh';
-import Main from './pages/main';
+import * as Pages from './pages'
 
-const useRoute = (isAuth: boolean) => {
+const useRoute = (isAuth: boolean): React.ReactElement => {
   if (!isAuth) {
     return (
       <Switch>
         <Route path='/login'>
-          <Login />
+          <Pages.Login />
         </Route>
         <Route path='/refresh'>
-          <Refresh />
+          <Pages.Refresh />
         </Route>
         <Route path='/verify-refresh/:token'>
-          <VerifyRefresh />
+          <Pages.VerifyRefresh />
+        </Route>
+        <Route path='/email-activation/:token'>
+          <Pages.EmailActivation />
         </Route>
         <Redirect to='/login' />
       </Switch>
@@ -25,7 +25,7 @@ const useRoute = (isAuth: boolean) => {
     return (
       <Switch>
         <Route path='/main'>
-          <Main />
+          <Pages.Main />
         </Route>
         <Redirect to='/main' />
       </Switch>
