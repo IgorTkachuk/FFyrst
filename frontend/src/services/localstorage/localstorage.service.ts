@@ -1,4 +1,4 @@
-class localstorageService {
+class LocalstorageService {
 
   setItem(key: string, data: any) {
     const jsonData = JSON.stringify(data);
@@ -16,4 +16,4 @@ class localstorageService {
 
 }
 
-export default localstorageService;
+export default LocalstorageService;

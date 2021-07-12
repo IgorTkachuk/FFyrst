@@ -2,8 +2,6 @@ import { createSlice } from '@reduxjs/toolkit';
 import { AuthSagasTypes, ReducerName } from 'common/enums';
 import { LoginResponse } from '../../../common/types';
 import { ILogin, IVerPassword } from 'shared';
-import { strictEqual } from 'assert';
-
 
 type UserState = {
   verifySucceed: boolean;
@@ -41,6 +39,7 @@ const { reducer, actions } = createSlice({
       state.accessToken = accessToken;
       state.refreshToken = refreshToken;
       state.loading = false;
+      state.authState = true;
     },
     resetSucceed: (state, action) => {
       state.resetState = action.payload;

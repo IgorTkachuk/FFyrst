@@ -1,15 +1,19 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Formik, FormikHelpers } from 'formik';
 import { useTypedSelector } from '../../../hooks/useTypedSelector';
 import { useDispatch } from 'react-redux';
 import { resetSchema } from 'shared';
 import { resetPasswordAction } from '../../../store/slices/user/user.slice';
-import {NavLink} from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 const Refresh = () => {
   const { loading, error } = useTypedSelector(state => state.user);
   const dispatch = useDispatch();
-
+  useEffect(() => {
+    if (error) {
+      alert(error);
+    }
+  }, [error]);
   return (
     <div className='container mx-auto h-screen flex justify-center items-center'>
       <div className='w-full max-w-xs'>
@@ -18,7 +22,6 @@ const Refresh = () => {
           validationSchema={resetSchema}
           onSubmit={(values, { resetForm }: FormikHelpers<{ email: string }>) => {
             dispatch(resetPasswordAction(values));
-            resetForm();
           }}
         >
           {({
@@ -63,7 +66,7 @@ const Refresh = () => {
                   Send
                 </button>
                 <div className='inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800'>
-                  <NavLink to="/login">Back to Login</NavLink>
+                  <NavLink to='/login'>Back to Login</NavLink>
                 </div>
               </div>
             </form>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Formik, FormikHelpers } from 'formik';
 import { useDispatch } from 'react-redux';
 import { ILogin, loginSchema } from 'shared';
@@ -10,6 +10,12 @@ const Login: React.FC = () => {
   const { loading, error } = useTypedSelector(state => state.user);
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    if (error) {
+      alert(error);
+    }
+  }, [error]);
+
   return (
     <div className='container mx-auto h-screen flex justify-center items-center'>
       <div className='w-full max-w-xs'>
@@ -18,8 +24,7 @@ const Login: React.FC = () => {
           validationSchema={loginSchema}
           onSubmit={(values, { resetForm }: FormikHelpers<ILogin>) => {
             dispatch(loginUserAction(values));
-            resetForm();
-          }}
+              }}
         >
           {({
               values,

@@ -1,5 +1,5 @@
 import { all } from 'redux-saga/effects';
-import authSagaWatcher from './login';
+import authSagaWatcher from './auth';
 
 
 function* rootSaga() {
