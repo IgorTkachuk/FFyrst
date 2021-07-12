@@ -36,7 +36,7 @@ const createUserModel = (orm:Sequelize): ModelCtor<UserInstance> => {
         type: DataTypes.BOOLEAN,
         defaultValue: false
       },
-      expiryDate: {
+      activationTokenExpiration: {
         type: DataTypes.DATE,
         defaultValue: Date.now() + 1000 * 60 * 60
       },

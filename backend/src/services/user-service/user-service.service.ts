@@ -31,7 +31,7 @@ class UserService {
     return await this.updateUser(id, {
       ...data,
       activationToken: tokenHash,
-      expiryDate: new Date(Date.now() + 1000 * 60 * 60)
+      activationTokenExpiration: new Date(Date.now() + 1000 * 60 * 60)
     })
   }
 
@@ -56,7 +56,7 @@ class UserService {
     if(!user) {
       return message(ActivationStatus.NOT_FOUND, 'User not found.');
     }
-    if(user.expiryDate < new Date(Date.now())) {
+    if(user.activationTokenExpiration < new Date(Date.now())) {
       return message(ActivationStatus.EXPIRED, 'Activation time expired.', user.email);
     }
     const data = {

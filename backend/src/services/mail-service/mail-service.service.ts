@@ -34,13 +34,6 @@ class MailService {
           ...options?.data,
         }),
       },
-      // function (error: any, info: any) {
-      //   if (error) {
-      //     console.log(error);
-      //   } else {
-      //     console.log('Email sent: ' + info.response);
-      //   }
-      // },
     );
   }
   async sendActivationMail(email: string, token: string): Promise<Transporter>{

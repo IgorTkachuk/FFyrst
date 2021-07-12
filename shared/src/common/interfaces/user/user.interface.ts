@@ -7,7 +7,7 @@ export interface IUser {
   email: string
   password: string
   isActive: boolean
-  expiryDate: Date
+  activationTokenExpiration: Date
   activationToken: string
   createdAt: Date
   updatedAt: Date
