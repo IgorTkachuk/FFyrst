@@ -18,29 +18,29 @@ export const Table = ({ headerData, rowsData, tableName }: TableProps) => {
 
   return (
     <div>
-      <div className="py-1 px-2 font-roboto text-2xl font-bold">
+      <div className="py-1 px-2 font-roboto text-2xl text-green-900 font-bold">
         {tableName}
       </div>
-      <div className="flex flex-col shadow-lg  border-2 border-gray-300 rounded pb-0.5">
+      <div className="flex flex-col shadow-lg  border-2 border-green-400 rounded pb-0.5">
         <div className="flex justify-between content-center p-0.5 rounded">
           {headerData.map((header, index) => (
             <div
-              className="border-2 w-full bg-gray-500 font-roboto text-white font-semibold rounded text-lg px-2 py-1"
+              className="border-2 w-full bg-green-600 font-roboto text-white font-semibold rounded text-lg px-2 py-1"
               key={`${header}${index}`}
             >
               {header}
             </div>
           ))}
         </div>
-        <div className="flex flex-col ">
+        <div className="flex flex-col rounded">
           {rowsData.map((row, rowIndex) => (
             <div
               key={rowIndex}
-              className="flex justify-between content-center border-gray-300 pt-0 px-0.5"
+              className="nth-child:bg-green-100 flex justify-between content-center border-green-300 pt-0 px-0.5"
             >
               {row.map((cellData, cellIndex) => (
                 <div
-                  className="flex w-full font-roboto border-2 rounded border-gray-300 px-2 py-1 m-0.5"
+                  className="flex w-full bg-green-200  font-roboto border-2 border-white px-2 py-1"
                   key={`${rowIndex}${cellIndex}`}
                 >
                   {cellData}

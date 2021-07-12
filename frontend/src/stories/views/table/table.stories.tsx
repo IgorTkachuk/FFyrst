@@ -12,13 +12,48 @@ const Template: ComponentStory<typeof Table> = (args) => <Table {...args} />;
 
 export const TableDefault = Template.bind({});
 TableDefault.args = {
-  tableName: 'Test table',
-  headerData: ['Title', 'Category', 'Data', 'Quantity'],
+  tableName: 'Employees',
+  headerData: ['Name', 'Position', 'Office', 'Age', 'Start date', 'Salary'],
   rowsData: [
-    ['Title 1', 'Category 1', 'Data1', '1'],
-    ['Title 2', 'Category 2', 'Data2', '2'],
-    ['Title 3', 'Category 3', 'Data3', '3'],
-    ['Title 4', 'Category 4', 'Data4', '4'],
-    ['Title 5', 'Category 5', 'Data5', '5'],
+    [
+      'Angelica Ramos',
+      'Chief Executive Officer',
+      'San Francisco',
+      '55',
+      '2009/01/12',
+      '$95,000',
+    ],
+    [
+      'Bradley Greer',
+      'Software Engineer',
+      'London',
+      '41',
+      '2012/10/13',
+      '$60,000',
+    ],
+    [
+      'Ashton Cox',
+      'Junior Technical Author',
+      'New York',
+      '29',
+      '2012/12/02',
+      '$55,000',
+    ],
+    [
+      'Bruno Nash',
+      'Pre-Sales Support',
+      'New York',
+      '26',
+      '2011/12/12',
+      '$48,000',
+    ],
+    [
+      'Caesar Vance',
+      'Sales Assistant',
+      'Edinburgh',
+      '31',
+      '2012/03/29',
+      '$58,000',
+    ],
   ],
 };
