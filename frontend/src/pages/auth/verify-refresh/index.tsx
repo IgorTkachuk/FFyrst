@@ -32,8 +32,11 @@ const VerifyRefresh = () => {
           initialValues={{ verifiedPassword: '', password: '', token }}
           validationSchema={verifySchema}
           onSubmit={(values, { resetForm }: FormikHelpers<IVerPassword>) => {
-            console.log(values);
-            dispatch(verifyPasswordAction(values));
+            if (values.verifiedPassword === values.password) {
+              console.log(values);
+              dispatch(verifyPasswordAction(values));
+            } else
+              alert('Passwords don`t match');
           }}
         >
           {({
