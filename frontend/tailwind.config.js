@@ -6,6 +6,9 @@ module.exports = {
       spacing: {
         '128': '32rem',
       },
+      maxWidth: {
+        'page-content': '1440px',
+      },
     },
     fontFamily: {
       'roboto': ['Roboto', 'sans-serif'],

@@ -1,6 +1,6 @@
-enum emailType {
+enum EmailType {
   ACTIVATION = 'activation',
   RESET_PASSWORD = 'resetpass',
 }
 
-export { emailType };
+export { EmailType };
