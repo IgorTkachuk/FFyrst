@@ -8,9 +8,9 @@ function* loginUser() {
   const load = http.load.bind(http);
   try {
     const authResult = yield call(load, '/');
-    yield put(UserActionCreator.loginSucceed(authResult));
+    // yield put(UserActionCreator.loginSucceed(authResult));
   } catch (e) {
-    yield put(UserActionCreator.loginFailed(e.message));
+    // yield put(UserActionCreator.loginFailed(e.message));
   }
 }
 
