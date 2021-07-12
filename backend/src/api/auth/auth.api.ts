@@ -62,7 +62,7 @@ const initAuthApi = (apiRouter: Router): Router => {
       if (user) {
         const token = createJWT(user.id);
         const mail = createMail(`Reset password from ${email} account`, `${link}/${token}`);
-        await mailService.sendMail(EmailType.RESET_PASSWORD, 'dimonprykh@gmail.com', mail);
+        await mailService.sendMail(EmailType.RESET_PASSWORD, email, mail);
         res.status(HttpCode.OK)
           .json({ message: ResponseMessages.CONFIRMED });
 
