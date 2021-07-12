@@ -5,7 +5,7 @@ import { Formik, Form } from 'formik';
 import { AppRoute } from 'common/enums';
 import { Link } from 'components/common';
 
-import { SignUpActionCreator } from 'store/slices';
+// import { signUpUserAction } from '../../sagas/login';
 
 import { FormField } from 'components';
 import { SignUpSchema } from './common/validations';
@@ -27,7 +27,7 @@ const Registration: React.FC = () => {
           }}
           validationSchema={SignUpSchema}
           onSubmit={(data) => {
-            // dispatch(UserActionCreator.reg(data));
+            // dispatch(signUpUserAction(data));
           }}
         >
           {(form) => (

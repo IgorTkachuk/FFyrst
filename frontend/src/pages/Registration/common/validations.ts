@@ -9,13 +9,12 @@ export const SignUpSchema = Yup.object().shape({
     .phone('', false, 'Phone Number is invalid')
     .required('Phone Number is required'),
   password: Yup.string()
-    //working fine
-    // .matches(
-    //   /^(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.*[0-9])/,
-    //   'Password Must Contain at least 6 Characters, One Uppercase, One Number, and One Special Character',
-    // )
-    .min(6, 'Password Must Contain 6 Characters')
-    .required('Password is required'),
+    .matches(/^[A-Z]/, 'First letter must be capital')
+    .matches(/[0-9]/, 'Must match some number')
+    .matches(/[^\d\sA-Z]/gi, 'Must match some special case character')
+    .required('Must be completed')
+    .min(6, 'Min length 6 symbols'),
+
   confirmPassword: Yup.string()
     .oneOf([Yup.ref('password'), null], 'Passwords must match')
     .required('Confirm Password is required'),
