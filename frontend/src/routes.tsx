@@ -1,33 +1,34 @@
 import React from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
-import Login from './pages/auth/login';
-import Refresh from './pages/auth/refresh';
-import VerifyRefresh from './pages/auth/verify-refresh';
-import Main from './pages/main';
+import { Registration, Login, Refresh, VerifyRefresh, Main } from 'pages';
+import { AppRoute } from 'common/enums';
 
 const useRoute = (isAuth: boolean) => {
   if (!isAuth) {
     return (
       <Switch>
-        <Route path='/login'>
+        <Route path={AppRoute.SIGN_IN}>
           <Login />
         </Route>
-        <Route path='/refresh'>
+        <Route path={AppRoute.SIGN_UP}>
+          <Registration />
+        </Route>
+        <Route path={AppRoute.REFRESH}>
           <Refresh />
         </Route>
-        <Route path='/verify-refresh/:token'>
+        <Route path={AppRoute.VERIFY_REFRESH}>
           <VerifyRefresh />
         </Route>
-        <Redirect to='/login' />
+        <Redirect to={AppRoute.SIGN_IN} />
       </Switch>
     );
   } else {
     return (
       <Switch>
-        <Route path='/main'>
+        <Route path={AppRoute.MAIN}>
           <Main />
         </Route>
-        <Redirect to='/main' />
+        <Redirect to={AppRoute.MAIN} />
       </Switch>
     );
   }
