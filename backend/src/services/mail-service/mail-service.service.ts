@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 import { host, port, user, pass } from 'config/email.config';
-import { emailType } from '~/common/enums';
+import { EmailType } from '~/common/enums';
 import { Transporter } from 'nodemailer';
 import { MailOptions } from '~/common/types';
 import { getFullUrl, createMail } from '~/helpers';
@@ -46,7 +46,7 @@ class MailService {
   async sendActivationMail(email: string, token: string): Promise<Transporter>{
     const link = getFullUrl(`/email-activation/${token}`);
     const mailOptions = createMail('Confirm registration', link)
-    return await this.sendMail(emailType.ACTIVATION, email, mailOptions);
+    return await this.sendMail(EmailType.ACTIVATION, email, mailOptions);
   }
 }
 
