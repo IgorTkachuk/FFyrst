@@ -62,9 +62,10 @@ export const Table = ({
       <div className="py-1 px-2 font-roboto text-2xl text-green-900 font-bold ">
         {tableName}
       </div>
-      <div className="flex flex-col shadow-lg  border-2 border-green-400 rounded overflow-x-auto pb-0.25 ">
+      <div className="flex flex-col shadow-lg border-2 border-green-400 rounded overflow-x-auto pb-0.25 ">
         <div
-          className={`rounded grid grid-cols-${headerData.length} pl-0.5 pr-0.5`}
+          className={`rounded grid pl-0.5 pr-0.5`}
+          style={{ gridTemplateColumns: `repeat(${headerData.length}, 1fr)` }}
         >
           {headerData.map((header, index) => (
             <div
