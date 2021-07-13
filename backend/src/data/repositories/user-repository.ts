@@ -31,6 +31,18 @@ class UserRepository {
   public async getByEmail(email: string): Promise<IUser | null> {
     return await UserModel.findOne({ where: { email } });
   }
+
+  public async getByToken(activationToken: string): Promise<IUser | null> {
+    return await UserModel.findOne({ where: { activationToken } });
+  }
+
+  public async activateUser(activationToken: string, data: IUser): Promise<IUser[]> {
+    const result = await UserModel.update(data, {
+      where: { activationToken },
+      returning: true,
+    });
+    return result[1];
+  }
 }
 
 export { UserRepository };

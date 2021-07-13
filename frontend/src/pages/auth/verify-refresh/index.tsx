@@ -8,26 +8,29 @@ import { verifyPasswordAction } from '../../../store/slices/user/user.slice';
 import { Input } from '../../../stories/inputs/input/input';
 import { Button } from '../../../stories/controls/button/Button';
 import ErrorBoundary from '../../../components/errorBoundry/errorBoundry';
+import { AppRoute } from 'common/enums';
 
 interface IParams {
-  token: string
+  token: string;
 }
 
 const VerifyRefresh = () => {
   const { token } = useParams<IParams>();
   const history = useHistory();
-  const { loading, error, verifySucceed } = useTypedSelector(state => state.user);
+  const { loading, error, verifySucceed } = useTypedSelector(
+    (state) => state.user,
+  );
   const dispatch = useDispatch();
 
   useEffect(() => {
     if (verifySucceed) {
-      history.push('/login');
+      history.push(AppRoute.SIGN_IN);
     }
   }, [verifySucceed]);
 
   return (
-    <div className='container mx-auto h-screen flex justify-center items-center'>
-      <div className='w-full max-w-xs'>
+    <div className="container mx-auto h-screen flex justify-center items-center">
+      <div className="w-full max-w-xs">
         <Formik
           initialValues={{ verifiedPassword: '', password: '', token }}
           validationSchema={verifySchema}
@@ -62,7 +65,7 @@ const VerifyRefresh = () => {
             </Form>
           )}
         </Formik>
-        <p className='text-center text-gray-500 text-xs'>
+        <p className="text-center text-gray-500 text-xs">
           &copy;2021 Radency. All rights reserved.
         </p>
       </div>
@@ -70,4 +73,4 @@ const VerifyRefresh = () => {
   );
 };
 
-export default VerifyRefresh;
+export { VerifyRefresh };

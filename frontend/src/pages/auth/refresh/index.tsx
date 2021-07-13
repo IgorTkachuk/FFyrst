@@ -33,7 +33,7 @@ const Refresh = () => {
               className='bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4'
             >
               {error && <ErrorBoundary message={error} />}
-              {resetState && <p className="font-semibold text-blue-500">Message was sent to email</p>}
+              {resetState && <p className='font-semibold text-blue-500'>Message was sent to email</p>}
               <Field name='email'>
                 {({ field, meta }: any) => (
                   <Input id='email' title='Email' type='text' meta={meta} field={field} />
@@ -56,4 +56,4 @@ const Refresh = () => {
   );
 };
 
-export default Refresh;
+export { Refresh };
