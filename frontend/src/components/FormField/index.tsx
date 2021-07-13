@@ -22,11 +22,7 @@ const FormField: React.FC<IFormField> = (props) => {
             {label}
           </label>
           <Field
-            className={`w-60 sm:w-56 md:w-50 lg:w-50 px-4 py-2 rounded-md bg-blue-50 focus:outline-none  ${
-              form.errors[id] && form.touched[id]
-                ? 'text-red-500 focus:ring-red-300 focus:ring-1 '
-                : 'text-green-500 focus:ring-green-300 focus:ring-1 '
-            }`}
+            className={`w-60 sm:w-56 md:w-50 lg:w-50 px-4 py-2 rounded-md bg-blue-50 focus:outline-none focus:ring-1`}
             id={id}
             name={id}
             placeholder={placeholder}

@@ -1,7 +1,7 @@
 import React from 'react';
 import './checkbox.css';
 
-interface ButtonProps {
+interface CheckBoxProps {
   boxColor?: 'blue' | 'red' | 'green' | 'black';
   textColor?: 'blue' | 'red' | 'green' | 'black';
   boxSize?: 'small' | 'medium' | 'big' | 'large';
@@ -47,7 +47,7 @@ export const CheckBox = ({
   rounded = false,
   checked = true,
   ...props
-}: ButtonProps) => {
+}: CheckBoxProps) => {
   return (
     <label className={`inline-flex items-center`}>
       <input
