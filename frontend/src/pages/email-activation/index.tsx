@@ -6,6 +6,14 @@ import { RootState } from 'common/types';
 import { ActivationActionCreator } from 'store/slices';
 import { ActivationStatus } from 'shared/common/enums';
 import { Button } from 'stories/controls/button/Button';
+import { Header } from 'stories/views/header/header';
+
+const defaultUser = {
+  firstName: 'Ivan',
+  lastName: 'Ivanov',
+  linkToProfile: '/ivanIvanov',
+  linkToAvatar: 'http://link-to-avatar/ivan-ivanov'
+}
 
 const EmailActivation: React.FC = () => {
   const dispatch = useDispatch();
@@ -58,6 +66,8 @@ const EmailActivation: React.FC = () => {
   }, [activationStatus])
 
   return (
+    <>
+    <Header user={defaultUser}/>
     <div className="container mx-auto flex flex-col justify-center items-center">
       <h1>{message}</h1>
       <div className="mx-auto">
@@ -72,6 +82,7 @@ const EmailActivation: React.FC = () => {
       />
       </div>
     </div>
+    </>
   );
 };
 

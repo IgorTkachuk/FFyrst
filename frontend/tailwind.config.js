@@ -12,8 +12,8 @@ module.exports = {
       maxWidth: {
         'page-content': '1440px',
       },
-      flex: {
-        '1/3': '0 0 33.3333%',
+      height: {
+        '3px': '3px'
       }
     },
     fontFamily: {
