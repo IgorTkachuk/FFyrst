@@ -10,15 +10,17 @@ const useRoute = (isAuth: boolean): React.ReactElement => {
         <Route path={AppRoute.SIGN_IN}>
           <Pages.Login />
         </Route>
-        <Redirect to='/login' />
         <Route path={AppRoute.SIGN_UP}>
-          {/* <Pages.Registration /> */}
+          <Pages.Registration />
         </Route>
         <Route path={AppRoute.REFRESH}>
           <Pages.Refresh />
         </Route>
         <Route path={AppRoute.VERIFY_REFRESH}>
           <Pages.VerifyRefresh />
+        </Route>
+        <Route path={AppRoute.EMAIL_ACTIVATION}>
+          <Pages.EmailActivation />
         </Route>
         <Redirect to={AppRoute.SIGN_IN} />
       </Switch>

@@ -1,5 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
-import * as H from 'history';
+import React, { useEffect, useState } from 'react';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams, useHistory } from 'react-router-dom';
@@ -59,7 +58,7 @@ const EmailActivation: React.FC = () => {
   }, [activationStatus])
 
   return (
-    <div className="container mx-auto flex justify-center items-center">
+    <div className="container mx-auto flex flex-col justify-center items-center">
       <h1>{message}</h1>
       <div className="mx-auto">
       <Button
