@@ -4,14 +4,14 @@ module.exports = {
   theme: {
     extend: {
       spacing: {
-        '128': '32rem',
+        128: '32rem',
       },
       maxWidth: {
         'page-content': '1440px',
       },
     },
     fontFamily: {
-      'roboto': ['Roboto', 'sans-serif'],
+      roboto: ['Roboto', 'sans-serif'],
     },
   },
   variants: {
@@ -19,5 +19,5 @@ module.exports = {
       scale: ['active', 'hover'],
     },
   },
-  plugins: [],
+  plugins: [require('@tailwindcss/forms')],
 };
