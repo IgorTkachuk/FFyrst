@@ -3,7 +3,7 @@ import { Formik, FormikHelpers, FormikProps, Form, Field } from 'formik';
 import { useTypedSelector } from '../../../hooks/useTypedSelector';
 import { useDispatch } from 'react-redux';
 import { resetSchema } from 'shared';
-import { resetPasswordAction } from '../../../store/slices/user/user.slice';
+import { resetPasswordAction, UserActionCreator } from '../../../store/slices/user/user.slice';
 import { NavLink } from 'react-router-dom';
 import { Input } from '../../../stories/inputs/input/input';
 import { Button } from '../../../stories/controls/button/Button';
@@ -12,11 +12,11 @@ import ErrorBoundary from '../../../components/errorBoundry/errorBoundry';
 const Refresh = () => {
   const { loading, error, resetState } = useTypedSelector(state => state.user);
   const dispatch = useDispatch();
+
   useEffect(() => {
-    if (error) {
-      alert(error);
-    }
-  }, [error]);
+    dispatch(UserActionCreator.clearError());
+  }, []);
+
   return (
     <div className='container mx-auto h-screen flex justify-center items-center'>
       <div className='w-full max-w-xs'>

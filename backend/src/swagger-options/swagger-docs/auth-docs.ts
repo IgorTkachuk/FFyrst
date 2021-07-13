@@ -23,7 +23,7 @@
 
 /**
  * @swagger
- * /auth/login:
+ * /auth/auth:
  *   post:
  *     description: Sign in
  *     tags: [Auth]
@@ -42,7 +42,7 @@
  *               password: As1@as
  *     responses:
  *       200:
- *         description: Successful login
+ *         description: Successful auth
  *         content:
  *           application/json:
  *             schema:
@@ -51,7 +51,7 @@
  *                 tokens:
  *                   $ref: '#/components/schemas/tokens'
  *       400:
- *         description: Some trouble with login dont match password/email
+ *         description: Some trouble with auth dont match password/email
  *         content:
  *           application/json:
  *             schema:

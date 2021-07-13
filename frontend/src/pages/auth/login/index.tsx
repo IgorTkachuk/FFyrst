@@ -3,15 +3,21 @@ import { Form, Formik, FormikHelpers, FormikProps, Field } from 'formik';
 import { useDispatch } from 'react-redux';
 import { ILogin, loginSchema } from 'shared';
 import { useTypedSelector } from '../../../hooks/useTypedSelector';
-import { loginUserAction } from '../../../store/slices/user/user.slice';
+import { loginUserAction, UserActionCreator } from '../../../store/slices/user/user.slice';
 import { NavLink } from 'react-router-dom';
 import { Input } from '../../../stories/inputs/input/input';
 import { Button } from '../../../stories/controls/button/Button';
 import ErrorBoundary from '../../../components/errorBoundry/errorBoundry';
+import { useHistory } from 'react-router-dom';
 
 const Login: React.FC = () => {
   const { loading, error } = useTypedSelector(state => state.user);
   const dispatch = useDispatch();
+  const history = useHistory();
+
+  useEffect(() => {
+    dispatch(UserActionCreator.clearError());
+  }, []);
 
   return (
     <div className='container mx-auto h-screen flex justify-center items-center'>
@@ -25,7 +31,7 @@ const Login: React.FC = () => {
         >
           {(props: FormikProps<any>) => (
             <Form
-              className='bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4'
+              className='bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col justify-center '
             >
               {error && <ErrorBoundary message={error} />}
               <Field name='email'>
@@ -44,6 +50,8 @@ const Login: React.FC = () => {
                   <NavLink to='/refresh'>Forgot Password?</NavLink>
                 </div>
               </div>
+              <hr className='my-1 h-1' />
+              <Button color='green' label='Create account' onClick={() => history.push('/sign-up')} />
             </Form>
           )}
         </Formik>
@@ -55,5 +63,5 @@ const Login: React.FC = () => {
   );
 };
 
-export {Login};
+export { Login };
 

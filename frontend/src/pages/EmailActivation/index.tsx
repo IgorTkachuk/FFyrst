@@ -21,7 +21,7 @@ const EmailActivation: React.FC = () => {
   const BUTTONS_OPTIONS = {
     [ActivationStatus.SUCCESS]: {
       label: 'Login',
-      onClick: () => history.push('/login'),
+      onClick: () => history.push('/auth'),
     },
     [ActivationStatus.EXPIRED]: {
       label: 'Send Link again',
