@@ -11,7 +11,6 @@ type UserState = {
   error: string | null;
   accessToken: string | null;
   refreshToken: string | null;
-
 };
 
 const initialState: UserState = {
@@ -51,10 +50,23 @@ const { reducer, actions } = createSlice({
     verifySucceed: (state) => {
       state.verifySucceed = true;
     },
+    signUpSucceed: (state, action) => {
+      state.accessToken = action.payload.accessToken;
+      state.refreshToken = action.payload.refreshToken;
+      state.loading = false;
+      state.authState = true;
+    },
   },
 });
 
-export const loginUserAction = (data: ILogin) => ({ type: AuthSagasTypes.LOGIN_USER, payload: data });
+export const signUpUserAction = (data: any) => ({
+  type: AuthSagasTypes.REGISTER_USER,
+  payload: data,
+});
+export const loginUserAction = (data: ILogin) => ({
+  type: AuthSagasTypes.LOGIN_USER,
+  payload: data,
+});
 export const resetPasswordAction = (email: { email: string }) => ({
   type: AuthSagasTypes.REFRESH_PASSWORD,
   payload: email,
@@ -63,9 +75,9 @@ export const verifyPasswordAction = (data: IVerPassword) => ({
   type: AuthSagasTypes.VERIFY_PASSWORD_CHANGE,
   payload: data,
 });
+
 const UserActionCreator = {
   ...actions,
 };
 
-
-export { UserActionCreator, reducer } ;
+export { UserActionCreator, reducer };
