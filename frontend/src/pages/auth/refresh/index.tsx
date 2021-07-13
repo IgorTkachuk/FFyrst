@@ -80,4 +80,4 @@ const Refresh = () => {
   );
 };
 
-export default Refresh;
+export { Refresh };

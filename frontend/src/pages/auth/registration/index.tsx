@@ -94,4 +94,4 @@ const Registration: React.FC = () => {
   );
 };
 
-export default Registration;
+export { Registration };
