@@ -20,12 +20,12 @@ const initAuthApi = (apiRouter: Router): Router => {
   authRouter.post(AuthApiPath.LOGIN, yupValidation(loginSchema), async (_req, _res) => {
     try {
       const { email, password } = _req.body as ILogin;
-      console.log('working');
-      console.log(`${email}, ${password}`);
       const user = await userService.getUserByEmail(email);
+
       if (!user) {
         return _res.status(HttpCode.UNAUTHORIZED)
           .json({ message: ResponseMessages.NON_EXISTING_EMAIL });
+
       } else {
         const isMatch = await isMatchPassword(password, user.password);
 
@@ -62,7 +62,7 @@ const initAuthApi = (apiRouter: Router): Router => {
       if (user) {
         const token = createJWT(user.id);
         const mail = createMail(`Reset password from ${email} account`, `${link}/${token}`);
-        await mailService.sendMail(EmailType.RESET_PASSWORD, email, mail);
+        await mailService.sendMail(EmailType.RESET_PASSWORD, 'dimonprykh@gmail.com', mail);
         res.status(HttpCode.OK)
           .json({ message: ResponseMessages.CONFIRMED });
 
