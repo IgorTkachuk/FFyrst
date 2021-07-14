@@ -1,8 +1,7 @@
 import React from 'react';
-import { ComponentStory, ComponentMeta } from '@storybook/react';
-import { Select } from './select';
+import {ComponentStory, ComponentMeta} from '@storybook/react';
+import {Select} from './select';
 import mock from './mock.json';
-
 
 export default {
   title: 'UI/Selects/Select',
@@ -11,11 +10,11 @@ export default {
 
 const Template: ComponentStory<typeof Select> = (args) => <Select {...args} />;
 
-const mockData = mock;
+const mockData:Array<{name: string, id: string}> | [] = mock;
 
 export const SelectOption = Template.bind({});
 SelectOption.args = {
-  title: 'Test',
-  options: mockData,
-  isMulti: true
+  title: 'Unified select / multi-select component',
+  singleSelect: false,
+  options: mockData
 };
