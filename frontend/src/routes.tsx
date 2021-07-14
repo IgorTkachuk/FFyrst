@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
-import * as Pages from './pages'
+import * as Pages from './pages';
 import { AppRoute } from 'common/enums';
 
 const useRoute = (isAuth: boolean): React.ReactElement => {
@@ -21,6 +21,13 @@ const useRoute = (isAuth: boolean): React.ReactElement => {
         </Route>
         <Route path={AppRoute.EMAIL_ACTIVATION}>
           <Pages.EmailActivation />
+        </Route>
+        <Route path={AppRoute.EMAIL_ACTIVATION}>
+          <Pages.EmailActivation />
+        </Route>
+        {/* for testing purpose. has to be removed */}
+        <Route path="/profile">
+          <Pages.UserProfileDetails />
         </Route>
         <Redirect to={AppRoute.SIGN_IN} />
       </Switch>
