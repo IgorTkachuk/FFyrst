@@ -15,9 +15,9 @@ const Login: React.FC = () => {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  useEffect(() => {
-    dispatch(UserActionCreator.clearError());
-  }, []);
+  // useEffect(() => {
+  //   dispatch(UserActionCreator.clearError());
+  // }, []);
 
   return (
     <div className='container mx-auto h-screen flex justify-center items-center'>
