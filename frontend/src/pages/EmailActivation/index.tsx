@@ -58,18 +58,22 @@ const EmailActivation: React.FC = () => {
   }, [activationStatus])
 
   return (
-    <div className="container mx-auto flex flex-col justify-center items-center">
-      <h1>{message}</h1>
-      <div className="mx-auto">
-      <Button
-        size="medium"
-        color="blue"
-        label={label}
-        onClick={handler}
-        props={{
-          disabled: activationStatus.status === ActivationStatus.SENT
-        }}
-      />
+    <div className="container mx-auto flex flex-col justify-center items-center p-20">
+      <div className="bg-white shadow-xl rounded px-8 pt-6 pb-8 mb-4 flex flex-col justify-center">
+        <h1 className="text-5xl text-gray-700 mb-10">{message}</h1>
+        <div className="mx-auto">
+          {
+            activationStatus.status !== ActivationStatus.SENT ?
+            <Button
+              size="big"
+              color="blue"
+              label={label}
+              onClick={handler}
+            />
+            : null
+          }
+
+        </div>
       </div>
     </div>
   );
