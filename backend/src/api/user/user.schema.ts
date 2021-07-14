@@ -21,8 +21,8 @@ const userSchema = Yup.object().shape({
     )),
   password: Yup.string()
     .matches(
-      /^(?=.*[A-Z])(?=.*[0-9])/,
-      'Password Must Contain at least One Uppercase and One Number',
+      /^.*(?=.{6,})((?=.*[!@#$%^&*()\-_=+{};:,<.>]){1})(?=.*\d)((?=.*[a-z]){1})((?=.*[A-Z]){1}).*$/,
+      'Password must contain at least 6 characters, one uppercase, one number and one special case character',
     )
     .min(6, 'Password Must Contain 6 Characters')
     .when('$required', (required: boolean, schema: StringSchema) => (
