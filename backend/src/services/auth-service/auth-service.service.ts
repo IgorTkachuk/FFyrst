@@ -29,6 +29,7 @@ class AuthService {
       if (!isMatch) {
         return { code: HttpCode.BAD_REQUEST, data: ResponseMessages.NON_MATCH_PASSWORDS };
       }
+      console.log(user.id);
       const tokens = await getTokens(user.id);
       return { code: HttpCode.OK, data: tokens };
     }

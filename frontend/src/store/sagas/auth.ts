@@ -18,13 +18,13 @@ export interface ResponseGenerator {
 function* signUpUser(data: PayloadAction) {
   try {
     yield put(UserActionCreator.requestStart());
-    const authResult: ResponseGenerator = yield call(
+    const confirm = yield call(
       apiService.httpRequest,
       '/users',
       'POST',
       data.payload,
     );
-    yield put(UserActionCreator.signUpSucceed(authResult.tokens));
+    yield put(UserActionCreator.signUpSucceed());
   } catch (e) {
     yield put(UserActionCreator.requestFailed(String(e)));
   }
@@ -78,7 +78,7 @@ function* verifyPassword(data: PayloadAction) {
 function* authSagaWatcher() {
   yield takeEvery<SagaAction>(AuthSagasTypes.LOGIN_USER, loginUser);
   yield takeEvery<SagaAction>(AuthSagasTypes.REFRESH_PASSWORD, resetPassword);
-  yield takeEvery<SagaAction>(AuthSagasTypes.VERIFY_PASSWORD_CHANGE, verifyPassword,);
+  yield takeEvery<SagaAction>(AuthSagasTypes.VERIFY_PASSWORD_CHANGE, verifyPassword);
   yield takeLatest<SagaAction>(AuthSagasTypes.REGISTER_USER, signUpUser);
 }
 
