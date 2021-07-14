@@ -1,23 +1,26 @@
 import React from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
-import { Registration, Login, Refresh, VerifyRefresh, Main } from 'pages';
+import * as Pages from './pages'
 import { AppRoute } from 'common/enums';
 
-const useRoute = (isAuth: boolean) => {
+const useRoute = (isAuth: boolean): React.ReactElement => {
   if (!isAuth) {
     return (
       <Switch>
         <Route path={AppRoute.SIGN_IN}>
-          <Login />
+          <Pages.Login />
         </Route>
         <Route path={AppRoute.SIGN_UP}>
-          <Registration />
+          <Pages.Registration />
         </Route>
         <Route path={AppRoute.REFRESH}>
-          <Refresh />
+          <Pages.Refresh />
         </Route>
         <Route path={AppRoute.VERIFY_REFRESH}>
-          <VerifyRefresh />
+          <Pages.VerifyRefresh />
+        </Route>
+        <Route path={AppRoute.EMAIL_ACTIVATION}>
+          <Pages.EmailActivation />
         </Route>
         <Redirect to={AppRoute.SIGN_IN} />
       </Switch>
@@ -26,7 +29,7 @@ const useRoute = (isAuth: boolean) => {
     return (
       <Switch>
         <Route path={AppRoute.MAIN}>
-          <Main />
+          <Pages.Main />
         </Route>
         <Redirect to={AppRoute.MAIN} />
       </Switch>

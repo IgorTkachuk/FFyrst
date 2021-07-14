@@ -7,6 +7,7 @@ type UserState = {
   verifySucceed: boolean;
   authState: boolean;
   loading: boolean;
+  registerState: boolean;
   resetState: string;
   error: string | null;
   accessToken: string | null;
@@ -17,6 +18,7 @@ const initialState: UserState = {
   verifySucceed: false,
   authState: false,
   resetState: '',
+  registerState: false,
   loading: false,
   error: null,
   accessToken: null,
@@ -50,11 +52,12 @@ const { reducer, actions } = createSlice({
     verifySucceed: (state) => {
       state.verifySucceed = true;
     },
-    signUpSucceed: (state, action) => {
-      state.accessToken = action.payload.accessToken;
-      state.refreshToken = action.payload.refreshToken;
+    clearError: (state) => {
+      state.error = null;
+    },
+    signUpSucceed: (state) => {
+      state.registerState = true;
       state.loading = false;
-      state.authState = true;
     },
   },
 });

@@ -8,6 +8,7 @@ interface InputProps {
   placeholder?: string;
   type: string;
   props?: Record<string, unknown>;
+  field: any,
   meta?: {
     touched: boolean;
     error: string;
@@ -21,17 +22,9 @@ const INPUT_SIZES = {
   widthAuto: 'text-lg w-full',
 };
 
-export const Input = ({
-  id,
-  title = '',
-  size = 'medium',
-  placeholder = '',
-  type = 'text',
-  meta = { touched: false, error: '' },
-  ...props
-}: InputProps) => {
+export const Input = ({ id, title = '', size = 'medium', placeholder = '', type = 'text', field, meta = { touched: false, error: '' }, ...props }: InputProps) => {
   return (
-    <div className="flex flex-col">
+    <div className='flex flex-col'>
       <label
         className={`${INPUT_SIZES[size]} font-bold py-0.5 px-0.5`}
         htmlFor={id}
@@ -48,9 +41,10 @@ export const Input = ({
         type={type}
         placeholder={placeholder}
         {...props}
+        {...field}
       />
       {meta.touched && meta.error ? (
-        <div className="w-full text-red-400 text-sm py-0.5">{meta.error}</div>
+        <div className='w-full text-red-400 text-sm py-0.5'>{meta.error}</div>
       ) : (
         ''
       )}

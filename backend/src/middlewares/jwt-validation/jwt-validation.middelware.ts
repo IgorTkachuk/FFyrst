@@ -5,7 +5,6 @@ import { ResponseMessages } from '~/common/enums/messages/response-messages.enum
 import jwt, { JwtPayload, Secret, TokenExpiredError } from 'jsonwebtoken';
 
 const jwtValidation: RequestHandler = (req, res, next) => {
-  console.log('VALIDATION');
   if (req.method === 'OPTIONS') {
     return next();
   }
