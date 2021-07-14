@@ -12,6 +12,9 @@ module.exports = {
       maxWidth: {
         'page-content': '1440px',
       },
+      height: {
+        '3px': '3px'
+      }
     },
     fontFamily: {
       roboto: ['Roboto', 'sans-serif'],
