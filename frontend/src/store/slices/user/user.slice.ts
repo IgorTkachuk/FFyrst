@@ -50,6 +50,9 @@ const { reducer, actions } = createSlice({
     verifySucceed: (state) => {
       state.verifySucceed = true;
     },
+    clearError: (state) => {
+      state.error = null;
+    },
     signUpSucceed: (state, action) => {
       state.accessToken = action.payload.accessToken;
       state.refreshToken = action.payload.refreshToken;

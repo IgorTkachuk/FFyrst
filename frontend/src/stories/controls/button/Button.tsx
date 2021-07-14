@@ -6,9 +6,8 @@ interface ButtonProps {
   size?: 'small' | 'medium' | 'big';
   label?: string;
   onClick?: () => void;
-  className?: string;
 
-  [key: string]: any;
+  [key: string]: any
 }
 
 const BTN_COLORS = {
@@ -29,17 +28,11 @@ const BTN_SIZES = {
   big: 'text-2xl',
 };
 
-export const Button = ({
-  size = 'medium',
-  color = 'green',
-  label = '',
-  className = '',
-  ...props
-}: ButtonProps) => {
+export const Button = ({ size = 'medium', color = 'green', label = '', ...props }: ButtonProps) => {
   return (
     <button
-      type="button"
-      className={`${BTN_COLORS[color]} ${BTN_SIZES[size]} transform active:scale-95 font-roboto  text-white font-bold py-2 px-4 rounded active:  hover:${BTN_COLORS_ON_HOVER[color]} ${className}`}
+      type='button'
+      className={`${BTN_COLORS[color]} ${BTN_SIZES[size]} ${props.disabled ? 'bg-opacity-70' : ''} transform active:scale-95 font-roboto  text-white font-bold py-2 px-4 rounded active:  hover:${BTN_COLORS_ON_HOVER[color]}`}
       {...props}
     >
       {label}
