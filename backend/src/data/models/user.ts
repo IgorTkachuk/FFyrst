@@ -7,19 +7,15 @@ interface UserInstance extends IUser, Model {}
 
 const createUserModel = (orm:Sequelize): ModelCtor<UserInstance> => {
   const UserModel = orm.define<UserInstance>(ModelName.USER, {
-      name: {
+    firstName: {
         allowNull: false,
         type: DataTypes.STRING
       },
-      surname: {
+      lastName: {
         allowNull: false,
         type: DataTypes.STRING
       },
-      birthdate: {
-        allowNull: false,
-        type: DataTypes.DATE
-      },
-      phone: {
+      phoneNumber: {
         allowNull: false,
         type: DataTypes.STRING
       },

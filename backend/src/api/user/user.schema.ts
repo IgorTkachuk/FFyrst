@@ -1,24 +1,20 @@
 import * as Yup from 'yup';
-import {StringSchema, DateSchema} from 'yup';
+import { StringSchema } from 'yup';
 
 const userSchema = Yup.object().shape({
-  name: Yup.string()
+  firstName: Yup.string()
     .when('$required', (required: boolean, schema: StringSchema) => (
       required ? schema.required('First Name is required') : schema
     )),
-  surname: Yup.string()
+  lastName: Yup.string()
     .when('$required', (required: boolean, schema: StringSchema) => (
-      required ? schema.required('Last Name is required') : schema
-    )),
-  birthdate: Yup.date()
-    .when('$required', (required: boolean, schema: DateSchema) => (
       required ? schema.required('Last Name is required') : schema
     )),
   email: Yup.string().email('Email is invalid')
     .when('$required', (required: boolean, schema: StringSchema) => (
       required ? schema.required('Email is required') : schema
     )),
-  phone: Yup.string()
+  phoneNumber: Yup.string()
     .matches(/^\+?\d{10,12}$/, 'Phone Number is invalid')
     .when('$required', (required: boolean, schema: StringSchema) => (
       required ? schema.required('Phone is required') : schema

@@ -20,7 +20,7 @@ function* signUpUser(data: PayloadAction) {
     yield put(UserActionCreator.requestStart());
     const authResult: ResponseGenerator = yield call(
       apiService.httpRequest,
-      '/auth/register',
+      '/users',
       'POST',
       data.payload,
     );
