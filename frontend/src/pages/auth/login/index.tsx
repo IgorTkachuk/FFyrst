@@ -9,6 +9,14 @@ import { Input } from '../../../stories/inputs/input/input';
 import { Button } from '../../../stories/controls/button/Button';
 import ErrorBoundary from '../../../components/errorBoundry/errorBoundry';
 import { useHistory } from 'react-router-dom';
+import { Header } from 'stories/views/header/header';
+
+const defaultUser = {
+  firstName: 'Antananis',
+  lastName: 'Papastatopuolous',
+  linkToProfile: '/Antananis',
+  linkToAvatar: 'http://link-to-avatar/ivan-ivanov'
+}
 
 const Login: React.FC = () => {
   const { loading, error } = useTypedSelector(state => state.user);
@@ -20,6 +28,8 @@ const Login: React.FC = () => {
   }, []);
 
   return (
+    <>
+    <Header user={defaultUser}/>
     <div className='container mx-auto h-screen flex justify-center items-center'>
       <div className='w-full max-w-xs'>
         <Formik
@@ -60,8 +70,8 @@ const Login: React.FC = () => {
         </p>
       </div>
     </div>
+    </>
   );
 };
 
 export { Login };
-

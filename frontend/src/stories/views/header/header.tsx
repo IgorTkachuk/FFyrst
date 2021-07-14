@@ -20,19 +20,21 @@ const Header = ({
     <header className="sticky top-0 left-0 w-full px-2 md:px-4 lg:px-10 border-b border-gray-200 bg-blue-50 shadow-md">
       <nav className="flex justify-between">
         <div className="burger-container w-1/3 py-2 sm:px-2 flex items-center">
-          <div className="burger h-6 w-7 relative cursor-pointer">
-            <span className="
-              absolute w-full left-0 h-3px border border-gray-400
-              bg-gray-400 rounded-full top-0"
-            ></span>
-            <span className="
-              absolute w-full left-0 h-3px border border-gray-400
-              bg-gray-400 rounded-full top-1/2 transform -translate-y-1/2"
-            ></span>
-            <span className="
-              absolute w-full left-0 h-3px border border-gray-400
-              bg-gray-400 rounded-full bottom-0"
-            ></span>
+          <div className="burger">
+            <div className="h-6 w-7 relative cursor-pointer">
+              <span className="
+                absolute w-full left-0 h-3px border border-gray-400
+                bg-gray-400 rounded-full top-0"
+              ></span>
+              <span className="
+                absolute w-full left-0 h-3px border border-gray-400
+                bg-gray-400 rounded-full top-1/2 transform -translate-y-1/2"
+              ></span>
+              <span className="
+                absolute w-full left-0 h-3px border border-gray-400
+                bg-gray-400 rounded-full bottom-0"
+              ></span>
+            </div>
           </div>
         </div>
         <div className="logo w-1/3 p-2 flex items-center justify-center">
