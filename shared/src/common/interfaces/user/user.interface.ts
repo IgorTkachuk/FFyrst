@@ -1,9 +1,8 @@
 export interface IUser {
   id: string
-  name: string
-  surname: string
-  birthdate: Date
-  phone: string
+  firstName: string
+  lastName: string
+  phoneNumber: string
   email: string
   password: string
   isActive: boolean
