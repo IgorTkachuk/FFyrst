@@ -2,113 +2,71 @@ import React, { useEffect } from 'react';
 import { NavLink, useParams, useHistory } from 'react-router-dom';
 import { useTypedSelector } from '../../../hooks/useTypedSelector';
 import { useDispatch } from 'react-redux';
-import { Formik, FormikHelpers } from 'formik';
+import { Formik, FormikHelpers, Form, Field } from 'formik';
 import { IVerPassword, verifySchema } from 'shared';
-import { verifyPasswordAction } from '../../../store/slices/user/user.slice';
+import { UserActionCreator, verifyPasswordAction } from '../../../store/slices/user/user.slice';
+import { Input } from '../../../stories/inputs/input/input';
+import { Button } from '../../../stories/controls/button/Button';
+import ErrorBoundary from '../../../components/errorBoundry/errorBoundry';
+import { AppRoute } from 'common/enums';
 
 interface IParams {
-  token: string
+  token: string;
 }
 
 const VerifyRefresh = () => {
   const { token } = useParams<IParams>();
   const history = useHistory();
-  const { loading, error, verifySucceed } = useTypedSelector(state => state.user);
+  const { loading, error, verifySucceed } = useTypedSelector(
+    (state) => state.user,
+  );
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (error) {
-      alert(error);
-    }
     if (verifySucceed) {
-      history.push('/login');
+      history.push(AppRoute.SIGN_IN);
     }
-  }, [error, verifySucceed]);
+    dispatch(UserActionCreator.clearError());
+  }, [verifySucceed]);
 
   return (
-    <div className='container mx-auto h-screen flex justify-center items-center'>
-      <div className='w-full max-w-xs'>
+    <div className="container mx-auto h-screen flex justify-center items-center">
+      <div className="w-full max-w-xs">
         <Formik
           initialValues={{ verifiedPassword: '', password: '', token }}
           validationSchema={verifySchema}
           onSubmit={(values, { resetForm }: FormikHelpers<IVerPassword>) => {
-            if (values.verifiedPassword === values.password) {
-              console.log(values);
+            if (values.verifiedPassword === values.password)
               dispatch(verifyPasswordAction(values));
-            } else
-              alert('Passwords don`t match');
           }}
         >
-          {({
-              values,
-              errors,
-              touched,
-              handleChange,
-              handleBlur,
-              handleSubmit,
-            }) => (
-            <form
-              onSubmit={handleSubmit}
+          {(props) => (
+            <Form
               className='bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4'
             >
-              <div className='mb-6'>
-                <label
-                  className='block text-gray-700 text-sm font-bold mb-2'
-                  htmlFor='password'
-                >
-                  Password
-                </label>
-                <input
-                  className={`shadow appearance-none border ${errors.password && touched.password ? 'border-red-500' : ''} rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline`}
-                  id='password'
-                  placeholder='Password'
-                  type='password'
-                  name='password'
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  value={values.password}
-                />
-                <p className='text-red-500 text-xs italic'>
-                  {touched.password && errors.password}
-                </p>
-              </div>
-              <div className='mb-4'>
-                <label
-                  className='block text-gray-700 text-sm font-bold mb-2'
-                  htmlFor='email'
-                >
-                  Repeat password
-                </label>
-                <input
-                  className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-                  id='verifiedPassword'
-                  placeholder='Repeat password'
-                  type='text'
-                  name='verifiedPassword'
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  value={values.verifiedPassword}
-                />
-              </div>
-              <p className='text-red-500 text-xs italic'>
-                {touched.verifiedPassword && errors.verifiedPassword}
-              </p>
-
-              <div className='flex items-center justify-between'>
-                <button
-                  className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline'
-                  type='submit'
-                  disabled={loading}>
-                  Change password
-                </button>
+              {error && <ErrorBoundary message={error} />}
+              {(props.values.password !== props.values.verifiedPassword && props.isSubmitting) &&
+              <ErrorBoundary message='Don`t match passwords' />}
+              <Field name='password'>
+                {({ field, meta }: any) => (
+                  <Input id='password' title='Password' type='password' meta={meta} field={field} />
+                )}
+              </Field>
+              <Field name='verifiedPassword'>
+                {({ field, meta }: any) => (
+                  <Input id='verifySucceed' title='Verify password' type='password' meta={meta} field={field} />
+                )}
+              </Field>
+              <div className='flex items-center justify-between mt-4'>
+                <Button color='blue' label='Send' type={'submit'} disable={loading} />
                 <div className='inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800'>
                   <NavLink to='/login'>Back to login</NavLink>
                 </div>
               </div>
-            </form>
+            </Form>
           )}
         </Formik>
-        <p className='text-center text-gray-500 text-xs'>
+        <p className="text-center text-gray-500 text-xs">
           &copy;2021 Radency. All rights reserved.
         </p>
       </div>
@@ -116,4 +74,4 @@ const VerifyRefresh = () => {
   );
 };
 
-export default VerifyRefresh;
+export { VerifyRefresh };

@@ -1,33 +1,24 @@
 import { Sequelize, DataTypes, ModelCtor, Model } from 'sequelize';
 
 import { IUser } from '~/common/interfaces';
-import { ModelName, UserSex, UserType } from '~/common/enums'
+import { ModelName } from '~/common/enums'
 
 interface UserInstance extends IUser, Model {}
 
 const createUserModel = (orm:Sequelize): ModelCtor<UserInstance> => {
   const UserModel = orm.define<UserInstance>(ModelName.USER, {
-      name: {
+    firstName: {
+      field: 'first_name',
         allowNull: false,
         type: DataTypes.STRING
       },
-      surname: {
+      lastName: {
+        field: 'last_name',
         allowNull: false,
         type: DataTypes.STRING
       },
-      birthdate: {
-        allowNull: false,
-        type: DataTypes.DATE
-      },
-      sex: {
-        allowNull: false,
-        type: DataTypes.ENUM(UserSex.MALE, UserSex.FEMALE)
-      },
-      type: {
-        allowNull: false,
-        type: DataTypes.ENUM(UserType.DOCTOR, UserType.PATIENT)
-      },
-      phone: {
+      phoneNumber: {
+        field: 'phone_number',
         allowNull: false,
         type: DataTypes.STRING
       },
@@ -40,12 +31,19 @@ const createUserModel = (orm:Sequelize): ModelCtor<UserInstance> => {
         type: DataTypes.STRING,
         unique: true
       },
-      imagePath: {
-        allowNull: false,
-        type: DataTypes.STRING
+      isActive: {
+        field: 'is_active',
+        type: DataTypes.BOOLEAN,
+        defaultValue: false
       },
-      diagnosis: {
-        type: DataTypes.UUID
+      activationTokenExpiration: {
+        field: 'activation_token_expiration',
+        type: DataTypes.DATE,
+        defaultValue: Date.now() + 1000 * 60 * 60
+      },
+      activationToken: {
+        field: 'activation_token',
+        type: DataTypes.STRING,
       },
       createdAt: DataTypes.DATE,
       updatedAt: DataTypes.DATE

@@ -1,17 +1,13 @@
-import { UserSex } from '~/common/enums';
-import { UserType } from '~/common/enums';
-
 export interface IUser {
   id: string
-  name: string
-  surname: string
-  birthdate: Date
-  sex: UserSex
-  type: UserType
-  phone: string;
+  firstName: string
+  lastName: string
+  phoneNumber: string
   email: string
   password: string
-  imagePath: string
+  isActive: boolean
+  activationTokenExpiration: Date
+  activationToken: string
   createdAt: Date
   updatedAt: Date
 }

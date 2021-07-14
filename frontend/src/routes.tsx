@@ -1,33 +1,37 @@
 import React from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
-import Login from './pages/auth/login';
-import Refresh from './pages/auth/refresh';
-import VerifyRefresh from './pages/auth/verify-refresh';
-import Main from './pages/main';
+import * as Pages from './pages'
+import { AppRoute } from 'common/enums';
 
-const useRoute = (isAuth: boolean) => {
+const useRoute = (isAuth: boolean): React.ReactElement => {
   if (!isAuth) {
     return (
       <Switch>
-        <Route path='/login'>
-          <Login />
+        <Route path={AppRoute.SIGN_IN}>
+          <Pages.Login />
         </Route>
-        <Route path='/refresh'>
-          <Refresh />
+        <Route path={AppRoute.SIGN_UP}>
+          <Pages.Registration />
         </Route>
-        <Route path='/verify-refresh/:token'>
-          <VerifyRefresh />
+        <Route path={AppRoute.REFRESH}>
+          <Pages.Refresh />
         </Route>
-        <Redirect to='/login' />
+        <Route path={AppRoute.VERIFY_REFRESH}>
+          <Pages.VerifyRefresh />
+        </Route>
+        <Route path={AppRoute.EMAIL_ACTIVATION}>
+          <Pages.EmailActivation />
+        </Route>
+        <Redirect to={AppRoute.SIGN_IN} />
       </Switch>
     );
   } else {
     return (
       <Switch>
-        <Route path='/main'>
-          <Main />
+        <Route path={AppRoute.MAIN}>
+          <Pages.Main />
         </Route>
-        <Redirect to='/main' />
+        <Redirect to={AppRoute.MAIN} />
       </Switch>
     );
   }
