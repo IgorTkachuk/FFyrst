@@ -4,9 +4,11 @@ export interface IListItem {
   onClick?: () => void
 }
 
-export interface IHeaderUser {
-  firstName: string,
-  lastName: string,
-  linkToProfile: string,
-  linkToAvatar: string,
+export interface IHeaderProps {
+  user: {
+    firstName: string,
+    lastName: string,
+    linkToProfile: string,
+    linkToAvatar: string,
+  }
 }

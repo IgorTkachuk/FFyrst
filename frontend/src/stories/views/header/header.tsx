@@ -2,28 +2,11 @@ import React, { ReactElement } from 'react';
 import { Link, BrowserRouter } from 'react-router-dom';
 
 import './header.css';
-import {IListItem, IHeaderUser} from './types';
-import Avatar from 'assets/images/avatar-example.png';
+import { IHeaderProps } from './types';
 import MainLogo from 'assets/images/temp-main-logo.png';
+import UserHeaderMenu from './UserHeaderMenu'
 
-interface HeaderProps {
-  user: IHeaderUser
-}
 
-const DROPDOWN_ITEMS: IListItem[] = [
-  {
-    label: 'Profile',
-  },
-  {
-    label: 'Settings',
-  },
-  {
-    label: 'Help',
-  },
-  {
-    label: 'Log out',
-  },
-];
 
 const Header = ({
   user = {
@@ -32,9 +15,8 @@ const Header = ({
     linkToProfile: '',
     linkToAvatar: ''
   },
-}: HeaderProps): ReactElement => {
+}: IHeaderProps): ReactElement => {
   return (
-    // <BrowserRouter>
     <header className="sticky top-0 left-0 w-full px-2 md:px-4 lg:px-10 border-b border-gray-200 bg-blue-50 shadow-md">
       <nav className="flex justify-between">
         <div className="burger-container w-1/3 py-2 sm:px-2 flex items-center">
@@ -58,18 +40,8 @@ const Header = ({
             <img src={MainLogo} alt="MainLogo"/>
           </Link>
         </div>
-        <div className="user w-1/3 cursor-pointer flex justify-end">
-          <div className="inline-flex items-center py-2 sm:px-2 md:px-4 md:-mr-4 hover:bg-blue-100">
-            <div className="w-10 md:mr-2 lg:mr-4 overflow-hidden border border-gray-400 rounded-full">
-              <img src={Avatar} alt="user-photo" className="max-w-full" />
-            </div>
-            <div className="name text-gray-600 hidden md:block md:text-xs lg:text-base">{user.firstName} {user.lastName}</div>
-          </div>
-          <ul className="dropdown hidden">
-            {DROPDOWN_ITEMS.map((item, i) => (
-              <li key={i.toString()}>{item.label}</li>
-            ))}
-          </ul>
+        <div className="user w-1/3 cursor-pointer flex justify-end relative">
+          <UserHeaderMenu user={user}/>
         </div>
       </nav>
     </header>
