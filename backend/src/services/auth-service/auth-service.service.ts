@@ -41,7 +41,7 @@ class AuthService {
     if (user) {
       const token = createJWT(user.id);
       const mail = createMail(`Reset password from ${email} account`, `${link}/${token}`);
-      await mailService.sendMail(EmailType.RESET_PASSWORD, 'dimonprykh@gmail.com', mail);
+      await mailService.sendMail(EmailType.RESET_PASSWORD, email, mail);
       return { code: HttpCode.OK, data: ResponseMessages.CONFIRMED };
     } else {
       return { code: HttpCode.BAD_REQUEST, data: ResponseMessages.NON_EXISTING_EMAIL };
