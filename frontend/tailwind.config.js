@@ -23,5 +23,5 @@ module.exports = {
       backgroundColor: ['nth-child'],
     },
   },
-  plugins: [plugin.nthChild()],
+  plugins: [require('@tailwindcss/forms'), plugin.nthChild()],
 };
