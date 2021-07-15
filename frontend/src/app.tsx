@@ -15,9 +15,11 @@ const App: React.FC = () => {
   const dispatch = useDispatch();
   const routes = useRoute(authState);
   const [isCollapsed, setIsCollapsed] = useState(false);
-  const setCollapse = () => {
-    setIsCollapsed(!isCollapsed);
+
+  const setCollapse = (val: boolean) => {
+    setIsCollapsed(val);
   };
+
   useEffect(() => {
     if (authState) {
       localstorageService.setItem(LocalstorageKeys.AUTH, { refreshToken, accessToken });
@@ -30,9 +32,12 @@ const App: React.FC = () => {
 
   return (
     <div className='w-full min-h-screen flex max-w-full'>
-      <SideNavbar isCollapsed={isCollapsed} setCollapse={setCollapse} />
-      <div className={`max-w-page-content bg-gray-50 ${isCollapsed ? 'def:mx-auto' : 'lg:mx-auto'} w-full sm:mx-4 flex justify-center items-center `}>
-        <button onClick={setCollapse}><BsList /></button>
+      {authState && <SideNavbar isCollapsed={isCollapsed} setCollapse={setCollapse} />}
+      <div
+        className={`max-w-page-content bg-gray-50 ${isCollapsed ? 'def:mx-auto' : 'lg:mx-auto'} w-full sm:mx-4 flex justify-center items-center `}>
+        <button className='collapse-btn' onClick={() => setCollapse(!isCollapsed)}>
+          <BsList className={'collapse-btn'} />
+        </button>
         {routes}
       </div>
     </div>

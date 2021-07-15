@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button } from '../../stories/controls/button/Button';
 import SideNavbarElement from './sideNavbarElement';
 import {
@@ -12,17 +12,29 @@ import {
 
 interface IProps {
   isCollapsed: boolean,
-  setCollapse: () => void
+  setCollapse: (val: boolean) => void
 }
 
 const SideNavbar: React.FC<IProps> = ({ isCollapsed, setCollapse }) => {
 
+  const dropdownStatus = (e: any) => {
+    if (!e.target.closest('.sidebar') && !e.target.classList.contains('collapse-btn')) {
+      setCollapse(false);
+      console.log(e.target);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('click', e => dropdownStatus(e));
+
+    return () => document.removeEventListener('click', e => dropdownStatus(e));
+  }, []);
   return (
     <>
       <ul
-        className={`
+        className={`sidebar
           ${isCollapsed ? 'w-full' : ''}
-          ${isCollapsed ? 'sm:fixed sm:left-0 sm:top-0' : ''}
+          ${isCollapsed ? 'mob:fixed mob:left-0 mob:top-0' : ''}
           ${isCollapsed ? '' : 'divide-y-2 divide-gray-300'}
           max-w-sidebar-content pt-20 px-1 lg:static bg-gray-100 min-h-screen ring-2 ring-gray-300 `}>
         <SideNavbarElement icon={<BsFillPersonFill size={24} />} title={'Person page'} isCollapsed={isCollapsed} />

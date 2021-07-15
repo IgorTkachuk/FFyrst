@@ -18,6 +18,7 @@ module.exports = {
         128: '32rem',
       },
       screens: {
+        mob: '320px',
         def: '1300px',
       },
       transitionProperty: {

@@ -3,7 +3,7 @@ import axios, { Method } from 'axios';
 const { REACT_APP_BACKEND_HOST, REACT_APP_API_ORIGIN_URL } = process.env;
 
 interface IHttpRequestConf {
-  token?: string,
+  token?: string | null,
   params?: any,
   body?: any
 }
@@ -15,15 +15,19 @@ class ApiService {
     baseURL: this._url,
   });
 
-  httpRequest = async (url: string, method: Method = 'GET', conf: IHttpRequestConf = {}): Promise<any> => {
+  httpRequest = async (url: string, method: Method = 'GET', options: IHttpRequestConf = {
+    body: null,
+    params: null,
+    token: null,
+  }): Promise<any> => {
     const res = await this.instance.request({
       url,
-      data: conf.body,
+      data: options.body,
       headers: {
-        'Authorization': `Bearer ${conf.token}`,
+        'Authorization': `Bearer ${options.token}`,
       },
       method,
-      params: conf.params,
+      params: options.params,
     });
     return res.data;
   };
