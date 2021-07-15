@@ -1,7 +1,7 @@
 import React, { ReactElement } from 'react';
-import { Link, BrowserRouter } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
-import './header.css';
+// import './header.css';
 import { IHeaderProps } from './types';
 import MainLogo from 'assets/images/temp-main-logo.png';
 import UserHeaderMenu from './UserHeaderMenu'
@@ -19,9 +19,9 @@ const Header = ({
   return (
     <header className="sticky top-0 left-0 w-full px-2 md:px-4 lg:px-10 border-b border-gray-200 bg-blue-50 shadow-md">
       <nav className="flex justify-between">
-        <div className="burger-container w-1/3 py-2 sm:px-2 flex items-center">
-          <div className="burger">
-            <div className="h-6 w-7 relative cursor-pointer">
+        <div className="burger-container w-1/3 md:py-1 flex items-center">
+          <div className="burger h-9 w-10 p-2 md:h-11 md:w-12 md:p-3 hover:bg-blue-100 rounded-full cursor-pointer">
+            <div className="h-full w-full relative">
               <span className="
                 absolute w-full left-0 h-3px border border-gray-400
                 bg-gray-400 rounded-full top-0"
@@ -37,8 +37,8 @@ const Header = ({
             </div>
           </div>
         </div>
-        <div className="logo w-1/3 p-2 flex items-center justify-center">
-          <Link to="/sign-in" className="block w-10 h-10">
+        <div className="logo w-1/3 px-2 flex items-center justify-center">
+          <Link to="/sign-in" className="block w-9 h-9 sm:w-10 sm:h-10 md:w-12 md:h-12">
             <img src={MainLogo} alt="MainLogo"/>
           </Link>
         </div>

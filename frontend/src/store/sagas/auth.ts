@@ -1,9 +1,10 @@
 import { takeEvery, put, call, takeLatest } from 'redux-saga/effects';
 import { UserActionCreator } from '../slices';
 import ApiService from '../../services/api/api.service';
-import { AuthSagasTypes } from '../../common/enums';
+import { AuthSagasTypes, LocalstorageKeys } from '../../common/enums';
 import { PayloadAction } from '@reduxjs/toolkit';
 import { SagaAction } from '../../common/types';
+import LocalstorageService from 'services/localstorage/localstorage.service';
 
 const apiService = new ApiService();
 
@@ -18,11 +19,11 @@ export interface ResponseGenerator {
 function* signUpUser(data: PayloadAction) {
   try {
     yield put(UserActionCreator.requestStart());
-    const confirm = yield call(
+    const confirm: ResponseGenerator = yield call(
       apiService.httpRequest,
       '/users',
       'POST',
-      data.payload,
+      { body: data.payload }
     );
     yield put(UserActionCreator.signUpSucceed());
   } catch (e) {
@@ -37,7 +38,7 @@ function* loginUser(data: PayloadAction) {
       apiService.httpRequest,
       '/auth/login',
       'POST',
-      data.payload,
+      { body: data.payload }
     );
     yield put(UserActionCreator.loginSucceed(authResult.tokens));
   } catch (e) {
@@ -52,7 +53,7 @@ function* resetPassword(data: PayloadAction) {
       apiService.httpRequest,
       '/auth/reset',
       'POST',
-      data.payload,
+      { body: data.payload }
     );
     yield put(UserActionCreator.resetSucceed(confirm.message));
   } catch (e) {
@@ -67,11 +68,22 @@ function* verifyPassword(data: PayloadAction) {
       apiService.httpRequest,
       '/auth/verify',
       'POST',
-      data.payload,
+      { body: data.payload }
     );
     yield put(UserActionCreator.verifySucceed());
   } catch (e) {
     yield put(UserActionCreator.requestFailed(String(e)));
+  }
+}
+
+function* logoutUser() {
+  yield put(UserActionCreator.requestStart());
+  const localstorageService = new LocalstorageService();
+  const token = localstorageService.getItem(LocalstorageKeys.AUTH);
+  if(!token) {
+    yield put(UserActionCreator.logoutSucceed());
+  } else {
+    yield put(UserActionCreator.requestFailed('Logout failed'));
   }
 }
 
@@ -80,6 +92,7 @@ function* authSagaWatcher() {
   yield takeEvery<SagaAction>(AuthSagasTypes.REFRESH_PASSWORD, resetPassword);
   yield takeEvery<SagaAction>(AuthSagasTypes.VERIFY_PASSWORD_CHANGE, verifyPassword);
   yield takeLatest<SagaAction>(AuthSagasTypes.REGISTER_USER, signUpUser);
+  yield takeEvery<SagaAction>(AuthSagasTypes.LOGOUT_USER, logoutUser);
 }
 
 export default authSagaWatcher;
