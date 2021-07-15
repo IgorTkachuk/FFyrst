@@ -10,7 +10,6 @@ const jwtValidation: RequestHandler = (req, res, next) => {
   }
   try {
     const token = req.headers.authorization?.split(' ')[1];
-    console.log('token BACKEND', token);
     if (!token) {
       return res
         .status(HttpCode.UNAUTHORIZED)
@@ -19,7 +18,6 @@ const jwtValidation: RequestHandler = (req, res, next) => {
 
     jwt.verify(token, secret as Secret, (err, decoded) => {
       if (err instanceof TokenExpiredError) {
-        console.log('Token expired', err);
         return res
           .status(HttpCode.UNAUTHORIZED)
           .send({ message: ResponseMessages.TOKEN_EXPIRED });

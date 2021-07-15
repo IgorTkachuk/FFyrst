@@ -1,7 +1,7 @@
 import * as React from 'react';
 import useRoute from './routes';
 import { useTypedSelector } from './hooks/useTypedSelector';
-import { UserActionCreator, UserDataActionCreator } from './store/slices';
+import { UserActionCreator } from './store/slices';
 import { useEffect } from 'react';
 import LocalstorageService from './services/localstorage/localstorage.service';
 import { LocalstorageKeys } from './common/enums';
@@ -25,8 +25,6 @@ const App: React.FC = () => {
     const auth = localstorageService.getItem(LocalstorageKeys.AUTH);
     if (auth) {
       dispatch(UserActionCreator.loginSucceed(auth));
-      console.log('access token', accessToken);
-
       dispatch(getUserAction(accessToken));
     }
   }, [authState]);

@@ -2,7 +2,7 @@ enum ReducerName {
   REG = 'registration',
   USER = 'user',
   ACTIVATION = 'activation',
-  USER_DATA = 'user-data',
+  USER_DATA = 'userData',
 }
 
 export { ReducerName };

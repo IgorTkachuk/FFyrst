@@ -1,21 +1,35 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { IUser } from 'shared';
 import { UserDataSagaTypes, ReducerName } from 'common/enums';
+import { IProfile } from 'shared';
 
 interface UserData {
-  user: IUser | null;
+  user: IProfile;
+  requestStatus: boolean;
 }
 
 const initialState: UserData = {
-  user: null,
+  user: {
+    firstName: '',
+    lastName: '',
+    phoneNumber: '',
+    birthDate: '',
+    email: '',
+    avatar: '',
+  },
+  requestStatus: false,
 };
 
 const { reducer, actions } = createSlice({
   name: ReducerName.USER_DATA,
   initialState,
   reducers: {
-    setUser: (state, action: PayloadAction<IUser>) => {
+    setUser: (state, action: PayloadAction<IProfile>) => {
       state.user = action.payload;
+      state.user.birthDate = state.user.birthDate
+        .slice(0, 10)
+        .split('-')
+        .reverse()
+        .join('/');
     },
   },
 });

@@ -22,13 +22,6 @@ const useRoute = (isAuth: boolean): React.ReactElement => {
         <Route path={AppRoute.EMAIL_ACTIVATION}>
           <Pages.EmailActivation />
         </Route>
-        <Route path={AppRoute.EMAIL_ACTIVATION}>
-          <Pages.EmailActivation />
-        </Route>
-        {/* for testing purpose. has to be removed */}
-        <Route path="/profile">
-          <Pages.UserProfileDetails />
-        </Route>
         <Redirect to={AppRoute.SIGN_IN} />
       </Switch>
     );
@@ -37,6 +30,9 @@ const useRoute = (isAuth: boolean): React.ReactElement => {
       <Switch>
         <Route path={AppRoute.MAIN}>
           <Pages.Main />
+        </Route>
+        <Route path={AppRoute.USER_PROFILE}>
+          <Pages.UserProfileDetails />
         </Route>
         <Redirect to={AppRoute.MAIN} />
       </Switch>

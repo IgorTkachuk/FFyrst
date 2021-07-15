@@ -1,9 +1,11 @@
 import React from 'react';
+import { Link } from '../../components/common';
+import { AppRoute } from '../../common/enums';
 
 const Main = () => {
   return (
     <div>
-      Main page
+      <Link to={AppRoute.USER_PROFILE}>Profile</Link>
     </div>
   );
 };
