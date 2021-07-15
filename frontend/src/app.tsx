@@ -25,10 +25,9 @@ const App: React.FC = () => {
     const auth = localstorageService.getItem(LocalstorageKeys.AUTH);
     if (auth) {
       dispatch(UserActionCreator.loginSucceed(auth));
-      const headers = {
-        authorization: accessToken,
-      };
-      dispatch(getUserAction(headers));
+      console.log('access token', accessToken);
+
+      dispatch(getUserAction(accessToken));
     }
   }, [authState]);
   return (

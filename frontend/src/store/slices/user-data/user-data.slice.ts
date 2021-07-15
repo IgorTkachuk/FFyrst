@@ -6,10 +6,6 @@ interface UserData {
   user: IUser | null;
 }
 
-interface Headers {
-  authorization: string | null;
-}
-
 const initialState: UserData = {
   user: null,
 };
@@ -24,7 +20,7 @@ const { reducer, actions } = createSlice({
   },
 });
 
-export const getUserAction = (headers: Headers) => ({
+export const getUserAction = (headers: string | null) => ({
   type: UserDataSagaTypes.GET_USER,
   payload: headers,
 });

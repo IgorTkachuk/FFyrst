@@ -4,17 +4,20 @@ import { call, put, takeEvery } from 'redux-saga/effects';
 import { UserActionCreator } from '../slices';
 import { SagaAction } from '../../common/types';
 import { UserDataSagaTypes } from '../../common/enums';
-import authSagaWatcher from './auth';
 
 const apiService = new ApiService();
 
-function* getUser(headers: PayloadAction) {
+function* getUser(data: PayloadAction) {
+  const accessToken = (data.payload as unknown) as string;
+  console.log('access token saga:', accessToken);
   try {
     const confirm = yield call(
       apiService.httpRequest,
-      '/users',
+      '/users/profile',
       'GET',
-      headers,
+      {
+        token: accessToken,
+      },
     );
     console.log('confirm = ', confirm);
   } catch (e) {
