@@ -8,7 +8,7 @@ const apiService = new ApiService();
 
 function* activateUser(action: Record<string, string>) {
   const {payload: token} = action;
-  const url = `${AppRoute.ACTIVATION}/${token}`;
+  const url = `/users/activation/${token}`;
 
   const activationResponse: IActivationMessage = yield call(apiService.httpRequest, url, HttpMethod.PUT);
   yield put(ActivationActionCreator.setStatus(activationResponse))
@@ -16,7 +16,7 @@ function* activateUser(action: Record<string, string>) {
 
 function* sendActivationRequest(action: Record<string, string>) {
   const {payload: email} = action;
-  const url = `${AppRoute.ACTIVATION}/request`;
+  const url = '/users/activation/request';
   apiService.httpRequest(url, HttpMethod.PUT,)
   const activationResponse: IActivationMessage = yield call(
     apiService.httpRequest,
