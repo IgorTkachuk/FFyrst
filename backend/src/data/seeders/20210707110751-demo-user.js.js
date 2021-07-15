@@ -14,7 +14,21 @@ module.exports = {
       imagePath: 'somefqfq',
       createdAt: new Date(),
       updatedAt: new Date(),
-    }]);
+    },
+    {
+      name: 'test',
+      surname: 'user',
+      birthdate: '02-08-1978',
+      sex: 'male',
+      type: 'doctor',
+      phone: '+380954736369',
+      email: 'Test.User@gmail.com',
+      password: '$2b$10$7O5SPKdvO8j7XVLqlCg6t.57b/4lY03odoj4O5jya6vtjkxSkVQrK',
+      imagePath: '/img/Test.User.png',
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    }
+  ]);
   },
 
   down: async (queryInterface, Sequelize) => {

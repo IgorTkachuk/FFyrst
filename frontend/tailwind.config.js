@@ -56,5 +56,7 @@ module.exports = {
   plugins: [
     plugin.nthChild(),
     require('tailwindcss-transitions'),
+    require('@tailwindcss/forms'),
   ],
+
 };

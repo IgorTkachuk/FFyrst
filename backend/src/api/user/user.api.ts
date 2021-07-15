@@ -33,7 +33,7 @@ const initUserApi = (apiRouter: Router): Router => {
       await userSchema.validate(_req.body, { context: { required: true } });
       const user = await userService.createNewUser(_req.body);
       const userToActivate = await userService.setUserActivation(user)
-      res.status(HttpCode.OK).json(userToActivate);
+      res.status(HttpCode.OK).json({ message: 'success', user: userToActivate});
     } catch(error) {
       next(error);
     }

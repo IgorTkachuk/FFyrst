@@ -7,6 +7,7 @@ import redis_client from '~/data/redis/redis-connection';
 
 const refreshTokenValidation: RequestHandler = (req, res, next) => {
   const refreshToken = req.body.token;
+
   try {
     if (!refreshToken) {
       return res

@@ -39,4 +39,4 @@ const server = app.listen(ENV.APP.SERVER_PORT, () => {
   logger.log(`Listening to connections on port — ${ENV.APP.SERVER_PORT}`);
 });
 
-export { server };
+export { server, app };
