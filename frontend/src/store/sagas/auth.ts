@@ -22,7 +22,9 @@ function* signUpUser(data: PayloadAction) {
       apiService.httpRequest,
       '/auth/register',
       'POST',
-      data.payload,
+      {
+        body: data.payload,
+      },
     );
     yield put(UserActionCreator.signUpSucceed());
   } catch (e) {
@@ -37,7 +39,9 @@ function* loginUser(data: PayloadAction) {
       apiService.httpRequest,
       '/auth/login',
       'POST',
-      data.payload,
+      {
+        body: data.payload,
+      },
     );
     yield put(UserActionCreator.loginSucceed(authResult.tokens));
   } catch (e) {
@@ -52,7 +56,7 @@ function* resetPassword(data: PayloadAction) {
       apiService.httpRequest,
       '/auth/reset',
       'POST',
-      data.payload,
+      { body: data.payload },
     );
     yield put(UserActionCreator.resetSucceed(confirm.message));
   } catch (e) {
@@ -67,7 +71,7 @@ function* verifyPassword(data: PayloadAction) {
       apiService.httpRequest,
       '/auth/verify',
       'POST',
-      data.payload,
+      { body: data.payload },
     );
     yield put(UserActionCreator.verifySucceed());
   } catch (e) {
