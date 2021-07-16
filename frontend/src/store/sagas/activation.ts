@@ -16,13 +16,13 @@ function* activateUser(action: Record<string, string>) {
 
 function* sendActivationRequest(action: Record<string, string>) {
   const {payload: email} = action;
-  const url = '/users/activation/request';
+  const url = `/users/activation/request`;
   apiService.httpRequest(url, HttpMethod.PUT,)
   const activationResponse: IActivationMessage = yield call(
     apiService.httpRequest,
     url,
     HttpMethod.PUT,
-    { email }
+    { body: { email } }
   );
   yield put(ActivationActionCreator.setStatus(activationResponse))
 }
