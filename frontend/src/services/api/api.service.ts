@@ -2,8 +2,11 @@ import axios, { Method } from 'axios';
 
 const { REACT_APP_BACKEND_HOST, REACT_APP_API_ORIGIN_URL, M } = process.env;
 
-type Header = {
-  [key: string]: string
+interface IHttpRequestOptions {
+  token?: string,
+  params?: any,
+  body?: any,
+  headers?: any
 }
 
 type Nullable<T> = null | T
@@ -15,11 +18,28 @@ class ApiService {
     baseURL: this._url,
   });
 
-  httpRequest = async (url: string, method: Method = 'GET', body: any = null, params: any = null, headers: Nullable<Array<Header>> = null): Promise<any> => {
+  httpRequest = async (
+    url: string,
+    method: Method = 'GET',
+    options: IHttpRequestOptions = {
+      body: null,
+      params: null,
+      token: '',
+    }
+  ): Promise<any> => {
+    const {
+      body = null,
+      params = null,
+      token = null,
+      headers = {},
+    } = options;
     const res = await this.instance.request({
       url,
       data: body,
-      headers,
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        ...headers
+      },
       method,
       params,
     });
