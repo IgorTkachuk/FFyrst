@@ -7,22 +7,19 @@ import { SagaAction } from '../../common/types';
 
 const apiService = new ApiService();
 
-export interface ResponseGenerator {
-  tokens?: {
-    accessToken: string;
-    refreshToken: string;
-  };
-  message?: string;
-}
-
 function* loadFileToCloud(data: PayloadAction) {
+  console.log('payload', data.payload);
+
   try {
     yield put(FileActionCreator.requestStart());
-    const url: ResponseGenerator = yield call(
+    const { url }: Record<string, string> = yield call(
       apiService.httpRequest,
       '/file-upload',
       'POST',
-      { body: data.payload}
+      {
+        body: data.payload,
+        headers: { 'Content-Type': 'multipart/form-data'}
+      }
     );
 
     //temporary hardcode

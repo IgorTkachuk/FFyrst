@@ -22,9 +22,6 @@ const useRoute = (isAuth: boolean): React.ReactElement => {
         <Route path={AppRoute.EMAIL_ACTIVATION}>
           <Pages.EmailActivation />
         </Route>
-        <Route path={AppRoute.USER_EDIT}>
-          <Pages.UserEdit />
-        </Route>
         <Redirect to={AppRoute.SIGN_IN} />
       </Switch>
     );

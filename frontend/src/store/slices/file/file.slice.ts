@@ -4,13 +4,13 @@ import { FileSagasTypes, ReducerName } from 'common/enums';
 type FileState = {
   loading: boolean;
   error: string | null;
-  url: string | null;
+  cloudURL: string;
 };
 
 const initialState: FileState = {
   loading: false,
   error: null,
-  url: null
+  cloudURL: ''
 };
 
 const { reducer, actions } = createSlice({
@@ -30,7 +30,7 @@ const { reducer, actions } = createSlice({
     },
     cloudUploadSucceed: (state, action) => {
       state.loading = false;
-      state.url = action.payload
+      state.cloudURL = action.payload
     },
   },
 });
