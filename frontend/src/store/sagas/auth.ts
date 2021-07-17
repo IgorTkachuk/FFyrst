@@ -1,6 +1,7 @@
 import { takeEvery, put, call, takeLatest } from 'redux-saga/effects';
 import { UserActionCreator } from '../slices';
 import ApiService from '../../services/api/api.service';
+import { ApiPath, AuthApiPath } from 'shared';
 import { AuthSagasTypes } from '../../common/enums';
 import { PayloadAction } from '@reduxjs/toolkit';
 import { SagaAction } from '../../common/types';
@@ -20,7 +21,7 @@ function* signUpUser(data: PayloadAction) {
     yield put(UserActionCreator.requestStart());
     const confirm = yield call(
       apiService.httpRequest,
-      '/users',
+      ApiPath.USERS,
       'POST',
       {
         body: data.payload,
@@ -37,7 +38,7 @@ function* loginUser(data: PayloadAction) {
     yield put(UserActionCreator.requestStart());
     const authResult: ResponseGenerator = yield call(
       apiService.httpRequest,
-      '/auth/login',
+      `${ApiPath.AUTH}${AuthApiPath.LOGIN}`,
       'POST',
       {
         body: data.payload,
@@ -54,7 +55,7 @@ function* resetPassword(data: PayloadAction) {
     yield put(UserActionCreator.requestStart());
     const confirm: ResponseGenerator = yield call(
       apiService.httpRequest,
-      '/auth/reset',
+      `${ApiPath.AUTH}${AuthApiPath.RESET_PASSWORD}`,
       'POST',
       { body: data.payload },
     );
@@ -69,7 +70,7 @@ function* verifyPassword(data: PayloadAction) {
     yield put(UserActionCreator.requestStart());
     const confirm: ResponseGenerator = yield call(
       apiService.httpRequest,
-      '/auth/verify',
+      `${ApiPath.AUTH}${AuthApiPath.VERIFY_PASSWORD}`,
       'POST',
       { body: data.payload },
     );
