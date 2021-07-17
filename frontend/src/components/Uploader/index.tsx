@@ -1,8 +1,9 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { ReactElement, useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import Cropper from 'react-cropper';
 import 'cropperjs/dist/cropper.css';
 
+import './uploader.css';
 import EditIcon from 'assets/icons/edit-icon.svg';
 import { Button } from 'stories/controls/button/Button';
 import { useDetectOutsideClick } from 'hooks/useDetectOutsideClick'
@@ -10,16 +11,23 @@ import { useTypedSelector } from 'hooks/useTypedSelector';
 import { loadFileToCloudAction } from 'store/slices/file/file.slice';
 
 interface UploaderProps {
-  id: string;
-  props?: Record<string, unknown>;
+  id: string,
+  children?: HTMLElement | ReactElement,
+  props?: Record<string, unknown>,
   field: any,
   meta?: {
-    touched: boolean;
-    error: string;
+    touched: boolean,
+    error: string,
   };
 }
 
-const Uploader = ({ id, field, meta = { touched: false, error: '' }, ...props }: UploaderProps) => {
+const defaultLabel = (
+  <div className='block edit w-4 sm:w-6 md:w-9 md:p-2 md:mr-2 lg:mr-1 overflow-hidden bg-blue-200 rounded-full cursor-pointer hover:bg-blue-300 transition duration-300'>
+    <img src={EditIcon} alt='edit' className='max-w-full' />
+  </div>
+)
+
+const Uploader = ({ id, children = defaultLabel, field, meta = { touched: false, error: '' }, ...props }: UploaderProps) => {
   const dispatch = useDispatch();
   const cropperRef = useRef<HTMLImageElement>(null);
   const [isCropperVisible, setIsCropperVisible] = useDetectOutsideClick('.cropper-container', false);
@@ -74,8 +82,8 @@ const Uploader = ({ id, field, meta = { touched: false, error: '' }, ...props }:
   return (
     <div className='uploader'>
       <fieldset>
-        <label htmlFor='image-input' className='block edit w-4 sm:w-6 md:w-9 md:p-2 md:mr-2 lg:mr-1 overflow-hidden bg-blue-200 rounded-full cursor-pointer hover:bg-blue-300 transition duration-300'>
-          <img src={EditIcon} alt='edit' className='max-w-full' />
+        <label htmlFor='image-input'>
+          { children }
         </label>
         <input type='file' id='image-input' name='file' onChange={e => handleChange(e)} className='hidden' accept='image/*' />
         <input type='hidden' id={id} {...props} {...field} value={url} />
@@ -83,7 +91,7 @@ const Uploader = ({ id, field, meta = { touched: false, error: '' }, ...props }:
       {
         file && isCropperVisible &&
         <div className='cropper fixed z-50 w-full h-screen flex justify-center items-center inset-0 p-4'>
-          <div className='cropper-container bg-gray-400 p-4 sm:p-6 md:p-8 rounded-lg'>
+          <div className='cropper-container bg-gray-400 p-4 sm:p-6 lg:p-8 rounded-lg'>
             <Cropper
               src={file.fileURL}
               style={{ height:'100%', maxHeight: 600, width: '100%', maxWidth: 800, background: '#A1A1AA'}}
@@ -92,6 +100,7 @@ const Uploader = ({ id, field, meta = { touched: false, error: '' }, ...props }:
               aspectRatio={1/1}
               guides={false}
               ref={cropperRef}
+              highlight={false}
               viewMode={2}
             />
             <div className='cropper-actions flex justify-between pt-6'>
