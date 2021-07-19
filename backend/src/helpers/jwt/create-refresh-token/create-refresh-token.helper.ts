@@ -12,10 +12,13 @@ const createRefreshToken = (userId: string): Promise<string> => {
 
     redis_client.SET(userId, refreshToken, (err) => {
       if (err) {
-        console.log(err.message);
         reject(HttpCode.INTERNAL_SERVER_ERROR);
         return;
       }
+      redis_client.GET(userId, (err, data) => {
+        console.log('TOKEN GOTTEN FROM REDIS', data);
+      });
+      console.log('TOKEN SET IN REDIS =', refreshToken);
       resolve(refreshToken);
     });
   });

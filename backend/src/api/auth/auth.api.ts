@@ -32,12 +32,14 @@ const initAuthApi = (apiRouter: Router): Router => {
     refreshTokenValidation,
     async (_req, _res) => {
       const tokens = await getTokens(_req.body.userId);
+      console.log('NEW TOKENS = ', tokens);
+
       _res.status(HttpCode.OK).json(tokens);
     },
   );
 
   authRouter.get(AuthApiPath.LOGIN, jwtValidation, async (req, res) => {
-    // endpoint for testing jwtValidation
+    // check access token endpoint
     res.json(req.user.userId);
   });
 

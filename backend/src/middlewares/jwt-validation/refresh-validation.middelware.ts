@@ -6,7 +6,7 @@ import jwt, { JwtPayload, Secret, VerifyErrors } from 'jsonwebtoken';
 import redis_client from '~/data/redis/redis-connection';
 
 const refreshTokenValidation: RequestHandler = (req, res, next) => {
-  const refreshToken = req.body.token;
+  const refreshToken = req.headers.authorization?.split(' ')[1];
 
   try {
     if (!refreshToken) {
@@ -43,10 +43,10 @@ const refreshTokenValidation: RequestHandler = (req, res, next) => {
                 .status(HttpCode.NOT_FOUND)
                 .json({ message: ResponseMessages.TOKEN_NOT_IN_STORE });
             }
+            req.body.userId = decoded?.userId;
+            next();
           });
         }
-        req.body.userId = decoded?.userId;
-        next();
       },
     );
   } catch {
