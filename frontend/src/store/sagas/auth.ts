@@ -79,6 +79,7 @@ function* verifyPassword(data: PayloadAction) {
 function* logoutUser() {
   yield put(UserActionCreator.requestStart());
   const localstorageService = new LocalstorageService();
+  localstorageService.removeItem(LocalstorageKeys.AUTH);
   const token = localstorageService.getItem(LocalstorageKeys.AUTH);
   if(!token) {
     yield put(UserActionCreator.logoutSucceed());

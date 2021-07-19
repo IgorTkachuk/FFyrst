@@ -40,8 +40,6 @@ const UserHeaderMenu = ({user}: IHeaderProps): React.ReactElement => {
     {
       label: 'Log out',
       onClick: () => {
-        const localstorageService = new LocalstorageService();
-        localstorageService.removeItem(LocalstorageKeys.AUTH);
         dispatch(logoutUserAction())
       }
     },
