@@ -43,6 +43,15 @@ class UserRepository {
     });
     return result[1];
   }
+
+  public async getUsersWithPagination(limit: number, offset: number, filters: any): Promise<IUser[]> {
+    return await UserModel.findAll({ where: { ...filters }, offset, limit });
+  }
+
+  public async getUsersCount(): Promise<number> {
+    return await UserModel.count();
+  }
+
 }
 
 export { UserRepository };

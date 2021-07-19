@@ -4,6 +4,7 @@ import { ApiPath, HttpCode, UsersApiPath } from 'shared';
 import { createActivationMessage } from '~/helpers';
 import { userService } from '~/services/services';
 import { userSchema } from './user.schema';
+import { jwtValidation } from '~/middlewares/jwt-validation/jwt-validation.middelware';
 
 const initUserApi = (apiRouter: Router): Router => {
   const userRouter = Router();
@@ -76,6 +77,24 @@ const initUserApi = (apiRouter: Router): Router => {
     try {
       const outcome = await userService.activateUser(_req.params.token);
       return res.json(outcome);
+    } catch (error) {
+      next(error);
+    }
+  });
+
+  userRouter.get(UsersApiPath.PAG_USERS, jwtValidation, async (_req, _res, next) => {
+    try {
+      const count = await userService.getUsersCount();
+      _res.status(HttpCode.OK).json({ count });
+    } catch (error) {
+      next(error);
+    }
+  });
+
+  userRouter.post(UsersApiPath.PAG_USERS, jwtValidation, (_req, _res, next) => {
+    try {
+      const { limit, offset, filters } = _req.body;
+
     } catch (error) {
       next(error);
     }

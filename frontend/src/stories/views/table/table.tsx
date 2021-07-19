@@ -5,18 +5,18 @@ import './table.css';
 interface TableProps {
   tableName: string;
   headerData: Array<string>;
-  rowsData: Array<Array<string>>;
+  rowsData: any;
   itemsOnPage: number;
 }
 
 export const Table = ({
-  headerData,
-  rowsData,
-  tableName,
-  itemsOnPage = 15,
-}: TableProps) => {
+                        headerData,
+                        rowsData,
+                        tableName,
+                        itemsOnPage = 15,
+                      }: TableProps) => {
   const [currentPage, setCurrentPage] = useState(1);
-  const [currentData, setCurrentData] = useState<Array<Array<string>>>([]);
+  const [currentData, setCurrentData] = useState<any>([]);
   const [maxPage, setMaxPage] = useState(1);
 
   const updateState = (page: number): void => {
@@ -59,17 +59,17 @@ export const Table = ({
 
   return (
     <div>
-      <div className="py-1 px-2 font-roboto text-2xl text-green-900 font-bold ">
+      <div className='py-1 px-2 font-roboto text-2xl text-green-900 font-bold '>
         {tableName}
       </div>
-      <div className="flex flex-col shadow-lg border-2 border-green-400 rounded overflow-x-auto pb-0.25 ">
+      <div className='flex flex-col shadow-lg border-2 border-green-400 rounded overflow-x-auto pb-0.25 '>
         <div
           className={`rounded grid pl-0.5 pr-0.5`}
           style={{ gridTemplateColumns: `repeat(${headerData.length}, 1fr)` }}
         >
           {headerData.map((header, index) => (
             <div
-              className="whitespace-nowrap box-content border-2 bg-green-600 font-roboto text-white font-semibold rounded text-lg px-2 py-1"
+              className='whitespace-nowrap box-content border-2 bg-green-600 font-roboto text-white font-semibold rounded text-lg px-2 py-1'
               key={`${header}${index}`}
             >
               {header}
@@ -78,7 +78,7 @@ export const Table = ({
           {currentData.map((row, rowIndex) =>
             row.map((cellData, cellIndex) => (
               <div
-                className="custom whitespace-nowrap width-test bg-green-200 font-roboto border-t-2 border-b-2  border-white px-2 py-1"
+                className='custom whitespace-nowrap width-test bg-green-200 font-roboto border-t-2 border-b-2  border-white px-2 py-1'
                 key={`${rowIndex}${cellIndex}`}
               >
                 {cellData}
@@ -87,20 +87,20 @@ export const Table = ({
           )}
         </div>
       </div>
-      <div className="w-full flex justify-end mt-4 pr-3">
+      <div className='w-full flex justify-end mt-4 pr-3'>
         <img
           src={arrow}
-          alt="arrow"
-          className="transform rotate-180 w-6 cursor-pointer transform active:scale-95 hover:scale-105"
+          alt='arrow'
+          className='transform rotate-180 w-6 cursor-pointer transform active:scale-95 hover:scale-105'
           onClick={onPrevPage}
         />
-        <div className="pl-2 pr-2 text-green-900">
+        <div className='pl-2 pr-2 text-green-900'>
           {currentPage === maxPage ? maxPage : `${currentPage} ..${maxPage}`}
         </div>
         <img
           src={arrow}
-          alt="arrow"
-          className="w-6 cursor-pointer transform active:scale-95 hover:scale-105"
+          alt='arrow'
+          className='w-6 cursor-pointer transform active:scale-95 hover:scale-105'
           onClick={onNextPage}
         />
       </div>
