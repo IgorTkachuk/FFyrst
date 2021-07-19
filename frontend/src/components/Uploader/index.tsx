@@ -9,11 +9,12 @@ import { Button } from 'stories/controls/button/Button';
 import { useDetectOutsideClick } from 'hooks/useDetectOutsideClick'
 import { useTypedSelector } from 'hooks/useTypedSelector';
 import { loadFileToCloudAction } from 'store/slices/file/file.slice';
+import { FormikProps } from 'formik';
 
 interface UploaderProps {
   id: string,
   children?: HTMLElement | ReactElement,
-  props?: Record<string, unknown>,
+  props?: FormikProps<any>,
   field: any,
   meta?: {
     touched: boolean,
@@ -27,13 +28,12 @@ const defaultLabel = (
   </div>
 )
 
-const Uploader = ({ id, children = defaultLabel, field, meta = { touched: false, error: '' }, ...props }: UploaderProps) => {
+const Uploader = ({ id, children = defaultLabel, field, meta = { touched: false, error: '' }, props }: UploaderProps) => {
   const dispatch = useDispatch();
   const cropperRef = useRef<HTMLImageElement>(null);
   const [isCropperVisible, setIsCropperVisible] = useDetectOutsideClick('.cropper-container', false);
   const [file, setFile] = useState<Record<string, string>>({});
   const { cloudURL } = useTypedSelector(state => state.file);
-  const [url, setUrl] = useState(field.value);
 
   function handleChange(e: any) {
     if(e.target.files.length) {
@@ -75,7 +75,7 @@ const Uploader = ({ id, children = defaultLabel, field, meta = { touched: false,
 
   useEffect(() => {
     if(cloudURL) {
-      setUrl(cloudURL)
+      props?.setFieldValue(field.name, cloudURL)
     }
   }, [cloudURL]);
 
@@ -86,7 +86,7 @@ const Uploader = ({ id, children = defaultLabel, field, meta = { touched: false,
           { children }
         </label>
         <input type='file' id='image-input' name='file' onChange={e => handleChange(e)} className='hidden' accept='image/*' />
-        <input type='hidden' id={id} {...props} {...field} value={url} />
+        <input type='hidden' id={id} {...field} />
       </fieldset>
       {
         file && isCropperVisible &&

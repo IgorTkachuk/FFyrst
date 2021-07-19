@@ -10,7 +10,7 @@ const apiService = new ApiService();
 
 function* loadFileToCloud(data: PayloadAction) {
   const ls = new LocalstorageService();
-  const token = ls.getItem(LocalstorageKeys.AUTH);
+  const { accessToken } = ls.getItem(LocalstorageKeys.AUTH);
 
   try {
     yield put(FileActionCreator.requestStart());
@@ -21,14 +21,11 @@ function* loadFileToCloud(data: PayloadAction) {
       {
         body: data.payload,
         headers: { 'Content-Type': 'multipart/form-data'},
-        token
+        token: accessToken
       }
     );
 
-    //temporary hardcode
-    const tempUrl = 'https://www.film.ru/sites/default/files/filefield_paths/maxresdefault_1_24.jpg';
-
-    yield put(FileActionCreator.cloudUploadSucceed(tempUrl));
+    yield put(FileActionCreator.cloudUploadSucceed(url));
   } catch (e) {
     yield put(FileActionCreator.requestFailed(String(e)));
   }
