@@ -73,7 +73,7 @@ const Registration: React.FC = () => {
                   )}
                 </Field>
                 <div className='h-20 mt-6 flex flex-col justify-between'>
-                  <Button color='blue' label='Sign up' type={'submit'} disable={loading} />
+                  <Button color='blue' label='Sign up' type={'submit'} disabled={loading} />
                   <div className='cursor-pointer text-center text-blue-500 font-bold hover:text-blue-700'>
                     <Link to={AppRoute.SIGN_IN}>Sign In</Link>
                   </div>

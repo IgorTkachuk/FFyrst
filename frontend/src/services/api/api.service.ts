@@ -6,9 +6,9 @@ import { HttpCode } from 'shared';
 const { REACT_APP_BACKEND_HOST, REACT_APP_API_ORIGIN_URL } = process.env;
 
 interface IHttpRequestConf {
-  token?: string | null;
-  params?: any;
-  body?: any;
+  token?: string | null,
+  params?: any,
+  body?: any
 }
 
 interface ITokens {
@@ -18,6 +18,7 @@ interface ITokens {
 
 class ApiService {
   _url = `${REACT_APP_BACKEND_HOST}${REACT_APP_API_ORIGIN_URL}`;
+
   instance = axios.create({
     baseURL: this._url,
   });

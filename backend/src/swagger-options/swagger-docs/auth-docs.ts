@@ -23,7 +23,7 @@
 
 /**
  * @swagger
- * /auth/auth:
+ * /auth/login:
  *   post:
  *     description: Sign in
  *     tags: [Auth]

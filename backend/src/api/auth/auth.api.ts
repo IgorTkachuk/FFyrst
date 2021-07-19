@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { ApiPath, AuthApiPath, HttpCode } from '~/common/enums';
+import { ApiPath, AuthApiPath, HttpCode } from 'shared';
 import { jwtValidation } from '~/middlewares/jwt-validation/jwt-validation.middelware';
 import { yupValidation } from '~/middlewares/yup-validation/yup-validation.middelware';
 import { verifySchema, resetSchema, loginSchema } from 'shared';
@@ -32,14 +32,12 @@ const initAuthApi = (apiRouter: Router): Router => {
     refreshTokenValidation,
     async (_req, _res) => {
       const tokens = await getTokens(_req.body.userId);
-      console.log('NEW TOKENS = ', tokens);
-
       _res.status(HttpCode.OK).json(tokens);
     },
   );
 
   authRouter.get(AuthApiPath.LOGIN, jwtValidation, async (req, res) => {
-    // check access token endpoint
+    // check access token endpoint. Used in frontend API service!
     res.json(req.user.userId);
   });
 
