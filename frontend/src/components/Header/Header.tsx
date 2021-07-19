@@ -12,7 +12,6 @@ const Header = ({
   user = {
     firstName: '',
     lastName: '',
-    linkToProfile: '',
     linkToAvatar: ''
   },
 }: IHeaderProps): ReactElement => {

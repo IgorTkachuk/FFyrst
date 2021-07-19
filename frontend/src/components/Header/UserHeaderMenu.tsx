@@ -1,42 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 
 import { IListItem, IHeaderProps } from './types';
-import LocalstorageService from 'services/localstorage/localstorage.service';
-import { LocalstorageKeys } from 'common/enums';
 import Avatar from 'assets/images/avatar-example.png';
 import { useDispatch } from 'react-redux';
 import { logoutUserAction } from 'store/slices/user/user.slice';
+import { useDetectOutsideClick } from 'hooks/useDetectOutsideClick';
 
 const UserHeaderMenu = ({user}: IHeaderProps): React.ReactElement => {
   const dispatch = useDispatch();
-  const [menuVisible, setMenuVisible] = useState(false);
-
-  function hideMenu({target}: Event) {
-    if (!(target instanceof Element)) return;
-    if (!target?.closest('.header-dropdown')) {
-      setMenuVisible(false);
-    }
-  }
-
-  useEffect(() => {
-    if(menuVisible) {
-      document.addEventListener('click', hideMenu);
-    }
-    return () => {
-      document.removeEventListener('click', hideMenu);
-    }
-  }, [menuVisible])
-
-  function showMenu() {
-    setMenuVisible(true);
-  }
+  const [menuVisible, setMenuVisible] = useDetectOutsideClick('.header-dropdown', false);
 
   const DROPDOWN_ITEMS: IListItem[] = [
-    {
-      label: 'Profile',
-      link: '/sign-up'
-    },
     {
       label: 'Log out',
       onClick: () => {
@@ -66,7 +41,7 @@ const UserHeaderMenu = ({user}: IHeaderProps): React.ReactElement => {
     <>
       <div
         className="inline-flex items-center py-1 md:py-2 sm:px-2 md:px-4 sm:hover:bg-blue-100"
-        onClick={showMenu}
+        onClick={() => setMenuVisible(true)}
       >
         <div className="w-8 sm:w-9 md:w-10 md:mr-2 lg:mr-4 overflow-hidden border border-gray-400 rounded-full">
           <img src={Avatar} alt="user-photo" className="max-w-full" />
