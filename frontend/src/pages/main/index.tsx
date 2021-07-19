@@ -5,7 +5,8 @@ import { AppRoute } from '../../common/enums';
 const Main = () => {
   return (
     <div>
-      <Link to={AppRoute.USER_PROFILE}>Profile</Link>
+      {/* for debug purpose */}
+      <Link to={AppRoute.USER_PROFILE}>User profile</Link>
     </div>
   );
 };

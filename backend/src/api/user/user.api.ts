@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { ActivationStatus } from 'shared';
 import { ApiPath, HttpCode, UsersApiPath } from '~/common/enums';
-import { createActivationMessage } from '~/helpers';
+import { createActivationMessage, getUpdatedUser } from '~/helpers';
 import { userService } from '~/services/services';
 import { userSchema } from './user.schema';
 import { jwtValidation } from '~/middlewares/jwt-validation/jwt-validation.middelware';
@@ -20,12 +20,32 @@ const initUserApi = (apiRouter: Router): Router => {
     }
   });
 
-  userRouter.get(UsersApiPath.GET_PROFILE, jwtValidation, async (_req, res) => {
+  // -- get user profile --
+  userRouter.get(UsersApiPath.PROFILE, jwtValidation, async (_req, res) => {
     try {
-      const users = await userService.getUserById(_req.user.userId);
-      res.status(HttpCode.OK).json(users);
+      const user = await userService.getUserById(_req.user.userId);
+      res.status(HttpCode.OK).json(user);
     } catch (error) {
       res.status(HttpCode.NOT_FOUND).json(error);
+    }
+  });
+
+  // -- update user profile --
+  userRouter.put(UsersApiPath.PROFILE, jwtValidation, async (_req, res) => {
+    try {
+      const user = await userService.getUserById(_req.user.userId);
+      if (!user) {
+        return res.status(HttpCode.BAD_REQUEST).json('User not found');
+      }
+      const updatedUser = getUpdatedUser(user, _req.body);
+      await userSchema.validate(updatedUser, { context: { required: true } });
+      const result = await userService.updateUser(
+        _req.user.userId,
+        updatedUser,
+      );
+      res.status(HttpCode.OK).json(result);
+    } catch (error) {
+      res.status(HttpCode.BAD_REQUEST).json(error);
     }
   });
 
@@ -48,16 +68,6 @@ const initUserApi = (apiRouter: Router): Router => {
         .json({ message: 'success', user: userToActivate });
     } catch (error) {
       next(error);
-    }
-  });
-
-  userRouter.put(UsersApiPath.$ID, async (_req, res) => {
-    try {
-      await userSchema.validate(_req.body);
-      const user = await userService.updateUser(_req.params.id, _req.body);
-      res.status(HttpCode.OK).json(user);
-    } catch (error) {
-      res.status(HttpCode.BAD_REQUEST).json(error);
     }
   });
 

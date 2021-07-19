@@ -3,7 +3,7 @@ import { IUser, IActivationMessage } from 'shared/common/interfaces';
 import { mailService } from '../services';
 import { hashPassword, hashToken } from '~/helpers/bcrypt';
 import { createActivationMessage as message } from '~/helpers';
-import { ActivationStatus } from 'shared/common/enums'
+import { ActivationStatus } from 'shared/common/enums';
 
 class UserService {
   public getAllUsers(): Promise<IUser[]> {
@@ -25,14 +25,14 @@ class UserService {
   }
 
   public async setUserActivation(data: IUser): Promise<IUser[]> {
-    const {id, email} = data;
+    const { id, email } = data;
     const tokenHash = hashToken(Date.now().toString());
     await mailService.sendActivationMail(email, tokenHash);
     return await this.updateUser(id, {
       ...data,
       activationToken: tokenHash,
-      activationTokenExpiration: new Date(Date.now() + 1000 * 60 * 60)
-    })
+      activationTokenExpiration: new Date(Date.now() + 1000 * 60 * 60),
+    });
   }
 
   public async updateUser(id: string, data: IUser): Promise<IUser[]> {
@@ -53,17 +53,21 @@ class UserService {
 
   public async activateUser(token: string): Promise<IActivationMessage> {
     const user = await this.getUserByToken(token);
-    if(!user) {
+    if (!user) {
       return message(ActivationStatus.NOT_FOUND, 'User not found.');
     }
-    if(user.activationTokenExpiration < new Date(Date.now())) {
-      return message(ActivationStatus.EXPIRED, 'Activation time expired.', user.email);
+    if (user.activationTokenExpiration < new Date(Date.now())) {
+      return message(
+        ActivationStatus.EXPIRED,
+        'Activation time expired.',
+        user.email,
+      );
     }
     const data = {
       isActive: true,
-      activationToken: ''
-    }
-    userRepository.activateUser(token, {...user, ...data});
+      activationToken: '',
+    };
+    userRepository.activateUser(token, { ...user, ...data });
     return message(ActivationStatus.SUCCESS, 'Successful activation.');
   }
 }

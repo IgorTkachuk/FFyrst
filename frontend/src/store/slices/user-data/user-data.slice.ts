@@ -25,11 +25,7 @@ const { reducer, actions } = createSlice({
   reducers: {
     setUser: (state, action: PayloadAction<IProfile>) => {
       state.user = action.payload;
-      state.user.birthDate = state.user.birthDate
-        .slice(0, 10)
-        .split('-')
-        .reverse()
-        .join('/');
+      state.user.birthDate = state.user.birthDate.slice(0, 10);
     },
   },
 });
@@ -37,6 +33,13 @@ const { reducer, actions } = createSlice({
 export const getUserAction = (headers: string | null) => ({
   type: UserDataSagaTypes.GET_USER,
   payload: headers,
+});
+
+export const updateUserAction = (
+  data: { user: IProfile } & { token: string },
+) => ({
+  type: UserDataSagaTypes.UPDATE_USER,
+  payload: data,
 });
 
 const UserDataActionCreator = {
