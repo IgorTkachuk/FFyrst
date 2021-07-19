@@ -1,14 +1,16 @@
 import { takeEvery, put, call, takeLatest } from 'redux-saga/effects';
 import { FileActionCreator } from '../slices';
 import ApiService from '../../services/api/api.service';
-import { FileSagasTypes } from '../../common/enums';
+import { FileSagasTypes, LocalstorageKeys } from '../../common/enums';
 import { PayloadAction } from '@reduxjs/toolkit';
 import { SagaAction } from '../../common/types';
+import LocalstorageService from 'services/localstorage/localstorage.service';
 
 const apiService = new ApiService();
 
 function* loadFileToCloud(data: PayloadAction) {
-  console.log('payload', data.payload);
+  const ls = new LocalstorageService();
+  const token = ls.getItem(LocalstorageKeys.AUTH);
 
   try {
     yield put(FileActionCreator.requestStart());
@@ -18,7 +20,8 @@ function* loadFileToCloud(data: PayloadAction) {
       'POST',
       {
         body: data.payload,
-        headers: { 'Content-Type': 'multipart/form-data'}
+        headers: { 'Content-Type': 'multipart/form-data'},
+        token
       }
     );
 

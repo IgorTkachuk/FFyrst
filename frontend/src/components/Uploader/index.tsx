@@ -58,7 +58,7 @@ const Uploader = ({ id, children = defaultLabel, field, meta = { touched: false,
     canvas.toBlob((blob) => {
       if(!blob) return;
       const formData = new FormData();
-      formData.append('file', blob, name);
+      formData.append('image', blob, name);
 
       dispatch(loadFileToCloudAction(formData));
     }, type);
