@@ -84,6 +84,9 @@ export const verifyPasswordAction = (data: IVerPassword) => ({
   type: AuthSagasTypes.VERIFY_PASSWORD_CHANGE,
   payload: data,
 });
+export const logoutUserAction = () => ({
+  type: AuthSagasTypes.LOGOUT_USER,
+});
 
 const UserActionCreator = {
   ...actions,
