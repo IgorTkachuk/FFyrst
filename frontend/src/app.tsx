@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import LocalstorageService from './services/localstorage/localstorage.service';
 import { LocalstorageKeys } from './common/enums';
 import { useDispatch } from 'react-redux';
+import { getUserAction } from './store/slices/user-data/user-data.slice';
 import SideNavbar from './components/sideNavbar/sideNavbar';
 import { BsList } from 'react-icons/bs';
 
@@ -23,6 +24,7 @@ const App: React.FC = () => {
     const auth = localstorageService.getItem(LocalstorageKeys.AUTH);
     if (auth) {
       dispatch(UserActionCreator.loginSucceed(auth));
+      dispatch(getUserAction(accessToken));
     }
   }, [authState]);
 

@@ -23,6 +23,7 @@ const jwtValidation: RequestHandler = (req, res, next) => {
           .send({ message: ResponseMessages.TOKEN_EXPIRED });
       }
       if (err) {
+        console.log('Token unautorized', err);
         return res
           .status(HttpCode.UNAUTHORIZED)
           .send({ message: ResponseMessages.WRONG_TOKEN_REQUEST });

@@ -6,3 +6,4 @@ export * from './bcrypt';
 export * from './mail';
 export * from './url';
 export * from './activation';
+export * from './user';

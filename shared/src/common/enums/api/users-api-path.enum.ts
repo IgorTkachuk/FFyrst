@@ -3,7 +3,8 @@ enum UsersApiPath {
   $ID = '/:id',
   ACTIVATION_REQUEST = '/activation/request',
   $ACTIVATION = '/activation/:token',
-  ACTIVATION = '/activation'
+  ACTIVATION = '/activation',
+  PROFILE = '/profile',
 }
 
 export { UsersApiPath };

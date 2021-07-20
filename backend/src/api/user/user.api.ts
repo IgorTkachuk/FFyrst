@@ -4,6 +4,7 @@ import { ApiPath, HttpCode, UsersApiPath } from 'shared';
 import { createActivationMessage } from '~/helpers';
 import { userService } from '~/services/services';
 import { userSchema } from './user.schema';
+import { jwtValidation } from '~/middlewares/jwt-validation/jwt-validation.middelware';
 
 const initUserApi = (apiRouter: Router): Router => {
   const userRouter = Router();
@@ -16,6 +17,32 @@ const initUserApi = (apiRouter: Router): Router => {
       res.status(HttpCode.OK).json(users);
     } catch (error) {
       res.status(HttpCode.NOT_FOUND).json(error);
+    }
+  });
+
+  // -- get user profile --
+  userRouter.get(UsersApiPath.PROFILE, jwtValidation, async (_req, res) => {
+    try {
+      const user = await userService.getUserById(_req.user.userId);
+      res.status(HttpCode.OK).json(user);
+    } catch (error) {
+      res.status(HttpCode.NOT_FOUND).json(error);
+    }
+  });
+
+  // -- update user profile --
+  userRouter.put(UsersApiPath.PROFILE, jwtValidation, async (_req, res) => {
+    try {
+      const result = await userService.updateUserProfile(
+        _req.user.userId,
+        _req.body,
+      );
+      if (!result) {
+        return res.status(HttpCode.BAD_REQUEST);
+      }
+      res.status(HttpCode.OK).json(result);
+    } catch (error) {
+      res.status(HttpCode.BAD_REQUEST).json(error);
     }
   });
 
@@ -33,7 +60,9 @@ const initUserApi = (apiRouter: Router): Router => {
       await userSchema.validate(_req.body, { context: { required: true } });
       const user = await userService.createNewUser(_req.body);
       const userToActivate = await userService.setUserActivation(user);
-      res.status(HttpCode.OK).json({ message: 'success', user: userToActivate });
+      res
+        .status(HttpCode.OK)
+        .json({ message: 'success', user: userToActivate });
     } catch (error) {
       next(error);
     }
@@ -63,7 +92,10 @@ const initUserApi = (apiRouter: Router): Router => {
       const user = await userService.getUserByEmail(_req.body.email);
       if (user) {
         await userService.setUserActivation(user);
-        const message = createActivationMessage(ActivationStatus.SENT, 'Mail was sent');
+        const message = createActivationMessage(
+          ActivationStatus.SENT,
+          'Mail was sent',
+        );
         res.status(HttpCode.OK).json(message);
       }
       res.status(HttpCode.NOT_FOUND).json('User not found.');

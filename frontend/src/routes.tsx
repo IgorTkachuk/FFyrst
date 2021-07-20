@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
-import * as Pages from './pages'
+import * as Pages from './pages';
 import { AppRoute } from 'common/enums';
 
 const useRoute = (isAuth: boolean): React.ReactElement => {
@@ -30,6 +30,9 @@ const useRoute = (isAuth: boolean): React.ReactElement => {
       <Switch>
         <Route path={AppRoute.MAIN}>
           <Pages.Main />
+        </Route>
+        <Route path={AppRoute.USER_PROFILE}>
+          <Pages.UserProfileDetails />
         </Route>
         <Redirect to={AppRoute.MAIN} />
       </Switch>
