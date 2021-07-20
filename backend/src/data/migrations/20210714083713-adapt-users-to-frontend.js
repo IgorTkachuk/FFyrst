@@ -17,6 +17,7 @@ module.exports = {
       queryInterface.renameColumn('users', 'phoneNumber', 'phone', { transaction }),
       queryInterface.addColumn('users', 'birthdate', {
         allowNull: false,
+        defaultValue: '01.01.1970',
         type: Sequelize.DATE
       }, { transaction }),
     ]));
