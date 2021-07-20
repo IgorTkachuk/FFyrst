@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import arrow from './right-arrow.svg';
+import React from 'react';
 import './table.css';
 
 type Row = {
@@ -14,10 +13,10 @@ interface TableProps {
   tableName: string;
   headers: Array<string>;
   data: Row[];
-  funcs?: Func
+  funcs: Func
 }
 
-export const Table: React.FC<TableProps> = ({ headers, data, tableName, funcs }) => {
+export const Table: React.FC<TableProps> = ({ headers, data, tableName, children }) => {
   return (
     <div>
       <div className='py-1 px-2 font-roboto text-2xl text-green-900 font-bold '>
@@ -38,19 +37,24 @@ export const Table: React.FC<TableProps> = ({ headers, data, tableName, funcs })
               {header}
             </div>
           ))}
-          {data.map((row, rowIndex) =>
-            headers.map((prop, cellIndex) => (
-              <div
-                className='custom whitespace-nowrap width-test bg-green-200 font-roboto border-t-2 border-b-2  border-white px-2 py-1'
-                key={`${rowIndex}${cellIndex}`}
-              >
-                {row.prop}
-              </div>
-            )),
-          )}
+          {data.map((row, rowIdx) => {
+            React.Children.map(children, (child: any, cellIdx) => {
+              return React.createElement(child, { row, idx: `${rowIdx}${cellIdx}` });
+            });
+          })}
+
         </div>
       </div>
-      ;
     </div>
   );
 };
+
+// {data.map((row, rowIndex) =>
+//   headers.map((prop, cellIndex) => (
+//     <div
+//       className='custom whitespace-nowrap width-test bg-green-200 font-roboto border-t-2 border-b-2  border-white px-2 py-1'
+//       key={`${rowIndex}${cellIndex}`}>
+//       {row[prop]}
+//     </div>
+//   )),
+// )};

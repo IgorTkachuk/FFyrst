@@ -67,7 +67,7 @@ class UserService {
     return message(ActivationStatus.SUCCESS, 'Successful activation.');
   }
 
-  public async getUsersCount(): Promise<number> {
+  public getUsersCount(): Promise<IUser[]> {
     return userRepository.getUsersCount();
   }
 

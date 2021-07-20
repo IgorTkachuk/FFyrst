@@ -14,7 +14,7 @@ const useRoute = (isAuth: boolean): React.ReactElement => {
           <Pages.Registration />
         </Route>
         <Route path={AppRoute.REFRESH}>
-          <Pages.Refresh />
+          <Pages.Reset />
         </Route>
         <Route path={AppRoute.VERIFY_REFRESH}>
           <Pages.VerifyRefresh />

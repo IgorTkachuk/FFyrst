@@ -15,7 +15,7 @@ const mockData = mock as Array<Array<string>>;
 export const TableDefault = Template.bind({});
 TableDefault.args = {
   tableName: 'Employees',
-  headerData: [
+  headers: [
     'First Name',
     'Last Name',
     'Email',
@@ -25,5 +25,5 @@ TableDefault.args = {
     'Job title',
     'Skill',
   ],
-  rowsData: mockData,
+  data: mockData,
 };

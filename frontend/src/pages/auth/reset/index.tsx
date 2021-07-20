@@ -9,7 +9,7 @@ import { Input } from '../../../stories/inputs/input/input';
 import { Button } from '../../../stories/controls/button/Button';
 import ErrorBoundary from '../../../components/errorBoundry/errorBoundry';
 
-const Refresh = () => {
+const Reset = () => {
   const { loading, error, resetState } = useTypedSelector(state => state.user);
   const dispatch = useDispatch();
 
@@ -56,4 +56,4 @@ const Refresh = () => {
   );
 };
 
-export { Refresh };
+export { Reset };

@@ -36,7 +36,7 @@ const initUserApi = (apiRouter: Router): Router => {
       const userToActivate = await userService.setUserActivation(user);
       res.status(HttpCode.OK).json({ message: 'success', user: userToActivate });
     } catch (error) {
-      next(error);
+      // next(error);
     }
   });
 
@@ -69,7 +69,7 @@ const initUserApi = (apiRouter: Router): Router => {
       }
       res.status(HttpCode.NOT_FOUND).json('User not found.');
     } catch (error) {
-      next(error);
+      // next(error);
     }
   });
 
@@ -78,7 +78,7 @@ const initUserApi = (apiRouter: Router): Router => {
       const outcome = await userService.activateUser(_req.params.token);
       return res.json(outcome);
     } catch (error) {
-      next(error);
+      // next(error);
     }
   });
 
@@ -87,7 +87,8 @@ const initUserApi = (apiRouter: Router): Router => {
       const count = await userService.getUsersCount();
       _res.status(HttpCode.OK).json({ count });
     } catch (error) {
-      next(error);
+      // next(error);
+      _res.status(400).json({ error });
     }
   });
 

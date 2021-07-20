@@ -65,7 +65,7 @@
 
 /**
  * @swagger
- * /auth/refresh:
+ * /auth/reset:
  *   post:
  *     description: Send request to email to confirm password reset
  *     tags: [Auth]
