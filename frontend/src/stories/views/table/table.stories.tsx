@@ -10,20 +10,18 @@ export default {
 
 const Template: ComponentStory<typeof Table> = (args) => <Table {...args} />;
 
-const mockData = mock as Array<Array<string>>;
+const user = {
+  img: 'https://otomatix.com.br/img/avatar/default.png',
+  name: 'dimas',
+  phone: '+380676642177',
+  email: 'dimonprykh@gmail.com',
+};
+
+const users = [user];
 
 export const TableDefault = Template.bind({});
 TableDefault.args = {
   tableName: 'Employees',
-  headers: [
-    'First Name',
-    'Last Name',
-    'Email',
-    'Gender',
-    'Language',
-    'Company',
-    'Job title',
-    'Skill',
-  ],
-  data: mockData,
+  headers: ['Name', 'Phone', 'Email', 'Photo', 'Del'],
+  data: users,
 };

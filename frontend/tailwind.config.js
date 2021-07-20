@@ -39,13 +39,17 @@ module.exports = {
       maxWidth: {
         'sidebar-content': '300px',
         'page-content': '1000px',
+        'img-content': '50px',
+      },
+      minHeight: {
+        'with-header': 'calc(100% - 54px)',
       },
       height: {
-        '3px': '3px'
+        '3px': '3px',
       },
       width: {
         'half-screen': '50vw',
-      }
+      },
     },
     fontFamily: {
       roboto: ['Roboto', 'sans-serif'],
@@ -59,6 +63,7 @@ module.exports = {
       ringWidth: ['hover', 'active'],
       ringColor: ['hover', 'active'],
       borderRadius: ['hover', 'active'],
+      cursor:['hover']
     },
   },
   plugins: [

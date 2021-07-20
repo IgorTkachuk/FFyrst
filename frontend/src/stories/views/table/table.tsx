@@ -5,24 +5,20 @@ type Row = {
   [key: string]: string
 }
 
-type Func = {
-  [key: string]: (id: string) => void
-}
-
 interface TableProps {
   tableName: string;
   headers: Array<string>;
   data: Row[];
-  funcs: Func
 }
 
 export const Table: React.FC<TableProps> = ({ headers, data, tableName, children }) => {
+  console.log(children);
   return (
     <div>
       <div className='py-1 px-2 font-roboto text-2xl text-green-900 font-bold '>
         {
           tableName
-        };
+        }
       </div>
       <div className='flex flex-col shadow-lg border-2 border-green-400 rounded overflow-x-auto pb-0.25 '>
         <div
@@ -37,24 +33,14 @@ export const Table: React.FC<TableProps> = ({ headers, data, tableName, children
               {header}
             </div>
           ))}
-          {data.map((row, rowIdx) => {
-            React.Children.map(children, (child: any, cellIdx) => {
-              return React.createElement(child, { row, idx: `${rowIdx}${cellIdx}` });
+          {data.map((row) => {
+            return React.Children.map(children, (child: any) => {
+              return React.cloneElement(child, { row });
             });
           })}
-
         </div>
       </div>
     </div>
   );
 };
 
-// {data.map((row, rowIndex) =>
-//   headers.map((prop, cellIndex) => (
-//     <div
-//       className='custom whitespace-nowrap width-test bg-green-200 font-roboto border-t-2 border-b-2  border-white px-2 py-1'
-//       key={`${rowIndex}${cellIndex}`}>
-//       {row[prop]}
-//     </div>
-//   )),
-// )};
