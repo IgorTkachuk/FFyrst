@@ -37,7 +37,7 @@ const initAuthApi = (apiRouter: Router): Router => {
   );
 
   authRouter.get(AuthApiPath.LOGIN, jwtValidation, async (req, res) => {
-    // check access token endpoint. Used in frontend API service!
+    // endpoint for testing jwtValidation
     res.json(req.user.userId);
   });
 

@@ -6,7 +6,6 @@ import { userService } from '~/services/services';
 import { userSchema } from './user.schema';
 import { jwtValidation } from '~/middlewares/jwt-validation/jwt-validation.middelware';
 
-
 const initUserApi = (apiRouter: Router): Router => {
   const userRouter = Router();
 
@@ -68,7 +67,6 @@ const initUserApi = (apiRouter: Router): Router => {
       next(error);
     }
   });
-
 
   userRouter.put(UsersApiPath.$ID, async (_req, res) => {
     try {
