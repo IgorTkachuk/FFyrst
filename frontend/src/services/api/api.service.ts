@@ -1,18 +1,13 @@
 import axios, { Method } from 'axios';
 
-const { REACT_APP_BACKEND_HOST, REACT_APP_API_ORIGIN_URL, M } = process.env;
+const { REACT_APP_BACKEND_HOST, REACT_APP_API_ORIGIN_URL } = process.env;
 
 interface IHttpRequestOptions {
   token?: string,
   params?: any,
-  body?: any
+  body?: any,
+  headers?: any
 }
-
-type Header = {
-  [key: string]: string
-}
-
-type Nullable<T> = null | T
 
 class ApiService {
   _url = `${REACT_APP_BACKEND_HOST}${REACT_APP_API_ORIGIN_URL}`;
@@ -24,18 +19,25 @@ class ApiService {
   httpRequest = async (
     url: string,
     method: Method = 'GET',
-    options: IHttpRequestOptions = {}
+    options: IHttpRequestOptions = {
+      body: null,
+      params: null,
+      token: '',
+      headers: {}
+    }
   ): Promise<any> => {
     const {
       body = null,
       params = null,
-      token = null
+      token = '',
+      headers = {},
     } = options;
     const res = await this.instance.request({
       url,
       data: body,
       headers: {
         'Authorization': `Bearer ${token}`,
+        ...headers
       },
       method,
       params,

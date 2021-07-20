@@ -58,7 +58,7 @@ const VerifyRefresh = () => {
                 )}
               </Field>
               <div className='flex items-center justify-between mt-4'>
-                <Button color='blue' label='Send' type={'submit'} disable={loading} />
+                <Button color='blue' label='Send' type={'submit'} disabled={loading} />
                 <div className='inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800'>
                   <NavLink to='/login'>Back to login</NavLink>
                 </div>

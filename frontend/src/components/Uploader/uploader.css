@@ -1,0 +1,22 @@
+.cropper-crop-box {
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+}
+.cropper-view-box {
+  overflow: hidden;
+  border-radius: 50%;
+  outline: 4000px solid rgba(0, 0, 0, 0.5);
+}
+
+.cropper-point {
+  background: #fff;
+  width: 14px !important;
+  height: 14px !important;
+}
+
+.point-e,
+.point-w,
+.point-n,
+.point-s {
+  display: none;
+}

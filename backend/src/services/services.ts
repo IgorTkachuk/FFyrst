@@ -6,6 +6,7 @@ import { UserService } from './user-service/user-service.service';
 import { MailService } from './mail-service/mail-service.service';
 import { TenantService } from './tenant-service/tenant-service.service';
 import { AuthService } from '~/services/auth-service/auth-service.service';
+import { FileUploadService } from './file-upload/file-upload-service';
 
 
 const appAsyncStorage = new AsyncLocalStorage<AppAsyncStorage>();
@@ -19,5 +20,6 @@ const userService = new UserService();
 const tenantService = new TenantService();
 const mailService = new MailService();
 const authService = new AuthService();
+const fileUploadService = new FileUploadService();
 
-export { appAsyncStorage, logger, userService, tenantService, mailService, authService };
+export { appAsyncStorage, logger, userService, tenantService, mailService, authService, fileUploadService };
