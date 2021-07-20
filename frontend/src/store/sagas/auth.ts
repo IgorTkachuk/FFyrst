@@ -83,7 +83,10 @@ function* verifyPassword(data: PayloadAction) {
 function* authSagaWatcher() {
   yield takeEvery<SagaAction>(AuthSagasTypes.LOGIN_USER, loginUser);
   yield takeEvery<SagaAction>(AuthSagasTypes.REFRESH_PASSWORD, resetPassword);
-  yield takeEvery<SagaAction>(AuthSagasTypes.VERIFY_PASSWORD_CHANGE, verifyPassword);
+  yield takeEvery<SagaAction>(
+    AuthSagasTypes.VERIFY_PASSWORD_CHANGE,
+    verifyPassword,
+  );
   yield takeLatest<SagaAction>(AuthSagasTypes.REGISTER_USER, signUpUser);
 }
 
