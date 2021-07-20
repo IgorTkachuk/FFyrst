@@ -4,3 +4,4 @@ export * from './auth/refresh';
 export * from './auth/verify-refresh';
 export * from './main';
 export * from './EmailActivation';
+export * from './platform/edit';
