@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { ActivationStatus } from 'shared';
 import { ApiPath, HttpCode, UsersApiPath } from 'shared';
-import { createActivationMessage, getUpdatedUser } from '~/helpers';
+import { createActivationMessage } from '~/helpers';
 import { userService } from '~/services/services';
 import { userSchema } from './user.schema';
 import { jwtValidation } from '~/middlewares/jwt-validation/jwt-validation.middelware';
@@ -33,16 +33,13 @@ const initUserApi = (apiRouter: Router): Router => {
   // -- update user profile --
   userRouter.put(UsersApiPath.PROFILE, jwtValidation, async (_req, res) => {
     try {
-      const user = await userService.getUserById(_req.user.userId);
-      if (!user) {
-        return res.status(HttpCode.BAD_REQUEST).json('User not found');
-      }
-      const updatedUser = getUpdatedUser(user, _req.body);
-      await userSchema.validate(updatedUser, { context: { required: true } });
-      const result = await userService.updateUser(
+      const result = await userService.updateUserProfile(
         _req.user.userId,
-        updatedUser,
+        _req.body,
       );
+      if (!result) {
+        return res.status(HttpCode.BAD_REQUEST);
+      }
       res.status(HttpCode.OK).json(result);
     } catch (error) {
       res.status(HttpCode.BAD_REQUEST).json(error);

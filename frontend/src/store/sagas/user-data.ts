@@ -16,8 +16,9 @@ function* getUser(data: PayloadAction) {
       token: accessToken,
     });
     yield put(UserDataActionCreator.setUser(user));
+    yield put(UserDataActionCreator.requestSuccess());
   } catch (e) {
-    //should be implemented refresh token feature for frontend
+    yield put(UserDataActionCreator.requestFail());
   }
 }
 
@@ -33,8 +34,9 @@ function* updateUser(
     });
 
     yield put(UserDataActionCreator.setUser(user));
+    yield put(UserDataActionCreator.requestSuccess());
   } catch (e) {
-    //should be implemented refresh token feature for frontend
+    yield put(UserDataActionCreator.requestFail());
   }
 }
 

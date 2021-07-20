@@ -27,6 +27,14 @@ const { reducer, actions } = createSlice({
       state.user = action.payload;
       state.user.birthDate = state.user.birthDate.slice(0, 10);
     },
+
+    requestFail: (state) => {
+      state.requestStatus = false;
+    },
+
+    requestSuccess: (state) => {
+      state.requestStatus = true;
+    },
   },
 });
 
