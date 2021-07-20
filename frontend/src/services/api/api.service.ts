@@ -21,7 +21,6 @@ interface ITokens {
 
 class ApiService {
   _url = `${REACT_APP_BACKEND_HOST}${REACT_APP_API_ORIGIN_URL}`;
-
   instance = axios.create({
     baseURL: this._url,
   });
@@ -35,10 +34,10 @@ class ApiService {
       body: null,
       params: null,
       headers: {},
+      token: '',
     },
   ): Promise<any> => {
     const { body, params, headers } = options;
-
     const tokens = await this.refreshTokens();
 
     const res = await this.instance.request({

@@ -20,9 +20,14 @@ export interface ResponseGenerator {
 function* signUpUser(data: PayloadAction) {
   try {
     yield put(UserActionCreator.requestStart());
-    const confirm = yield call(apiService.httpRequest, ApiPath.USERS, 'POST', {
-      body: data.payload,
-    });
+    const confirm: ResponseGenerator = yield call(
+      apiService.httpRequest,
+      ApiPath.USERS,
+      'POST',
+      {
+        body: data.payload,
+      },
+    );
     yield put(UserActionCreator.signUpSucceed());
   } catch (e) {
     yield put(UserActionCreator.requestFailed(String(e)));
@@ -81,7 +86,7 @@ function* logoutUser() {
   const localstorageService = new LocalstorageService();
   localstorageService.removeItem(LocalstorageKeys.AUTH);
   const token = localstorageService.getItem(LocalstorageKeys.AUTH);
-  if (!token) {
+  if(!token) {
     yield put(UserActionCreator.logoutSucceed());
   } else {
     yield put(UserActionCreator.requestFailed('Logout failed'));

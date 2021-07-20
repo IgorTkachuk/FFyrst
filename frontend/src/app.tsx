@@ -12,19 +12,14 @@ import { BsList } from 'react-icons/bs';
 
 const App: React.FC = () => {
   const localstorageService = new LocalstorageService();
-  const { authState, refreshToken, accessToken } = useTypedSelector(
-    (state) => state.user,
-  );
+  const { authState, refreshToken, accessToken } = useTypedSelector(state => state.user);
   const dispatch = useDispatch();
   const routes = useRoute(authState);
   const [isCollapsed, setIsCollapsed] = useState(false);
 
   useEffect(() => {
     if (authState) {
-      localstorageService.setItem(LocalstorageKeys.AUTH, {
-        refreshToken,
-        accessToken,
-      });
+      localstorageService.setItem(LocalstorageKeys.AUTH, { refreshToken, accessToken });
     }
     const auth = localstorageService.getItem(LocalstorageKeys.AUTH);
     if (auth) {

@@ -1,9 +1,10 @@
 import { userRepository } from '~/data/repositories';
-import { IUser, IActivationMessage } from 'shared/common/interfaces';
-import { mailService } from '../services';
+import { IUser, IActivationMessage, IProfile } from 'shared/common/interfaces';
+import { mailService, userService } from '../services';
 import { hashPassword, hashToken } from '~/helpers/bcrypt';
-import { createActivationMessage as message } from '~/helpers';
-import { ActivationStatus } from 'shared/common/enums';
+import { createActivationMessage as message, getUpdatedUser } from '~/helpers';
+import { ActivationStatus, HttpCode } from 'shared/common/enums';
+import { userSchema } from '~/api/user/user.schema';
 
 class UserService {
   public getAllUsers(): Promise<IUser[]> {
@@ -37,6 +38,24 @@ class UserService {
 
   public async updateUser(id: string, data: IUser): Promise<IUser[]> {
     return userRepository.updateById(id, data);
+  }
+
+  public async updateUserProfile(
+    id: string,
+    userProfile: IProfile,
+  ): Promise<IUser[] | null> {
+    try {
+      const user = await userService.getUserById(id);
+      if (!user) {
+        return null;
+      }
+      const updatedUser = getUpdatedUser(user, userProfile);
+      await userSchema.validate(updatedUser, { context: { required: true } });
+      const result = await userRepository.updateById(id, updatedUser);
+      return result;
+    } catch {
+      return null;
+    }
   }
 
   public deleteUser(id: string): Promise<number> {
