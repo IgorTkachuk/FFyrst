@@ -16,6 +16,16 @@ const initTenantApi = (apiRouter: Router): Router => {
     }
   });
 
+  tenantRouter.get(TenantsApiPath.DOMAINURL, async (_req, res, next) => {
+    try {
+      console.log(_req.hostname);
+      const tenant = await tenantService.getTenantByDomainUrl(_req.hostname);
+      res.status(HttpCode.OK).json(tenant);
+    } catch(error) {
+      next(error);
+    }
+  });
+
   tenantRouter.get(TenantsApiPath.$ID, async (_req, res, next) => {
     try {
       const user = await tenantService.getTenantById(_req.params.id);
@@ -24,6 +34,7 @@ const initTenantApi = (apiRouter: Router): Router => {
       next(error);
     }
   });
+
 
   tenantRouter.post(TenantsApiPath.ROOT, async (_req, res, next) => {
     try {

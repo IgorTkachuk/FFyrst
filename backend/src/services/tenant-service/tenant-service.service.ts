@@ -8,6 +8,9 @@ class TenantService {
   public getTenantById(id:string):Promise<ITenant | null>{
     return tenantRepository.getById(id)
   }
+  public getTenantByDomainUrl(domainUrl:string):Promise<ITenant | null>{
+    return tenantRepository.getByDomainUrl(domainUrl)
+  }
   public createNewTenant(user:ITenant):Promise<ITenant>{
     return tenantRepository.createTenant(user)
   }
