@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { ApiPath, AuthApiPath, HttpCode } from '~/common/enums';
+import { ApiPath, AuthApiPath, HttpCode } from 'shared';
 import { jwtValidation } from '~/middlewares/jwt-validation/jwt-validation.middelware';
 import { yupValidation } from '~/middlewares/yup-validation/yup-validation.middelware';
 import { verifySchema, resetSchema, loginSchema } from 'shared';

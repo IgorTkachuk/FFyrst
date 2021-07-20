@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { ActivationStatus } from 'shared';
-import { ApiPath, HttpCode, UsersApiPath } from '~/common/enums';
+import { ApiPath, HttpCode, UsersApiPath } from 'shared';
 import { createActivationMessage, getUpdatedUser } from '~/helpers';
 import { userService } from '~/services/services';
 import { userSchema } from './user.schema';
@@ -68,6 +68,16 @@ const initUserApi = (apiRouter: Router): Router => {
         .json({ message: 'success', user: userToActivate });
     } catch (error) {
       next(error);
+    }
+  });
+
+  userRouter.put(UsersApiPath.$ID, async (_req, res) => {
+    try {
+      await userSchema.validate(_req.body);
+      const user = await userService.updateUser(_req.params.id, _req.body);
+      res.status(HttpCode.OK).json(user);
+    } catch (error) {
+      res.status(HttpCode.BAD_REQUEST).json(error);
     }
   });
 

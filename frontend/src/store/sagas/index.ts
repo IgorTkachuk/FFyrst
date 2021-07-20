@@ -1,11 +1,11 @@
 import { all } from 'redux-saga/effects';
 import authSagaWatcher from './auth';
 import activationSaga from './activation';
-import {} from '../slices/';
+import fileSagaWatcher from './file'
 import userDataSagaWatcher from './user-data';
 
 function* rootSaga(): Generator {
-  yield all([authSagaWatcher(), activationSaga(), userDataSagaWatcher()]);
+  yield all([authSagaWatcher(), activationSaga(), fileSagaWatcher(),userDataSagaWatcher()]);
 }
 
 export default rootSaga;

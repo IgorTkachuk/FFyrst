@@ -45,7 +45,7 @@ const Login: React.FC = () => {
                 )}
               </Field>
               <div className='flex items-center justify-between mt-4'>
-                <Button color='blue' label='Sign in' type={'submit'} disable={loading} />
+                <Button color='blue' label='Sign in' type={'submit'} disabled={loading} />
                 <div className='inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800'>
                   <NavLink to='/refresh'>Forgot Password?</NavLink>
                 </div>

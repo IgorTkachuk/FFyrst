@@ -1,9 +1,11 @@
 import { takeEvery, put, call, takeLatest } from 'redux-saga/effects';
 import { UserActionCreator } from '../slices';
 import ApiService from '../../services/api/api.service';
-import { AuthSagasTypes } from '../../common/enums';
+import { ApiPath, AuthApiPath } from 'shared';
+import { AuthSagasTypes, LocalstorageKeys } from '../../common/enums';
 import { PayloadAction } from '@reduxjs/toolkit';
 import { SagaAction } from '../../common/types';
+import LocalstorageService from 'services/localstorage/localstorage.service';
 
 const apiService = new ApiService();
 
@@ -18,9 +20,14 @@ export interface ResponseGenerator {
 function* signUpUser(data: PayloadAction) {
   try {
     yield put(UserActionCreator.requestStart());
-    const confirm = yield call(apiService.httpRequest, '/users', 'POST', {
-      body: data.payload,
-    });
+    const confirm: ResponseGenerator = yield call(
+      apiService.httpRequest,
+      ApiPath.USERS,
+      'POST',
+      {
+        body: data.payload,
+      },
+    );
     yield put(UserActionCreator.signUpSucceed());
   } catch (e) {
     yield put(UserActionCreator.requestFailed(String(e)));
@@ -32,7 +39,7 @@ function* loginUser(data: PayloadAction) {
     yield put(UserActionCreator.requestStart());
     const authResult: ResponseGenerator = yield call(
       apiService.httpRequest,
-      '/auth/login',
+      `${ApiPath.AUTH}${AuthApiPath.LOGIN}`,
       'POST',
       {
         body: data.payload,
@@ -49,7 +56,7 @@ function* resetPassword(data: PayloadAction) {
     yield put(UserActionCreator.requestStart());
     const confirm: ResponseGenerator = yield call(
       apiService.httpRequest,
-      '/auth/reset',
+      `${ApiPath.AUTH}${AuthApiPath.RESET_PASSWORD}`,
       'POST',
       { body: data.payload },
     );
@@ -64,13 +71,25 @@ function* verifyPassword(data: PayloadAction) {
     yield put(UserActionCreator.requestStart());
     const confirm: ResponseGenerator = yield call(
       apiService.httpRequest,
-      '/auth/verify',
+      `${ApiPath.AUTH}${AuthApiPath.VERIFY_PASSWORD}`,
       'POST',
       { body: data.payload },
     );
     yield put(UserActionCreator.verifySucceed());
   } catch (e) {
     yield put(UserActionCreator.requestFailed(String(e)));
+  }
+}
+
+function* logoutUser() {
+  yield put(UserActionCreator.requestStart());
+  const localstorageService = new LocalstorageService();
+  localstorageService.removeItem(LocalstorageKeys.AUTH);
+  const token = localstorageService.getItem(LocalstorageKeys.AUTH);
+  if(!token) {
+    yield put(UserActionCreator.logoutSucceed());
+  } else {
+    yield put(UserActionCreator.requestFailed('Logout failed'));
   }
 }
 
@@ -82,6 +101,7 @@ function* authSagaWatcher() {
     verifyPassword,
   );
   yield takeLatest<SagaAction>(AuthSagasTypes.REGISTER_USER, signUpUser);
+  yield takeEvery<SagaAction>(AuthSagasTypes.LOGOUT_USER, logoutUser);
 }
 
 export default authSagaWatcher;
