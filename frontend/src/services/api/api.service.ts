@@ -7,10 +7,11 @@ import { store } from '../../store/store';
 
 const { REACT_APP_BACKEND_HOST, REACT_APP_API_ORIGIN_URL } = process.env;
 
-interface IHttpRequestConf {
-  token?: string | null;
+interface IHttpRequestOptions {
+  token?: string;
   params?: any;
   body?: any;
+  headers?: any;
 }
 
 interface ITokens {
@@ -30,22 +31,25 @@ class ApiService {
   httpRequest = async (
     url: string,
     method: Method = 'GET',
-    options: IHttpRequestConf = {
+    options: IHttpRequestOptions = {
       body: null,
       params: null,
-      token: null,
+      headers: {},
     },
   ): Promise<any> => {
+    const { body, params, headers } = options;
+
     const tokens = await this.refreshTokens();
 
     const res = await this.instance.request({
       url,
-      data: options.body,
+      data: body,
       headers: {
         Authorization: `Bearer ${tokens?.accessToken || ''}`,
+        ...headers,
       },
       method,
-      params: options.params,
+      params,
     });
 
     return res.data;

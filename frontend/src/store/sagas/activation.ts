@@ -22,7 +22,7 @@ function* sendActivationRequest(action: Record<string, string>) {
     apiService.httpRequest,
     url,
     HttpMethod.PUT,
-    { body: email },
+    { body: { email } }
   );
   yield put(ActivationActionCreator.setStatus(activationResponse));
 }

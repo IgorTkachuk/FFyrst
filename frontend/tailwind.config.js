@@ -1,4 +1,5 @@
 const Nth = require('tailwindcss-nth-child');
+const { width } = require('tailwindcss/defaultTheme');
 const plugin = new Nth('even');
 
 module.exports = {
@@ -39,6 +40,12 @@ module.exports = {
         'sidebar-content': '300px',
         'page-content': '1000px',
       },
+      height: {
+        '3px': '3px'
+      },
+      width: {
+        'half-screen': '50vw',
+      }
     },
     fontFamily: {
       roboto: ['Roboto', 'sans-serif'],

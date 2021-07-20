@@ -59,6 +59,12 @@ const { reducer, actions } = createSlice({
       state.registerState = true;
       state.loading = false;
     },
+    logoutSucceed: (state) => {
+      state.authState = false;
+      state.accessToken = null;
+      state.refreshToken = null;
+      state.loading = false;
+    }
   },
 });
 
@@ -77,6 +83,9 @@ export const resetPasswordAction = (email: { email: string }) => ({
 export const verifyPasswordAction = (data: IVerPassword) => ({
   type: AuthSagasTypes.VERIFY_PASSWORD_CHANGE,
   payload: data,
+});
+export const logoutUserAction = () => ({
+  type: AuthSagasTypes.LOGOUT_USER,
 });
 
 const UserActionCreator = {

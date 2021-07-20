@@ -1,13 +1,23 @@
 import React from 'react';
-import { Link } from '../../components/common';
+import { Header } from 'components/Header/Header';
 import { AppRoute } from '../../common/enums';
+import { Link } from '../../components/common';
+
+const defaultUser = {
+  firstName: 'Antananis',
+  lastName: 'Papastatopuolous',
+  linkToAvatar: 'http://link-to-avatar/ivan-ivanov'
+}
 
 const Main = () => {
   return (
-    <div>
-      {/* for debug purpose */}
-      <Link to={AppRoute.USER_PROFILE}>User profile</Link>
-    </div>
+    <>
+      <Header user={defaultUser}/>
+      <div>
+        {/* for debug purpose */}
+        <Link to={AppRoute.USER_PROFILE}>User profile</Link>
+      </div>
+    </>
   );
 };
 
