@@ -72,8 +72,8 @@ class UserRepository {
     });
   }
 
-  public getUsersCount(): Promise<IUser[]> {
-    return UserModel.findAll();
+  public async getUsersCount(): Promise<number> {
+    return await UserModel.count();
   }
 
 }

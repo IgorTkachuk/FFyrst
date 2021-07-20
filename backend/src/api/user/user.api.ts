@@ -20,15 +20,6 @@ const initUserApi = (apiRouter: Router): Router => {
     }
   });
 
-  userRouter.get(UsersApiPath.$ID, async (_req, res) => {
-    try {
-      const user = await userService.getUserById(_req.params.id);
-      res.status(HttpCode.OK).json(user);
-    } catch (error) {
-      res.status(HttpCode.NOT_FOUND).json(error);
-    }
-  });
-
   userRouter.post(UsersApiPath.ROOT, async (_req, res, next) => {
     try {
       await userSchema.validate(_req.body, { context: { required: true } });
@@ -36,7 +27,7 @@ const initUserApi = (apiRouter: Router): Router => {
       const userToActivate = await userService.setUserActivation(user);
       res.status(HttpCode.OK).json({ message: 'success', user: userToActivate });
     } catch (error) {
-      // next(error);
+      next(error);
     }
   });
 
@@ -69,7 +60,7 @@ const initUserApi = (apiRouter: Router): Router => {
       }
       res.status(HttpCode.NOT_FOUND).json('User not found.');
     } catch (error) {
-      // next(error);
+      next(error);
     }
   });
 
@@ -78,7 +69,7 @@ const initUserApi = (apiRouter: Router): Router => {
       const outcome = await userService.activateUser(_req.params.token);
       return res.json(outcome);
     } catch (error) {
-      // next(error);
+      next(error);
     }
   });
 
@@ -98,6 +89,15 @@ const initUserApi = (apiRouter: Router): Router => {
 
     } catch (error) {
       next(error);
+    }
+  });
+
+  userRouter.get(UsersApiPath.$ID, async (_req, res) => {
+    try {
+      const user = await userService.getUserById(_req.params.id);
+      res.status(HttpCode.OK).json(user);
+    } catch (error) {
+      res.status(HttpCode.NOT_FOUND).json(error);
     }
   });
 

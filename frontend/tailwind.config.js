@@ -1,5 +1,4 @@
 const Nth = require('tailwindcss-nth-child');
-const { width } = require('tailwindcss/defaultTheme');
 const plugin = new Nth('even');
 
 module.exports = {
@@ -22,17 +21,10 @@ module.exports = {
         mob: '320px',
         def: '1300px',
       },
-      transitionProperty: {
-        width: 'width',
-        display: 'display',
-      },
       divideColor: theme => ({
         ...theme('borderColors'),
         dark: '#444444',
       }),
-      scale: {
-        '300': '3',
-      },
       textColor: {
         'dark-txt': '#444444',
       },
@@ -63,7 +55,8 @@ module.exports = {
       ringWidth: ['hover', 'active'],
       ringColor: ['hover', 'active'],
       borderRadius: ['hover', 'active'],
-      cursor:['hover']
+      cursor: ['hover'],
+
     },
   },
   plugins: [

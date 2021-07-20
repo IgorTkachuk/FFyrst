@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 
 interface IProps {
   idx?: string,
   row?: any,
   prop: string,
-  title: string,
+  title: ReactNode | HTMLAllCollection | string,
   callback: (id: any) => void
 }
 

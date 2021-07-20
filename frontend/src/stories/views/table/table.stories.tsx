@@ -21,7 +21,6 @@ const users = [user];
 
 export const TableDefault = Template.bind({});
 TableDefault.args = {
-  tableName: 'Employees',
   headers: ['Name', 'Phone', 'Email', 'Photo', 'Del'],
   data: users,
 };

@@ -40,7 +40,7 @@ const App: React.FC = () => {
 
   return (
     <div className='w-full min-h-screen max-w-full'>
-      <Header user={defaultUser} callback={burgerClick} isCollapsed={isCollapsed} />
+      { authState && <Header user={defaultUser} callback={burgerClick} isCollapsed={isCollapsed} />}
       <div className={'flex'}>
         {authState && <SideNavbar isCollapsed={isCollapsed} setCollapse={setIsCollapsed} />}
         <div
