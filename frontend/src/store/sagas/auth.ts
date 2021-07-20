@@ -2,9 +2,10 @@ import { takeEvery, put, call, takeLatest } from 'redux-saga/effects';
 import { UserActionCreator } from '../slices';
 import ApiService from '../../services/api/api.service';
 import { ApiPath, AuthApiPath } from 'shared';
-import { AuthSagasTypes } from '../../common/enums';
+import { AuthSagasTypes, LocalstorageKeys } from '../../common/enums';
 import { PayloadAction } from '@reduxjs/toolkit';
 import { SagaAction } from '../../common/types';
+import LocalstorageService from 'services/localstorage/localstorage.service';
 
 const apiService = new ApiService();
 
@@ -19,7 +20,7 @@ export interface ResponseGenerator {
 function* signUpUser(data: PayloadAction) {
   try {
     yield put(UserActionCreator.requestStart());
-    const confirm = yield call(
+    const confirm: ResponseGenerator = yield call(
       apiService.httpRequest,
       ApiPath.USERS,
       'POST',
@@ -80,11 +81,27 @@ function* verifyPassword(data: PayloadAction) {
   }
 }
 
+function* logoutUser() {
+  yield put(UserActionCreator.requestStart());
+  const localstorageService = new LocalstorageService();
+  localstorageService.removeItem(LocalstorageKeys.AUTH);
+  const token = localstorageService.getItem(LocalstorageKeys.AUTH);
+  if(!token) {
+    yield put(UserActionCreator.logoutSucceed());
+  } else {
+    yield put(UserActionCreator.requestFailed('Logout failed'));
+  }
+}
+
 function* authSagaWatcher() {
   yield takeEvery<SagaAction>(AuthSagasTypes.LOGIN_USER, loginUser);
   yield takeEvery<SagaAction>(AuthSagasTypes.REFRESH_PASSWORD, resetPassword);
-  yield takeEvery<SagaAction>(AuthSagasTypes.VERIFY_PASSWORD_CHANGE, verifyPassword);
+  yield takeEvery<SagaAction>(
+    AuthSagasTypes.VERIFY_PASSWORD_CHANGE,
+    verifyPassword,
+  );
   yield takeLatest<SagaAction>(AuthSagasTypes.REGISTER_USER, signUpUser);
+  yield takeEvery<SagaAction>(AuthSagasTypes.LOGOUT_USER, logoutUser);
 }
 
 export default authSagaWatcher;
