@@ -2,13 +2,15 @@ import axios, { Method } from 'axios';
 import { LocalstorageKeys } from '../../common/enums';
 import LocalstorageService from '../localstorage/localstorage.service';
 import { HttpCode } from 'shared';
+import { ApiPath, AuthApiPath } from 'shared';
+import { store } from '../../store/store';
 
 const { REACT_APP_BACKEND_HOST, REACT_APP_API_ORIGIN_URL } = process.env;
 
 interface IHttpRequestConf {
-  token?: string | null,
-  params?: any,
-  body?: any
+  token?: string | null;
+  params?: any;
+  body?: any;
 }
 
 interface ITokens {
@@ -34,10 +36,7 @@ class ApiService {
       token: null,
     },
   ): Promise<any> => {
-    const storageTokens = this.localstorageService.getItem(
-      LocalstorageKeys.AUTH,
-    );
-    const tokens = await this.checkTokens(storageTokens);
+    const tokens = await this.refreshTokens();
 
     const res = await this.instance.request({
       url,
@@ -52,10 +51,19 @@ class ApiService {
     return res.data;
   };
 
-  async checkTokens(tokens: ITokens): Promise<ITokens | undefined> {
+  async refreshTokens(): Promise<ITokens | undefined> {
+    const state = store.getState();
+    const userLoggedIn = state.user.authState;
+
+    if (!userLoggedIn) {
+      return;
+    }
+    const tokens = this.localstorageService.getItem(LocalstorageKeys.AUTH);
+
     try {
+      // check if access token still valid
       await this.instance.request({
-        url: '/auth/login',
+        url: `${ApiPath.AUTH}${AuthApiPath.LOGIN}`,
         headers: {
           Authorization: `Bearer ${tokens?.accessToken || ''}`,
         },
@@ -64,22 +72,27 @@ class ApiService {
       return tokens;
     } catch (e) {
       if (e.message.includes(HttpCode.UNAUTHORIZED)) {
-        console.log('new tokens');
-        const tokensData = await this.instance.request({
-          url: '/auth/refresh-token',
-          headers: {
-            Authorization: `Bearer ${tokens?.refreshToken || ''}`,
-          },
-          method: 'POST',
-        });
+        try {
+          // refresh tokens
+          const tokensData = await this.instance.request({
+            url: `${ApiPath.AUTH}${AuthApiPath.REFRESH_TOKEN}`,
+            headers: {
+              Authorization: `Bearer ${tokens?.refreshToken || ''}`,
+            },
+            method: 'POST',
+          });
 
-        const newTokens: ITokens = {
-          refreshToken: tokensData.data.refreshToken,
-          accessToken: tokensData.data.accessToken,
-        };
-        this.localstorageService.setItem(LocalstorageKeys.AUTH, newTokens);
+          const newTokens: ITokens = {
+            refreshToken: tokensData.data.refreshToken,
+            accessToken: tokensData.data.accessToken,
+          };
 
-        return newTokens;
+          this.localstorageService.setItem(LocalstorageKeys.AUTH, newTokens);
+          return newTokens;
+        } catch (e) {
+          this.localstorageService.removeItem(LocalstorageKeys.AUTH);
+          return;
+        }
       }
     }
   }

@@ -4,6 +4,8 @@ import { call, put, takeEvery } from 'redux-saga/effects';
 import { UserDataActionCreator } from '../slices';
 import { SagaAction, SagaUserAction } from '../../common/types';
 import { UserDataSagaTypes } from '../../common/enums';
+import { ApiPath, UsersApiPath } from 'shared';
+
 import { IProfile } from 'shared';
 
 const apiService = new ApiService();
@@ -12,9 +14,14 @@ function* getUser(data: PayloadAction) {
   const accessToken = (data.payload as unknown) as string;
   if (!accessToken) return;
   try {
-    const user = yield call(apiService.httpRequest, '/users/profile', 'GET', {
-      token: accessToken,
-    });
+    const user = yield call(
+      apiService.httpRequest,
+      `${ApiPath.USERS}${UsersApiPath.PROFILE}`,
+      'GET',
+      {
+        token: accessToken,
+      },
+    );
     yield put(UserDataActionCreator.setUser(user));
   } catch (e) {
     //should be implemented refresh token feature for frontend
@@ -27,10 +34,15 @@ function* updateUser(
   const accessToken = data.payload.token;
   if (!accessToken) return;
   try {
-    const user = yield call(apiService.httpRequest, '/users/profile', 'PUT', {
-      body: data.payload.user,
-      token: accessToken,
-    });
+    const user = yield call(
+      apiService.httpRequest,
+      `${ApiPath.USERS}${UsersApiPath.PROFILE}`,
+      'PUT',
+      {
+        body: data.payload.user,
+        token: accessToken,
+      },
+    );
 
     yield put(UserDataActionCreator.setUser(user));
   } catch (e) {
