@@ -20,15 +20,15 @@ const SideNavbar: React.FC<IProps> = ({ isCollapsed, setCollapse }) => {
   const dropdownStatus = (e: any) => {
     if (!e.target.closest('.sidebar') && !e.target.classList.contains('collapse-btn')) {
       setCollapse(false);
-      console.log(e.target);
     }
   };
 
   useEffect(() => {
-    document.addEventListener('click', e => dropdownStatus(e));
-
+    if(isCollapsed) {
+      document.addEventListener('click', e => dropdownStatus(e));
+    }
     return () => document.removeEventListener('click', e => dropdownStatus(e));
-  }, []);
+  }, [isCollapsed]);
 
   return (
     <>

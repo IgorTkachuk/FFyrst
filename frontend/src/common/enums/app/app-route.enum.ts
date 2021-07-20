@@ -5,6 +5,7 @@ enum AppRoute {
   REFRESH = '/refresh',
   VERIFY_REFRESH = '/verify-refresh/:token',
   EMAIL_ACTIVATION = '/email-activation/:token',
+  PLATFORM_EDIT = '/platform-edit',
   USER_PROFILE = '/profile',
 }
 
