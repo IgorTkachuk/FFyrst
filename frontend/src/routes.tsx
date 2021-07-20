@@ -4,8 +4,6 @@ import * as Pages from './pages'
 import { AppRoute } from 'common/enums';
 
 const useRoute = (isAuth: boolean): React.ReactElement => {
-  console.log('isAuth', isAuth);
-
   if (!isAuth) {
     return (
       <Switch>
@@ -36,7 +34,7 @@ const useRoute = (isAuth: boolean): React.ReactElement => {
         <Route path={AppRoute.PLATFORM_EDIT}>
           <Pages.PlatformEdit />
         </Route>
-        <Redirect to={AppRoute.PLATFORM_EDIT} />
+        <Redirect to={AppRoute.MAIN} />
       </Switch>
     );
   }
