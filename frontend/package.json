@@ -5,7 +5,7 @@
     "node": "14.x.x",
     "npm": "6.x.x"
   },
-  "proxy": "http://nyp.fyrst.com:3001/",
+  "proxy": "http://localhost:3001/",
   "scripts": {
     "start": "craco start",
     "build": "craco build",
