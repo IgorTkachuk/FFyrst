@@ -14,6 +14,9 @@ module.exports = {
         '4': '4px',
         '6': '6px',
       },
+      outline: {
+        non: "1px solid #F9FAFB",
+      },
       spacing: {
         128: '32rem',
       },
@@ -31,7 +34,8 @@ module.exports = {
       maxWidth: {
         'sidebar-content': '300px',
         'page-content': '1000px',
-        'img-content': '50px',
+        'img-content': '24px',
+        'select-content': '200px',
       },
       minHeight: {
         'with-header': 'calc(100% - 54px)',
@@ -49,6 +53,7 @@ module.exports = {
   },
   variants: {
     extend: {
+      appearance: ['hover', 'focus'],
       display: ['group-hover'],
       scale: ['active', 'hover'],
       backgroundColor: ['nth-child'],

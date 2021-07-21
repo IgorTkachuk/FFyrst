@@ -2,44 +2,35 @@ import React from 'react';
 import './table.css';
 
 type Row = {
-  [key: string]: string
+  [key: string]: string | boolean | number,
 }
 
 interface TableProps {
-  tableName: string;
   headers: Array<string>;
   data: Row[];
 }
 
-export const Table: React.FC<TableProps> = ({ headers, data, tableName, children }) => {
+export const Table: React.FC<TableProps> = ({ headers, data, children }) => {
   return (
-    <div>
-      <div className='py-1 px-2 font-roboto text-2xl text-green-900 font-bold '>
+    <table className={'table-auto w-full '}>
+      <thead>
+      <tr>
+        {headers.map((el, idx) => <th className=' font-thin px-2 ' key={idx}>{el}</th>)}
+      </tr>
+      </thead>
+      <tbody className={'divide-y '}>
+      {data.map((row, rowIdx) => <tr className='px-2 hover:bg-gray-100 transition duration-200'
+        // key={String(row.id)}
+        key={rowIdx}
+      >
         {
-          tableName
+          React.Children.map(children, (child: any, cellIdx) => {
+            return React.cloneElement(child, { row, id: `${rowIdx}${cellIdx}` });
+          })
         }
-      </div>
-      <div className='flex flex-col shadow-lg border-2 border-green-400 rounded overflow-x-auto pb-0.25 '>
-        <div
-          className={`rounded grid pl-0.5 pr-0.5 divide-y `}
-          style={{ gridTemplateColumns: `repeat(${headers.length}, 1fr)` }}
-        >
-          {headers.map((header, index) => (
-            <div
-              className='whitespace-nowrap box-content border-2 bg-green-600 font-roboto text-white font-semibold rounded text-lg px-2 py-1'
-              key={`${header}${index}`}
-            >
-              {header}
-            </div>
-          ))}
-          {data.map((row) => {
-            return React.Children.map(children, (child: any) => {
-              return React.cloneElement(child, { row });
-            });
-          })}
-        </div>
-      </div>
-    </div>
+      </tr>)}
+      </tbody>
+    </table>
   );
 };
 

@@ -9,11 +9,11 @@ interface IProps {
 
 const ImgCell: React.FC<IProps> = ({ prop, row, idx, alt }) => {
   return (
-    <div
-      className={'custom w-full flex justify-center items-center bg-green-200 border-t-2 border-b-2  border-white px-2 py-1  '}
+    <td
+      className={'py-1'}
       key={idx}>
-      <img className="max-w-img-content h-auto" src={row[prop]} alt={row[alt]} />
-    </div>
+      <img className="max-w-img-content h-auto rounded-full" src={row[prop]} alt={row[alt]} />
+    </td>
   );
 };
 

@@ -8,11 +8,11 @@ interface IProps {
 
 const TextCell: React.FC<IProps> = ({ idx, row, prop }) => {
   return (
-    <div
-      className='custom flex justify-center items-center whitespace-nowrap width-test bg-green-200 font-roboto border-t-2 border-b-2  border-white px-2 py-1'
+    <td
+      className=' whitespace-nowrap text-center font-roboto px-2 py-1 text-gray-500'
       key={idx}>
       {row[prop]}
-    </div>
+    </td>
   );
 };
 

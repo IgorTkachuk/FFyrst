@@ -3,34 +3,32 @@ import './select.css';
 import { Multiselect } from 'multiselect-react-dropdown';
 
 interface SelectProps {
-  id: string,
+  placeholder: string,
   title: string,
   singleSelect: boolean,
   options?: Array<{ name: string, id: string }> | []
+  callback?: (val: string) => void
 }
 
-export const Select = ({ id, title = '', singleSelect = false, options = [] }: SelectProps) : JSX.Element => {
-  const [currentData, setCurrentData] = useState<Array<{name: string, id: string}>>([]);
-  useEffect(() => {
-    setCurrentData(options);
-  }, [options]);
+export const Select = ({ placeholder, title = '', singleSelect = false, options = [], callback, }: SelectProps): JSX.Element => {
   return (
-    <div className="flex flex-col">
+    <div className='flex flex-col max-w-select-content'>
       {title}
       {singleSelect ? (
         <Multiselect
-          id = {id}
-          options = {currentData}
-          displayValue = "name"
-          showArrow = {true}
-          singleSelect = {true}
+          onSelect={callback}
+          options={options}
+          displayValue='name'
+          showArrow={true}
+          singleSelect={true}
         />
       ) : (
         <Multiselect
-          id = {id}
-          options = {currentData}
-          displayValue = "name"
-          closeIcon = {"cancel"}
+          placeholder={placeholder}
+          onSelect={callback}
+          options={options}
+          displayValue='name'
+          closeIcon={'cancel'}
         />
       )}
     </div>
