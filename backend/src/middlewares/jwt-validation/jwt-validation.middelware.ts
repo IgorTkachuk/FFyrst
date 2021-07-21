@@ -2,7 +2,7 @@ import { RequestHandler } from 'express';
 import { secret } from '../../../config/jwt.config';
 import { HttpCode } from '~/common/enums';
 import { ResponseMessages } from '~/common/enums/messages/response-messages.enum';
-import jwt, { JwtPayload, Secret, TokenExpiredError } from 'jsonwebtoken';
+import jwt, { Secret, TokenExpiredError } from 'jsonwebtoken';
 
 const jwtValidation: RequestHandler = (req, res, next) => {
   if (req.method === 'OPTIONS') {
@@ -23,7 +23,6 @@ const jwtValidation: RequestHandler = (req, res, next) => {
           .send({ message: ResponseMessages.TOKEN_EXPIRED });
       }
       if (err) {
-        console.log('Token unautorized', err);
         return res
           .status(HttpCode.UNAUTHORIZED)
           .send({ message: ResponseMessages.WRONG_TOKEN_REQUEST });

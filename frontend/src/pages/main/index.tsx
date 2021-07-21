@@ -6,13 +6,13 @@ import { AppRoute } from '../../common/enums';
 const defaultUser = {
   firstName: 'Antananis',
   lastName: 'Papastatopuolous',
-  linkToAvatar: 'http://link-to-avatar/ivan-ivanov'
-}
+  linkToAvatar: 'http://link-to-avatar/ivan-ivanov',
+};
 
 const Main = () => {
   return (
     <>
-      <Header user={defaultUser}/>
+      <Header user={defaultUser} />
       <div>
         Main page
         {/* for debug purpose */}
