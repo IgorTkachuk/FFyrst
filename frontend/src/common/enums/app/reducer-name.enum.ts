@@ -3,7 +3,8 @@ enum ReducerName {
   USER = 'user',
   ACTIVATION = 'activation',
   FILE = 'file',
-  USER_MANAGE = 'user_manage'
+  USER_MANAGE = 'user_manage',
+  USER_DATA = 'userData',
 }
 
 export { ReducerName };

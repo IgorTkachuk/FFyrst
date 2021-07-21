@@ -39,7 +39,10 @@ class UserRepository {
     return await UserModel.findOne({ where: { activationToken } });
   }
 
-  public async activateUser(activationToken: string, data: IUser): Promise<IUser[]> {
+  public async activateUser(
+    activationToken: string,
+    data: IUser,
+  ): Promise<IUser[]> {
     const result = await UserModel.update(data, {
       where: { activationToken },
       returning: true,

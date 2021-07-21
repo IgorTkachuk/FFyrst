@@ -34,6 +34,9 @@ const useRoute = (isAuth: boolean): React.ReactElement => {
         <Route path={AppRoute.USER_MANAGE}>
           <Pages.UserManage />
         </Route>
+        <Route path={AppRoute.USER_PROFILE}>
+          <Pages.UserProfileDetails />
+        </Route>
         <Redirect to={AppRoute.MAIN} />
       </Switch>
     );

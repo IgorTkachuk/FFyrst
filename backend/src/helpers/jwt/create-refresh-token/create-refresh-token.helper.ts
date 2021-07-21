@@ -12,7 +12,6 @@ const createRefreshToken = (userId: string): Promise<string> => {
 
     redis_client.SET(userId, refreshToken, (err) => {
       if (err) {
-        console.log(err.message);
         reject(HttpCode.INTERNAL_SERVER_ERROR);
         return;
       }

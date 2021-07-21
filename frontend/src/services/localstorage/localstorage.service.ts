@@ -1,11 +1,10 @@
 class LocalstorageService {
-
   setItem(key: string, data: any) {
     const jsonData = JSON.stringify(data);
     localStorage.setItem(key, jsonData);
   }
 
-  getItem(key: string) {
+  getItem(key: string): { accessToken: string; refreshToken: string } {
     const data = localStorage.getItem(key);
     return data ? JSON.parse(data) : null;
   }
@@ -13,7 +12,6 @@ class LocalstorageService {
   removeItem(key: string) {
     localStorage.removeItem(key);
   }
-
 }
 
 export default LocalstorageService;

@@ -2,7 +2,6 @@ import { takeEvery, put, call } from 'redux-saga/effects';
 import { ApiPath, UsersApiPath, HttpMethod } from 'shared';
 import { IActivationMessage } from 'shared';
 import { ActivationActionCreator } from '../slices';
-import { AppRoute } from '../../common/enums';
 import ApiService from 'services/api/api.service';
 
 const apiService = new ApiService();

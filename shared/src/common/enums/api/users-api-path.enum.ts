@@ -4,7 +4,8 @@ enum UsersApiPath {
   ACTIVATION_REQUEST = '/activation/request',
   $ACTIVATION = '/activation/:token',
   ACTIVATION = '/activation',
-  PAG_USERS = '/pagination-users'
+  PAG_USERS = '/pagination-users',
+  PROFILE = '/profile',
 }
 
 export { UsersApiPath };
