@@ -14,7 +14,7 @@ const useRoute = (isAuth: boolean): React.ReactElement => {
           <Pages.Registration />
         </Route>
         <Route path={AppRoute.REFRESH}>
-          <Pages.Refresh />
+          <Pages.Reset />
         </Route>
         <Route path={AppRoute.VERIFY_REFRESH}>
           <Pages.VerifyRefresh />
@@ -28,8 +28,11 @@ const useRoute = (isAuth: boolean): React.ReactElement => {
   } else {
     return (
       <Switch>
-        <Route path={AppRoute.MAIN}>
+        <Route path={AppRoute.MAIN} exact>
           <Pages.Main />
+        </Route>
+        <Route path={AppRoute.USER_MANAGE}>
+          <Pages.UserManage />
         </Route>
         <Route path={AppRoute.USER_PROFILE}>
           <Pages.UserProfileDetails />

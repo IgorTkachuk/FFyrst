@@ -10,4 +10,6 @@ export interface IHeaderProps {
     lastName: string,
     linkToAvatar: string,
   }
+  callback?: () => void,
+  isCollapsed?: boolean
 }

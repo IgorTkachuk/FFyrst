@@ -3,7 +3,7 @@ import { IUser, IActivationMessage, IProfile } from 'shared/common/interfaces';
 import { mailService, userService } from '../services';
 import { hashPassword, hashToken } from '~/helpers/bcrypt';
 import { createActivationMessage as message, getUpdatedUser } from '~/helpers';
-import { ActivationStatus, HttpCode } from 'shared/common/enums';
+import { ActivationStatus } from 'shared/common/enums';
 import { userSchema } from '~/api/user/user.schema';
 
 class UserService {
@@ -89,6 +89,11 @@ class UserService {
     userRepository.activateUser(token, { ...user, ...data });
     return message(ActivationStatus.SUCCESS, 'Successful activation.');
   }
+
+  public async getUsersCount(): Promise<number> {
+    return await userRepository.getUsersCount();
+  }
+
 }
 
 export { UserService };

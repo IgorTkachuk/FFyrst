@@ -46,15 +46,6 @@ const initUserApi = (apiRouter: Router): Router => {
     }
   });
 
-  userRouter.get(UsersApiPath.$ID, async (_req, res) => {
-    try {
-      const user = await userService.getUserById(_req.params.id);
-      res.status(HttpCode.OK).json(user);
-    } catch (error) {
-      res.status(HttpCode.NOT_FOUND).json(error);
-    }
-  });
-
   userRouter.post(UsersApiPath.ROOT, async (_req, res, next) => {
     try {
       await userSchema.validate(_req.body, { context: { required: true } });
@@ -110,6 +101,34 @@ const initUserApi = (apiRouter: Router): Router => {
       return res.json(outcome);
     } catch (error) {
       next(error);
+    }
+  });
+
+  userRouter.get(UsersApiPath.PAG_USERS, jwtValidation, async (_req, _res, next) => {
+    try {
+      const count = await userService.getUsersCount();
+      _res.status(HttpCode.OK).json({ count });
+    } catch (error) {
+      // next(error);
+      _res.status(400).json({ error });
+    }
+  });
+
+  userRouter.post(UsersApiPath.PAG_USERS, jwtValidation, (_req, _res, next) => {
+    try {
+      const { limit, offset, filters } = _req.body;
+
+    } catch (error) {
+      next(error);
+    }
+  });
+
+  userRouter.get(UsersApiPath.$ID, async (_req, res) => {
+    try {
+      const user = await userService.getUserById(_req.params.id);
+      res.status(HttpCode.OK).json(user);
+    } catch (error) {
+      res.status(HttpCode.NOT_FOUND).json(error);
     }
   });
 

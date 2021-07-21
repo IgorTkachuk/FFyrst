@@ -5,6 +5,7 @@ import { Transporter } from 'nodemailer';
 import { MailOptions } from '~/common/types';
 import { getFullUrl, createMail } from '~/helpers';
 import { compileFile } from 'pug';
+import path from 'path';
 
 const nodemailer = require('nodemailer');
 
@@ -29,7 +30,7 @@ class MailService {
         from: user,
         to: email,
         subject: options?.mailTheme,
-        html: compileFile(`${__dirname}/templates/${type}.pug`)({
+        html: compileFile(path.resolve(`${__dirname}/templates/${type}.pug`))({
           ...options?.data,
         }),
       },
