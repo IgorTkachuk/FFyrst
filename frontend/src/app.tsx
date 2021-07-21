@@ -26,12 +26,6 @@ const App: React.FC = () => {
   }, [authState]);
 
   useEffect(() => {
-    // const apiService = new ApiService();
-    // const {  REACT_APP_API_ORIGIN_URL } = process.env;
-    // const url = `http://${window.location.host}/${REACT_APP_API_ORIGIN_URL}${AppRoute.TENANT_DETERMINE}`;
-    // apiService
-    //   .httpRequest(url)
-    //   .then((result) => console.log(result));
     dispatch(TenantActionCreator.requestStart('<p>'));
   }, []);
 
