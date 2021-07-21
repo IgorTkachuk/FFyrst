@@ -6,15 +6,7 @@ import MainLogo from 'assets/images/temp-main-logo.png';
 import UserHeaderMenu from './UserHeaderMenu';
 
 
-const Header = ({
-                  user = {
-                    firstName: '',
-                    lastName: '',
-                    linkToAvatar: '',
-                  },
-                  callback,
-                  isCollapsed,
-                }: IHeaderProps): ReactElement => {
+const Header = ({ user = { firstName: '', lastName: '', linkToAvatar: '', }, callback, isCollapsed, }: IHeaderProps): ReactElement => {
   return (
     <header
       className='sticky top-0 left-0 w-full border-b border-gray-200 bg-blue-600 shadow-md self-start z-50'>

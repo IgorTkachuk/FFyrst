@@ -10,3 +10,8 @@ export interface SagaUserAction
     PayloadAction<{ user: IProfile } & { token: string }> {
   type: string;
 }
+
+export interface SagaUsersPaginationAction extends Action,
+  PayloadAction<{ pagination: any, token: string }> {
+  type: string
+}

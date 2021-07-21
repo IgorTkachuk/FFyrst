@@ -3,7 +3,7 @@ import { Formik, FormikHelpers, FormikProps, Form, Field } from 'formik';
 import { useTypedSelector } from '../../../hooks/useTypedSelector';
 import { useDispatch } from 'react-redux';
 import { resetSchema } from 'shared';
-import { resetPasswordAction, UserActionCreator } from '../../../store/slices/user/user.slice';
+import { resetPasswordAction, UserActionCreator } from '../../../store/slices/auth/auth.slice';
 import { NavLink } from 'react-router-dom';
 import { Input } from '../../../stories/inputs/input/input';
 import { Button } from '../../../stories/controls/button/Button';

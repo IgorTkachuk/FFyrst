@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { IListItem, IHeaderProps } from './types';
 import Avatar from 'assets/images/avatar-example.png';
 import { useDispatch } from 'react-redux';
-import { logoutUserAction } from 'store/slices/user/user.slice';
+import { logoutUserAction } from 'store/slices/auth/auth.slice';
 import { useDetectOutsideClick } from 'hooks/useDetectOutsideClick';
 
 const UserHeaderMenu = ({user}: IHeaderProps): React.ReactElement => {

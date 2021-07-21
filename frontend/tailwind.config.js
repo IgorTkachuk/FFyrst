@@ -15,7 +15,7 @@ module.exports = {
         '6': '6px',
       },
       outline: {
-        non: "1px solid #F9FAFB",
+        non: '1px solid #F9FAFB',
       },
       spacing: {
         128: '32rem',
@@ -53,15 +53,15 @@ module.exports = {
   },
   variants: {
     extend: {
-      appearance: ['hover', 'focus'],
+      borderColor: ['checked'],
+      appearance: ['hover', 'focus', 'checked', 'active'],
       display: ['group-hover'],
       scale: ['active', 'hover'],
-      backgroundColor: ['nth-child'],
+      backgroundColor: ['nth-child,checked'],
       ringWidth: ['hover', 'active'],
       ringColor: ['hover', 'active'],
       borderRadius: ['hover', 'active'],
       cursor: ['hover'],
-
     },
   },
   plugins: [

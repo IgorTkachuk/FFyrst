@@ -5,7 +5,7 @@ import { Formik, Form, Field } from 'formik';
 import { AppRoute } from 'common/enums';
 import { Link } from 'components/common';
 
-import { signUpUserAction } from '../../../store/slices/user/user.slice';
+import { signUpUserAction } from '../../../store/slices/auth/auth.slice';
 
 import { FormField } from 'components';
 import { SignUpSchema } from './common/validations';

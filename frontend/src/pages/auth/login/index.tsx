@@ -3,7 +3,7 @@ import { Form, Formik, FormikHelpers, FormikProps, Field } from 'formik';
 import { useDispatch } from 'react-redux';
 import { ILogin, loginSchema } from 'shared';
 import { useTypedSelector } from '../../../hooks/useTypedSelector';
-import { loginUserAction, UserActionCreator } from '../../../store/slices/user/user.slice';
+import { loginUserAction, UserActionCreator } from '../../../store/slices/auth/auth.slice';
 import { NavLink } from 'react-router-dom';
 import { Input } from '../../../stories/inputs/input/input';
 import { Button } from '../../../stories/controls/button/Button';
@@ -47,7 +47,7 @@ const Login: React.FC = () => {
               <div className='flex items-center justify-between mt-4'>
                 <Button color='blue' label='Sign in' type={'submit'} disabled={loading} />
                 <div className='inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800'>
-                  <NavLink to='/refresh'>Forgot Password?</NavLink>
+                  <NavLink to='/reset'>Forgot Password?</NavLink>
                 </div>
               </div>
               <hr className='my-1 h-1' />

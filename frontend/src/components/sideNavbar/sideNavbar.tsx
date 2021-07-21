@@ -7,6 +7,8 @@ import {
   BsChatFill,
   BsHouseDoorFill,
 } from 'react-icons/bs';
+import { AppRoute } from '../../common/enums';
+import App from '../../app';
 
 interface IProps {
   isCollapsed: boolean,
@@ -29,9 +31,9 @@ const SideNavbar: React.FC<IProps> = ({ isCollapsed, setCollapse }) => {
   return (
     <>
       <ul
-        className={`sidebar ${isCollapsed ? 'w-full' : ''} ${isCollapsed ? 'fixed left-0 top-0' : ''} ${isCollapsed ? '' : 'divide-y-2 divide-gray-300'}  max-w-sidebar-content pt-4 px-1 lg:static bg-gray-100 content-area ring-1 ring-gray-300  `}>
-        <SideNavbarElement icon={<BsFillPersonFill size={24} />} title={'Person page'} isCollapsed={isCollapsed} link={'/profile'} />
-        <SideNavbarElement icon={<BsFillInfoCircleFill size={24} />} title={'Info page'} isCollapsed={isCollapsed} link={'/user-manage'} />
+        className={`sidebar ${isCollapsed ? 'w-full' : ''} ${isCollapsed ? 'fixed left-0 top-14' : ''} ${isCollapsed ? '' : 'divide-y-2 divide-gray-300'}  max-w-sidebar-content pt-4 px-1 lg:static bg-gray-100 content-area ring-1 ring-gray-300  `}>
+        <SideNavbarElement icon={<BsFillPersonFill size={24} />} title={'Person page'} isCollapsed={isCollapsed} link={AppRoute.USER_PROFILE} />
+        <SideNavbarElement icon={<BsFillInfoCircleFill size={24} />} title={'Info page'} isCollapsed={isCollapsed} link={AppRoute.USER_MANAGE} />
         <SideNavbarElement icon={<BsBookmarkFill size={24} />} title={'Bookmark page'} isCollapsed={isCollapsed} />
         <SideNavbarElement icon={<BsChatFill size={24} />} title={'Chat page'} isCollapsed={isCollapsed} />
         <SideNavbarElement icon={<BsHouseDoorFill size={24} />} title={'Home page'} isCollapsed={isCollapsed} />

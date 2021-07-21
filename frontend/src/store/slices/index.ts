@@ -1,19 +1,24 @@
 export {
   reducer as userReducer,
   UserActionCreator,
-} from './user/user.slice';
+} from './auth/auth.slice';
 
 export {
   reducer as activationReducer,
-  ActivationActionCreator
+  ActivationActionCreator,
 } from './activation/activation.slice';
 
 export {
   reducer as fileReducer,
-  FileActionCreator
+  FileActionCreator,
 } from './file/file.slice';
 
 export {
   reducer as userDataReducer,
   UserDataActionCreator,
 } from './user-data/user-data.slice';
+
+export {
+  reducer as userManageReducer,
+  UserManageActionCreator,
+} from './user-manage/user-manage.slice';

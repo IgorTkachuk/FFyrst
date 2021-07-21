@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { ReducerName } from '../../../common/enums';
+import { ReducerName, UserManageSagaTypes } from '../../../common/enums';
 
+type Filter = 'all' | 'online' | 'offline'
 
 interface IState {
   loading: boolean,
@@ -8,8 +9,7 @@ interface IState {
   count: number,
   activePage: number,
   search: string,
-  useFilter: boolean,
-  valueFilter: boolean
+  useFilter: Filter,
   itemsPerPage: number,
   data: any
 }
@@ -19,10 +19,9 @@ const initialState: IState = {
   error: null,
   activePage: 1,
   data: [],
-  useFilter: false,
+  useFilter: 'all',
   itemsPerPage: 2,
   search: '',
-  valueFilter: false,
   count: 0,
 };
 
@@ -32,30 +31,22 @@ const { reducer, actions } = createSlice({
   initialState,
   reducers: {
     changePage: (state, action) => {
-      const { page } = action.payload;
-      state.activePage = page;
+      state.activePage = action.payload;
     },
     changeItemsPerPage: (state, action) => {
-      const { count } = action.payload;
-      state.itemsPerPage = count;
+      state.itemsPerPage = action.payload;
     },
     changeFormState: (state, action) => {
-      const { value } = action.payload;
-      state.search = value;
+      state.search = action.payload;
     },
     changeUseFilter: (state, action) => {
-      const { value } = action.payload;
-      state.useFilter = value;
-    },
-    changeValueFilter: (state, action) => {
-      const { value } = action.payload;
-      state.valueFilter = value;
+      state.useFilter = action.payload;
     },
     startRequest: (state) => {
       state.count = 0;
       state.loading = true;
       state.error = null;
-      state.data = 0;
+      state.data = [];
     },
     succeedRequest: (state, action) => {
       const { count, data } = action.payload;
@@ -64,10 +55,15 @@ const { reducer, actions } = createSlice({
       state.loading = false;
     },
     failedRequest: (state, action) => {
-      const { error } = action.payload;
-      state.error = error;
+      state.error = action.payload;
+      state.loading = false;
     },
   },
+});
+
+export const getPaginationUsersAction = (data: any) => ({
+  type: UserManageSagaTypes.GET_USERS_WITH_PAGINATION,
+  payload: data,
 });
 
 const UserManageActionCreator = {

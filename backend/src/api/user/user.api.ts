@@ -20,7 +20,7 @@ const initUserApi = (apiRouter: Router): Router => {
     }
   });
 
-  // -- get user profile --
+  // -- get auth profile --
   userRouter.get(UsersApiPath.PROFILE, jwtValidation, async (_req, res) => {
     try {
       const user = await userService.getUserById(_req.user.userId);
@@ -30,7 +30,7 @@ const initUserApi = (apiRouter: Router): Router => {
     }
   });
 
-  // -- update user profile --
+  // -- update auth profile --
   userRouter.put(UsersApiPath.PROFILE, jwtValidation, async (_req, res) => {
     try {
       const result = await userService.updateUserProfile(
@@ -104,20 +104,10 @@ const initUserApi = (apiRouter: Router): Router => {
     }
   });
 
-  userRouter.get(UsersApiPath.PAG_USERS, jwtValidation, async (_req, _res, next) => {
-    try {
-      const count = await userService.getUsersCount();
-      _res.status(HttpCode.OK).json({ count });
-    } catch (error) {
-      // next(error);
-      _res.status(400).json({ error });
-    }
-  });
-
   userRouter.post(UsersApiPath.PAG_USERS, jwtValidation, (_req, _res, next) => {
     try {
-      const { limit, offset, filters } = _req.body;
-
+      const { limit, page, filter, search } = _req.body;
+      _res.status(200).json({ count: 20, data: [] });
     } catch (error) {
       next(error);
     }

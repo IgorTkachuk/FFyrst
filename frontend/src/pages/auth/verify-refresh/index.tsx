@@ -4,7 +4,7 @@ import { useTypedSelector } from '../../../hooks/useTypedSelector';
 import { useDispatch } from 'react-redux';
 import { Formik, FormikHelpers, Form, Field } from 'formik';
 import { IVerPassword, verifySchema } from 'shared';
-import { UserActionCreator, verifyPasswordAction } from '../../../store/slices/user/user.slice';
+import { UserActionCreator, verifyPasswordAction } from '../../../store/slices/auth/auth.slice';
 import { Input } from '../../../stories/inputs/input/input';
 import { Button } from '../../../stories/controls/button/Button';
 import ErrorBoundary from '../../../components/errorBoundry/errorBoundry';
