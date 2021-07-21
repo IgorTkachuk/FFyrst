@@ -14,7 +14,7 @@ import { FormikProps } from 'formik';
 interface UploaderProps {
   id: string,
   children?: HTMLElement | ReactElement,
-  props?: FormikProps<any>,
+  props: FormikProps<any>,
   field: any,
   meta?: {
     touched: boolean,
@@ -28,7 +28,7 @@ const defaultLabel = (
   </div>
 )
 
-const Uploader = ({ id, children = defaultLabel, field, meta = { touched: false, error: '' }, props }: UploaderProps) => {
+const Uploader = ({ id, children = defaultLabel, field, meta = { touched: false, error: '' }, props }: UploaderProps): ReactElement => {
   const dispatch = useDispatch();
   const cropperRef = useRef<HTMLImageElement>(null);
   const [isCropperVisible, setIsCropperVisible] = useDetectOutsideClick('.cropper-container', false);

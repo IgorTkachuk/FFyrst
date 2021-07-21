@@ -16,7 +16,7 @@ const Header = ({
   },
 }: IHeaderProps): ReactElement => {
   return (
-    <header className="sticky top-0 left-0 w-full px-2 md:px-4 lg:px-10 border-b border-gray-200 bg-blue-50 shadow-md">
+    <header className="sticky z-50 top-0 left-0 w-full px-2 md:px-4 lg:px-10 border-b border-gray-200 bg-blue-50 shadow-md">
       <nav className="flex justify-between">
         <div className="burger-container w-1/3 md:py-1 flex items-center">
           <div className="burger h-9 w-10 p-2 md:h-11 md:w-12 md:p-3 hover:bg-blue-100 rounded-full cursor-pointer">

@@ -1,6 +1,7 @@
 import React, { ReactElement, useEffect, useState } from 'react';
 import ReactSelect, { Props } from 'react-select';
 import { FormikProps, FormikValues } from 'formik';
+import './select.css';
 
 
 interface ISelectProps extends Props {
