@@ -9,13 +9,17 @@ const Main = () => {
   return (
     <>
       {/* <Header user={defaultUser}/> */}
-      <nav>
-        <Link to={AppRoute.PLATFORM_EDIT}>PlatformEdit</Link>
-      </nav>
       <div>
         Main page
         {/* for debug purpose */}
+        <nav className='bg-green-50 divide-x flex'>
+        <div className='py-2 px-4'>
+        <Link to={AppRoute.PLATFORM_EDIT}>PlatformEdit</Link>
+        </div>
+        <div className='py-2 px-4'>
         <Link to={AppRoute.USER_PROFILE}>User profile</Link>
+        </div>
+      </nav>
       </div>
     </>
   );
