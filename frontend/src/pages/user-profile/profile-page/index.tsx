@@ -17,7 +17,7 @@ const UserProfileDetails = (): ReactElement => {
   const token = useSelector((state: RootState) => state.user.accessToken);
 
   return (
-    <div className="container shadow-2xl border-t-2 rounded-3xl mx-auto w-11/12 max-w-6xl md:w-4/5 mt-8 flex flex-col justify-start items-center p-8 pl-14 pt-14 min-h-screen mt-2">
+    <div className="container shadow-2xl border-t-2 rounded-3xl mx-auto mt-8 flex flex-col justify-start items-center p-8 pl-14 pt-14 min-h-screen mt-2">
       <div className="w-10/12 md:w-8/12 flex flex-col">
         <div className="font-roboto text-5xl font-semibold">Profile</div>
         <div className=" self-center md:self-start mt-8 ml-4 relative w-48 md:w-60">
