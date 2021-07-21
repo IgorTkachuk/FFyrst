@@ -7,13 +7,14 @@ interface InputProps {
   size?: 'small' | 'medium' | 'big' | 'widthAuto';
   placeholder?: string;
   type: string;
-  props?: Record<string, unknown>;
   className?: string;
+  disabled?: boolean;
   field: any;
   meta?: {
     touched: boolean;
     error: string;
   };
+  [key: string]: any;
 }
 
 const INPUT_SIZES = {

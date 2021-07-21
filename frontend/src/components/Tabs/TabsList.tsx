@@ -1,7 +1,7 @@
 import React, {ReactElement, useState} from 'react';
 
 interface ITabsListProps {
-  children: ReactElement[]
+  children: ReactElement[] | ReactElement
   classNames?: {
     navbar?: string,
     navItem?: string,
@@ -20,12 +20,13 @@ const TabsList = ({ children, classNames = {} }: ITabsListProps): ReactElement =
     navItemPassive: 'hover:bg-gray-200'
   }
   const styles = Object.assign(defaultStyles, classNames)
+  const childrenArr = Array.isArray(children) ? children : [children];
 
   return (
     <div className='tabs-list'>
       <nav className={styles.navbar}>
         {
-          children.map((child, index) => (
+          childrenArr.map((child, index) => (
             <div
               key={index.toString()}
               onClick={() => setActive(index)}
@@ -36,7 +37,7 @@ const TabsList = ({ children, classNames = {} }: ITabsListProps): ReactElement =
           ))
         }
       </nav>
-      <div className='tabItem'>{ children[active] }</div>
+      <div className='tabItem'>{ childrenArr[active] }</div>
     </div>
   )
 }

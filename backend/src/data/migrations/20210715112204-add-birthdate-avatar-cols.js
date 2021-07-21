@@ -1,31 +1,27 @@
 'use strict';
-
 module.exports = {
   up: async (queryInterface, Sequelize) =>
-    queryInterface.sequelize.then(() =>
-      queryInterface.sequelize.transaction((transaction) =>
-        Promise.all([
-          queryInterface.addColumn(
-            'users',
-            'avatar',
-            {
-              type: Sequelize.STRING,
-              defaultValue: '',
-            },
-            { transaction },
-          ),
-          queryInterface.addColumn(
-            'users',
-            'birth_date',
-            {
-              type: Sequelize.DATE,
-            },
-            { transaction },
-          ),
-        ]),
-      ),
+    queryInterface.sequelize.transaction((transaction) =>
+      Promise.all([
+        queryInterface.addColumn(
+          'users',
+          'avatar',
+          {
+            type: Sequelize.STRING,
+            defaultValue: '',
+          },
+          { transaction },
+        ),
+        queryInterface.addColumn(
+          'users',
+          'birth_date',
+          {
+            type: Sequelize.DATE,
+          },
+          { transaction },
+        ),
+      ]),
     ),
-
   down: async (queryInterface) => {
     return queryInterface.sequelize.transaction((transaction) =>
       Promise.all([
