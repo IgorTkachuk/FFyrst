@@ -9,6 +9,7 @@ import { CheckBox } from 'stories/controls/checkbox/CheckBox';
 import { Uploader } from 'components/Uploader';
 
 import iconEdit from 'assets/icons/icon-edit.svg';
+import { Spinner } from 'components/Spinner/Spinner';
 
 
 interface IPlatformGeneral {
@@ -188,7 +189,7 @@ const General = () => {
                 </div>
                 <Field name='logoURL'>
                 {({ field, meta }: any) => (
-                  <Uploader id="logoURL" field={field} props={props}>
+                  <Uploader id="logoURL" field={field} props={props} spinner>
                     <div className="bg-red-500 w-9 h-9 md:w-12 md:h-12 rounded-full flex justify-center items-center absolute inset-3/4 cursor-pointer transform hover:scale-105 active:scale-100">
                       <img
                         className="w-6 md:w-8"

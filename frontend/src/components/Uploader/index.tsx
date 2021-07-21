@@ -10,16 +10,18 @@ import { useDetectOutsideClick } from 'hooks/useDetectOutsideClick'
 import { useTypedSelector } from 'hooks/useTypedSelector';
 import { loadFileToCloudAction } from 'store/slices/file/file.slice';
 import { FormikProps } from 'formik';
+import { Spinner } from 'components/Spinner/Spinner';
 
 interface UploaderProps {
   id: string,
-  children?: HTMLElement | ReactElement,
+  children?: any,
   props: FormikProps<any>,
   field: any,
   meta?: {
     touched: boolean,
     error: string,
-  };
+  },
+  spinner?: boolean
 }
 
 const defaultLabel = (
@@ -28,12 +30,12 @@ const defaultLabel = (
   </div>
 )
 
-const Uploader = ({ id, children = defaultLabel, field, meta = { touched: false, error: '' }, props }: UploaderProps): ReactElement => {
+const Uploader = ({ id, children = defaultLabel, field, meta = { touched: false, error: '' }, spinner = false, props }: UploaderProps): ReactElement => {
   const dispatch = useDispatch();
   const cropperRef = useRef<HTMLImageElement>(null);
   const [isCropperVisible, setIsCropperVisible] = useDetectOutsideClick('.cropper-container', false);
   const [file, setFile] = useState<Record<string, string>>({});
-  const { cloudURL } = useTypedSelector(state => state.file);
+  const { cloudURL, loading } = useTypedSelector(state => state.file);
 
   function handleChange(e: any) {
     if(e.target.files.length) {
@@ -83,7 +85,13 @@ const Uploader = ({ id, children = defaultLabel, field, meta = { touched: false,
     <div className='uploader'>
       <fieldset>
         <label htmlFor='image-input'>
-          { children }
+          {
+            spinner && loading ?
+            (<div className={children.props.className}>
+              <Spinner size={9}/>
+            </div>) :
+            children
+          }
         </label>
         <input type='file' id='image-input' name='file' onChange={e => handleChange(e)} className='hidden' accept='image/*' />
         <input type='hidden' id={id} {...field} />
