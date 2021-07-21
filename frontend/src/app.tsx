@@ -9,6 +9,7 @@ import { useDispatch } from 'react-redux';
 import { getUserAction } from './store/slices/user-data/user-data.slice';
 import SideNavbar from './components/sideNavbar/sideNavbar';
 import { BsList } from 'react-icons/bs';
+import { Header } from 'components/Header/Header';
 
 const App: React.FC = () => {
   const localstorageService = new LocalstorageService();
@@ -29,7 +30,13 @@ const App: React.FC = () => {
   }, [authState]);
 
   return (
-    <div className='w-full min-h-screen flex max-w-full'>
+    <>
+      { authState && <Header user = {{
+        firstName: 'Alexandros',
+        lastName: 'Papastatopoulous',
+        linkToAvatar: 'alexandros'
+      }}/> }
+      <div className='w-full min-h-screen flex max-w-full'>
       {authState && <SideNavbar isCollapsed={isCollapsed} setCollapse={setIsCollapsed} />}
       <div
         className={`max-w-page-content bg-gray-50 ${isCollapsed ? 'def:mx-auto' : 'lg:mx-auto'} w-full sm:mx-4`}>
@@ -39,6 +46,7 @@ const App: React.FC = () => {
         {routes}
       </div>
     </div>
+    </>
   );
 };
 
