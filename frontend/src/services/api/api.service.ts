@@ -1,6 +1,6 @@
 import axios, { Method } from 'axios';
 
-const { REACT_APP_BACKEND_HOST, REACT_APP_API_ORIGIN_URL, M } = process.env;
+const { REACT_APP_BACKEND_HOST, REACT_APP_API_ORIGIN_URL } = process.env;
 
 type Header = {
   [key: string]: string
