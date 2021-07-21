@@ -31,6 +31,9 @@ const useRoute = (isAuth: boolean): React.ReactElement => {
         <Route path={AppRoute.MAIN} exact>
           <Pages.Main />
         </Route>
+        <Route path={AppRoute.PLATFORM_EDIT}>
+          <Pages.PlatformEdit />
+        </Route>
         <Route path={AppRoute.USER_MANAGE}>
           <Pages.UserManage />
         </Route>
