@@ -57,7 +57,7 @@ describe('Login Endpoint', () => {
 
   });
 
-  it('for correct refresh token should return new acces and refresh tokens', async () => {
+  it('for correct reset token should return new acces and reset tokens', async () => {
     const res = await request
       .post('/api/v1/auth/login')
       .send({
@@ -68,7 +68,7 @@ describe('Login Endpoint', () => {
     const token = res.body.tokens.refreshToken;
 
     const refreshRes = await request
-    .post('/api/v1/auth/refresh-token')
+    .post('/api/v1/auth/reset-token')
     .send({
       token
     })

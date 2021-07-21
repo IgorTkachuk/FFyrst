@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import './button.css';
 
 interface ButtonProps {
   color: 'blue' | 'red' | 'green';
   size?: 'small' | 'medium' | 'big';
   label?: string;
+  icon?: ReactNode | HTMLAllCollection | string,
   type?: 'button' | 'submit' | 'reset';
   onClick?: () => void;
 
@@ -29,13 +30,8 @@ const BTN_SIZES = {
   big: 'text-2xl',
 };
 
-export const Button = ({
-  size = 'medium',
-  color = 'green',
-  label = '',
-  type = 'button',
-  ...props
-}: ButtonProps) => {
+
+export const Button = ({ size = 'medium', color = 'green', label = '', type = 'button', icon, ...props }: ButtonProps) => {
   return (
     <button
       type={type}
@@ -46,7 +42,7 @@ export const Button = ({
       }`}
       {...props}
     >
-      {label}
+      {icon} {label}
     </button>
   );
 };

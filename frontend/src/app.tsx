@@ -11,12 +11,25 @@ import SideNavbar from './components/sideNavbar/sideNavbar';
 import { BsList } from 'react-icons/bs';
 import { TenantActionCreator } from 'store/slices/tenant/tenant.slice';
 
+import { Header } from './components/Header/Header';
+
+
+const defaultUser = {
+  firstName: 'Antananis',
+  lastName: 'Papastatopuolous',
+  linkToAvatar: 'http://link-to-avatar/ivan-ivanov',
+};
+
 const App: React.FC = () => {
   const localstorageService = new LocalstorageService();
   const { authState, refreshToken, accessToken } = useTypedSelector(state => state.user);
   const dispatch = useDispatch();
   const routes = useRoute(authState);
   const [isCollapsed, setIsCollapsed] = useState(false);
+
+  const burgerClick = () => {
+    setIsCollapsed(!isCollapsed);
+  };
 
   useEffect(() => {
     if (authState) {
@@ -34,14 +47,14 @@ const App: React.FC = () => {
   }, []);
 
   return (
-    <div className='w-full min-h-screen flex max-w-full'>
-      {authState && <SideNavbar isCollapsed={isCollapsed} setCollapse={setIsCollapsed} />}
-      <div
-        className={`max-w-page-content bg-gray-50 ${isCollapsed ? 'def:mx-auto' : 'lg:mx-auto'} w-full sm:mx-4`}>
-        <button className='collapse-btn' onClick={() => setIsCollapsed(!isCollapsed)}>
-          <BsList className={'collapse-btn'} />
-        </button>
-        {routes}
+    <div className='w-full min-h-screen max-w-full'>
+      { authState && <Header user={defaultUser} callback={burgerClick} isCollapsed={isCollapsed} />}
+      <div className={'flex'}>
+        {authState && <SideNavbar isCollapsed={isCollapsed} setCollapse={setIsCollapsed} />}
+        <div
+          className={`max-w-page-content ${isCollapsed ? 'def:mx-auto' : 'lg:mx-auto'} w-full sm:mx-4 px-10`}>
+          {routes}
+        </div>
       </div>
     </div>
   );
