@@ -1,0 +1,7 @@
+.profile__input-block {
+  width: 100%!important;
+
+  @media (min-width: 768px) {
+    width: 46% !important;
+  }
+}

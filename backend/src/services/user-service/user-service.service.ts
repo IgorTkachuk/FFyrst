@@ -1,9 +1,10 @@
 import { userRepository } from '~/data/repositories';
-import { IUser, IActivationMessage } from 'shared/common/interfaces';
-import { mailService } from '../services';
+import { IUser, IActivationMessage, IProfile } from 'shared/common/interfaces';
+import { mailService, userService } from '../services';
 import { hashPassword, hashToken } from '~/helpers/bcrypt';
-import { createActivationMessage as message } from '~/helpers';
-import { ActivationStatus } from 'shared/common/enums'
+import { createActivationMessage as message, getUpdatedUser } from '~/helpers';
+import { ActivationStatus } from 'shared/common/enums';
+import { userSchema } from '~/api/user/user.schema';
 
 class UserService {
   public getAllUsers(): Promise<IUser[]> {
@@ -25,18 +26,36 @@ class UserService {
   }
 
   public async setUserActivation(data: IUser): Promise<IUser[]> {
-    const {id, email} = data;
+    const { id, email } = data;
     const tokenHash = hashToken(Date.now().toString());
     await mailService.sendActivationMail(email, tokenHash);
     return await this.updateUser(id, {
       ...data,
       activationToken: tokenHash,
-      activationTokenExpiration: new Date(Date.now() + 1000 * 60 * 60)
-    })
+      activationTokenExpiration: new Date(Date.now() + 1000 * 60 * 60),
+    });
   }
 
   public async updateUser(id: string, data: IUser): Promise<IUser[]> {
     return userRepository.updateById(id, data);
+  }
+
+  public async updateUserProfile(
+    id: string,
+    userProfile: IProfile,
+  ): Promise<IUser[] | null> {
+    try {
+      const user = await userService.getUserById(id);
+      if (!user) {
+        return null;
+      }
+      const updatedUser = getUpdatedUser(user, userProfile);
+      await userSchema.validate(updatedUser, { context: { required: true } });
+      const result = await userRepository.updateById(id, updatedUser);
+      return result;
+    } catch {
+      return null;
+    }
   }
 
   public deleteUser(id: string): Promise<number> {
@@ -53,19 +72,28 @@ class UserService {
 
   public async activateUser(token: string): Promise<IActivationMessage> {
     const user = await this.getUserByToken(token);
-    if(!user) {
+    if (!user) {
       return message(ActivationStatus.NOT_FOUND, 'User not found.');
     }
-    if(user.activationTokenExpiration < new Date(Date.now())) {
-      return message(ActivationStatus.EXPIRED, 'Activation time expired.', user.email);
+    if (user.activationTokenExpiration < new Date(Date.now())) {
+      return message(
+        ActivationStatus.EXPIRED,
+        'Activation time expired.',
+        user.email,
+      );
     }
     const data = {
       isActive: true,
-      activationToken: ''
-    }
-    userRepository.activateUser(token, {...user, ...data});
+      activationToken: '',
+    };
+    userRepository.activateUser(token, { ...user, ...data });
     return message(ActivationStatus.SUCCESS, 'Successful activation.');
   }
+
+  public async getUsersCount(): Promise<number> {
+    return await userRepository.getUsersCount();
+  }
+
 }
 
 export { UserService };

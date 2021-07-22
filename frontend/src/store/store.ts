@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { ReducerName } from 'common/enums';
-import { userReducer, activationReducer, tenantReducer } from './slices';
+import { userReducer, activationReducer, fileReducer, userDataReducer, tenantReducer } from './slices';
 import createSagaMiddleware from 'redux-saga';
 import rootSaga from 'store/sagas';
 
@@ -10,7 +10,9 @@ const store = configureStore({
   reducer: {
     [ReducerName.USER]: userReducer,
     [ReducerName.ACTIVATION]: activationReducer,
-    [ReducerName.TENANT] : tenantReducer,
+    [ReducerName.FILE]: fileReducer,
+    [ReducerName.USER_DATA]: userDataReducer,
+    [ReducerName.TENANT]: tenantReducer,
   },
   middleware: (cdm) => cdm().concat(sagaMiddleware),
 });

@@ -1,13 +1,15 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import './button.css';
 
 interface ButtonProps {
   color: 'blue' | 'red' | 'green';
   size?: 'small' | 'medium' | 'big';
   label?: string;
+  icon?: ReactNode | HTMLAllCollection | string,
+  type?: 'button' | 'submit' | 'reset';
   onClick?: () => void;
 
-  [key: string]: any
+  [key: string]: any;
 }
 
 const BTN_COLORS = {
@@ -28,14 +30,19 @@ const BTN_SIZES = {
   big: 'text-2xl',
 };
 
-export const Button = ({ size = 'medium', color = 'green', label = '', ...props }: ButtonProps) => {
+
+export const Button = ({ size = 'medium', color = 'green', label = '', type = 'button', icon, ...props }: ButtonProps) => {
   return (
     <button
-      type='button'
-      className={`${BTN_COLORS[color]} ${BTN_SIZES[size]} ${props.disabled ? 'bg-opacity-70' : ''} transform active:scale-95 font-roboto  text-white font-bold py-2 px-4 rounded active:  hover:${BTN_COLORS_ON_HOVER[color]}`}
+      type={type}
+      className={`${BTN_COLORS[color]} ${BTN_SIZES[size]} ${
+        props.disabled ? 'bg-opacity-70' : ''
+      } transform active:scale-95 font-roboto  text-white font-bold py-2 px-4 rounded active:  hover:${
+        BTN_COLORS_ON_HOVER[color]
+      }`}
       {...props}
     >
-      {label}
+      {icon} {label}
     </button>
   );
 };

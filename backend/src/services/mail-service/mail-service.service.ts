@@ -4,8 +4,9 @@ import { EmailType } from '~/common/enums';
 import { Transporter } from 'nodemailer';
 import { MailOptions } from '~/common/types';
 import { getFullUrl, createMail } from '~/helpers';
+import { compileFile } from 'pug';
+import path from 'path';
 
-const pug = require('pug');
 const nodemailer = require('nodemailer');
 
 class MailService {
@@ -23,22 +24,22 @@ class MailService {
     });
   }
 
-  //type: check enum emailType  email: example@gmail.com
-  async sendMail(type: string, email: string, options: MailOptions):Promise<Transporter> {
+  async sendMail(type: string, email: string, options: MailOptions): Promise<Transporter> {
     return this.transporter.sendMail(
       {
         from: user,
         to: email,
         subject: options?.mailTheme,
-        html: pug.compileFile(`${__dirname}/templates/${type}.pug`)({
+        html: compileFile(path.resolve(`${__dirname}/templates/${type}.pug`))({
           ...options?.data,
         }),
       },
     );
   }
-  async sendActivationMail(email: string, token: string): Promise<Transporter>{
+
+  async sendActivationMail(email: string, token: string): Promise<Transporter> {
     const link = getFullUrl(`/email-activation/${token}`);
-    const mailOptions = createMail('Confirm registration', link)
+    const mailOptions = createMail('Confirm registration', link);
     return await this.sendMail(EmailType.ACTIVATION, email, mailOptions);
   }
 }

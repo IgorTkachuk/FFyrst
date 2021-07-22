@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { ApiPath, FileUploadApiPath, HttpCode } from '~/common/enums';
+import { ApiPath, FileUploadApiPath, HttpCode } from 'shared';
 import { jwtValidation } from '~/middlewares/jwt-validation/jwt-validation.middelware';
 import { fileUploadService } from '~/services/services';
 

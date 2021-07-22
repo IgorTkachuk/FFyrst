@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { ApiPath, HttpCode, TenantsApiPath } from '~/common/enums';
+import { ApiPath, HttpCode, TenantsApiPath } from 'shared';
 import { tenantService } from '~/services/services';
 
 const initTenantApi = (apiRouter: Router): Router => {
@@ -11,7 +11,7 @@ const initTenantApi = (apiRouter: Router): Router => {
     try {
       const tenants = await tenantService.getAllTenants();
       res.status(HttpCode.OK).json(tenants);
-    } catch(error) {
+    } catch (error) {
       next(error);
     }
   });
@@ -32,7 +32,7 @@ const initTenantApi = (apiRouter: Router): Router => {
     try {
       const user = await tenantService.getTenantById(_req.params.id);
       res.status(HttpCode.OK).json(user);
-    } catch(error) {
+    } catch (error) {
       next(error);
     }
   });
@@ -42,7 +42,7 @@ const initTenantApi = (apiRouter: Router): Router => {
     try {
       const user = await tenantService.createNewTenant(_req.body);
       res.status(HttpCode.OK).json(user);
-    } catch(error) {
+    } catch (error) {
       next(error);
     }
   });
@@ -51,7 +51,7 @@ const initTenantApi = (apiRouter: Router): Router => {
     try {
       const user = await tenantService.updateTenant(_req.params.id, _req.body);
       res.status(HttpCode.OK).json(user);
-    } catch(error) {
+    } catch (error) {
       next(error);
     }
   });
@@ -60,7 +60,7 @@ const initTenantApi = (apiRouter: Router): Router => {
     try {
       await tenantService.deleteTenant(_req.params.id);
       res.status(HttpCode.NO_CONTENT).json();
-    } catch(error) {
+    } catch (error) {
       next(error);
     }
   });

@@ -16,36 +16,47 @@ import { link } from '../../../config/email.config';
 import { EmailType } from '~/common/enums';
 import { secret } from '../../../config/jwt.config';
 
-
 class AuthService {
-
   async loginUser(data: ILogin): Promise<AuthServiceRes<ITokens>> {
     const { email, password } = data;
     const user = await userService.getUserByEmail(email);
     if (!user) {
-      return { code: HttpCode.BAD_REQUEST, data: ResponseMessages.NON_EXISTING_EMAIL };
+      return {
+        code: HttpCode.BAD_REQUEST,
+        data: ResponseMessages.NON_EXISTING_EMAIL,
+      };
     } else {
       const isMatch = await isMatchPassword(password, user.password);
       if (!isMatch) {
-        return { code: HttpCode.BAD_REQUEST, data: ResponseMessages.NON_MATCH_PASSWORDS };
+        return {
+          code: HttpCode.BAD_REQUEST,
+          data: ResponseMessages.NON_MATCH_PASSWORDS,
+        };
       }
-      console.log(user.id);
       const tokens = await getTokens(user.id);
       return { code: HttpCode.OK, data: tokens };
     }
   }
 
-  async resetPassword(data: { email: string }): Promise<AuthServiceRes<string>> {
+  async resetPassword(data: {
+    email: string;
+  }): Promise<AuthServiceRes<string>> {
     const { email } = data;
     const mailService = new MailService();
     const user = await userService.getUserByEmail(email);
     if (user) {
       const token = createJWT(user.id);
-      const mail = createMail(`Reset password from ${email} account`, `${link}/${token}`);
+      const mail = createMail(
+        `Reset password from ${email} account`,
+        `${link}/${token}`,
+      );
       await mailService.sendMail(EmailType.RESET_PASSWORD, email, mail);
       return { code: HttpCode.OK, data: ResponseMessages.CONFIRMED };
     } else {
-      return { code: HttpCode.BAD_REQUEST, data: ResponseMessages.NON_EXISTING_EMAIL };
+      return {
+        code: HttpCode.BAD_REQUEST,
+        data: ResponseMessages.NON_EXISTING_EMAIL,
+      };
     }
   }
 
@@ -53,7 +64,10 @@ class AuthService {
     const { password, verifiedPassword, token } = data;
     const isCompare = comparePasswords(password, verifiedPassword);
     if (!isCompare) {
-      return { code: HttpCode.BAD_REQUEST, data: ResponseMessages.NON_MATCH_PASSWORDS };
+      return {
+        code: HttpCode.BAD_REQUEST,
+        data: ResponseMessages.NON_MATCH_PASSWORDS,
+      };
     } else {
       const decoded = verifyJWT(token, secret) as { userId: string };
 
@@ -62,18 +76,25 @@ class AuthService {
 
         if (user) {
           const hashedPassword = await hashPassword(password);
-          await userService.updateUser(user.id, { ...user, password: hashedPassword });
+          await userService.updateUser(user.id, {
+            ...user,
+            password: hashedPassword,
+          });
           return { code: HttpCode.OK, data: ResponseMessages.CONFIRMED };
         } else {
-          return { code: HttpCode.BAD_REQUEST, data: ResponseMessages.NON_EXISTING_EMAIL };
+          return {
+            code: HttpCode.BAD_REQUEST,
+            data: ResponseMessages.NON_EXISTING_EMAIL,
+          };
         }
       } else {
-        return { code: HttpCode.FORBIDDEN, data: ResponseMessages.TOKEN_EXPIRED };
+        return {
+          code: HttpCode.FORBIDDEN,
+          data: ResponseMessages.TOKEN_EXPIRED,
+        };
       }
-
     }
   }
-
 }
 
 export { AuthService };
