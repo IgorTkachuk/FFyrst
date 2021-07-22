@@ -8,7 +8,7 @@ interface ITabProps {
 
 const Tab = ({ children, classList = '' }: ITabProps): ReactElement => {
   return (
-    <div className={classList || 'tab p-5 bg-white'}>{children}</div>
+    <div className={classList || 'tab p-2 sm:p-5 bg-white'}>{children}</div>
   )
 }
 

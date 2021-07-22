@@ -46,8 +46,8 @@ const General = () => {
       }}
     >
       {(props: FormikProps<FormikValues>) => (
-        <Form className='ml-4 mr-4 mt-4 flex flex-col self-center text-gray-600'>
-          <h2 className='text-2xl border-b pb-1 mb-4'>Main</h2>
+        <Form className='m-2 sm:m-4 flex flex-col self-center text-gray-600'>
+          <h2 className='text-lg sm:text-xl md:text-2xl border-b pb-1 mb-3 sm:mb-4'>Main</h2>
           <div className='name w-full mb-4'>
             <Field name='name'>
               {({ field, meta }: any) => (
@@ -109,7 +109,7 @@ const General = () => {
               )}
             </Field>
           </div>
-          <h2 className='text-2xl border-b pb-1 mb-4'>Contacts</h2>
+          <h2 className='text-lg sm:text-xl md:text-2xl border-b pb-1 mb-3 sm:mb-4'>Contacts</h2>
           <div className='phoneNumber w-full mb-4'>
             <Field name='phoneNumber'>
               {({ field, meta }: any) => (
@@ -140,7 +140,7 @@ const General = () => {
               )}
             </Field>
           </div>
-          <h2 className='text-2xl border-b pb-1 mb-4'>Links</h2>
+          <h2 className='text-lg sm:text-xl md:text-2xl border-b pb-1 mb-3 sm:mb-4'>Links</h2>
           <div className='useCred w-full mb-4'>
             <Field name='useCred'>
               {({ field, meta }: any) => (
@@ -174,10 +174,10 @@ const General = () => {
               )}
             </Field>
           </div>
-          <h2 className='text-2xl border-b pb-1 mb-4'>Media</h2>
+          <h2 className='text-lg sm:text-xl md:text-2xl border-b pb-1 mb-3 sm:mb-4'>Media</h2>
           <div className="flex flex-col justify-center items-center">
           <h2 className='text-xl text-center'>Company Logo</h2>
-            <div className="mt-8 ml-4 relative w-48 md:w-60">
+            <div className="mt-4 sm:mt-8 relative w-48 md:w-60">
               <div className="w-48 md:w-60 h-48 md:h-60 rounded-full border-4 overflow-hidden">
                 <img
                   className="object-contain w-full h-full"

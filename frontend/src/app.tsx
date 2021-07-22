@@ -53,7 +53,7 @@ const App: React.FC = () => {
       <div className={'flex'}>
         {authState && <SideNavbar isCollapsed={isCollapsed} setCollapse={setIsCollapsed} />}
         <div
-          className={`max-w-page-content ${isCollapsed ? 'def:mx-auto' : 'lg:mx-auto'} w-full sm:mx-4 px-10`}>
+          className={`max-w-page-content ${isCollapsed ? 'def:mx-auto' : 'lg:mx-auto'} w-full sm:mx-4 sm:px-5 md:px-10`}>
           {routes}
         </div>
       </div>
