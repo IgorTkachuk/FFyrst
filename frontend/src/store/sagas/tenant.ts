@@ -4,6 +4,7 @@ import ApiService from 'services/api/api.service';
 import { TenantActionCreator } from 'store/slices/tenant/tenant.slice';
 import { SagaAction } from 'common/types';
 import { PayloadAction } from '@reduxjs/toolkit';
+import { ApiPath, TenantsApiPath } from 'shared';
 
 const {  REACT_APP_API_ORIGIN_URL } = process.env;
 
@@ -20,9 +21,7 @@ export interface ITenant {
 }
 
 function* determineTenant(action: Record<string, string>) {
-  const url = `http://${window.location.host}/${REACT_APP_API_ORIGIN_URL}${AppRoute.TENANT_DETERMINE}`;
-
-  console.log('Tenant URL: ', url);
+  const url = ApiPath.TENANTS + TenantsApiPath.DOMAINURL;
 
   const determinationResponse: ITenant = yield call(apiService.httpRequest, url, HttpMethod.GET);
   yield put(TenantActionCreator.requestSucceed(determinationResponse))

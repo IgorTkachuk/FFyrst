@@ -42,6 +42,15 @@ class MailService {
     const mailOptions = createMail('Confirm registration', link);
     return await this.sendMail(EmailType.ACTIVATION, email, mailOptions);
   }
+
+  async sendResetPasswordMail(email: string, token: string): Promise<Transporter> {
+    const link = getFullUrl(`/verify-refresh/${token}`);
+    const mailOptions = createMail(
+      `Reset password from ${email} account`,
+      link
+    );
+    return await this.sendMail(EmailType.RESET_PASSWORD, email, mailOptions);
+  }
 }
 
 export { MailService };

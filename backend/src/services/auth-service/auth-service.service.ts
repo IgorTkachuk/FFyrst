@@ -4,7 +4,6 @@ import { ResponseMessages } from '~/common/enums/messages/response-messages.enum
 import {
   comparePasswords,
   createJWT,
-  createMail,
   getTokens,
   hashPassword,
   isMatchPassword,
@@ -12,8 +11,6 @@ import {
 } from '~/helpers';
 import { AuthServiceRes } from '~/common/interfaces';
 import { MailService } from '~/services/mail-service/mail-service.service';
-import { link } from '../../../config/email.config';
-import { EmailType } from '~/common/enums';
 import { secret } from '../../../config/jwt.config';
 
 class AuthService {
@@ -46,11 +43,7 @@ class AuthService {
     const user = await userService.getUserByEmail(email);
     if (user) {
       const token = createJWT(user.id);
-      const mail = createMail(
-        `Reset password from ${email} account`,
-        `${link}/${token}`,
-      );
-      await mailService.sendMail(EmailType.RESET_PASSWORD, email, mail);
+      await mailService.sendResetPasswordMail(email, token)
       return { code: HttpCode.OK, data: ResponseMessages.CONFIRMED };
     } else {
       return {
