@@ -4,12 +4,10 @@ import { Button } from 'stories/controls/button/Button';
 import { Input } from 'stories/inputs/input/input';
 import { Select } from 'stories/selects/select/selectFormik';
 import { platformGeneralSchema } from './common/validation';
-import { Industries } from 'shared'
 import { CheckBox } from 'stories/controls/checkbox/CheckBox';
 import { Uploader } from 'components/Uploader';
 
 import iconEdit from 'assets/icons/icon-edit.svg';
-import { Spinner } from 'components/Spinner/Spinner';
 import { useTypedSelector } from 'hooks/useTypedSelector';
 import { useDispatch } from 'react-redux';
 import { updateTenantAction } from 'store/slices/tenant/tenant.slice';
