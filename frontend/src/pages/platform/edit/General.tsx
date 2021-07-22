@@ -19,19 +19,6 @@ interface IPlatformGeneral {
   name: string;
 }
 
-const platformDetails = {
-  name: 'Super Medical',
-  domainURL: 'supermedical.fyrst.com',
-  supportEmail: 'support@supermedical.com',
-  industry: 1,
-  phoneNumber: '+380735556677',
-  invoiceAddress: 'GA 30309',
-  useCred: false,
-  credURL: '',
-  // logoURL: 'https://image.freepik.com/free-vector/lion-head-logo-mascot_6427-342.jpg',
-  logoURL: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Ikea_logo.svg/1280px-Ikea_logo.svg.png'
-}
-
 const tempMockIndustries = [
   {
     value: '1',
@@ -53,7 +40,6 @@ const General = () => {
         validationSchema={platformGeneralSchema}
         onSubmit={(values, { resetForm }: FormikHelpers<IPlatformGeneral>) => {
           dispatch(updateTenantAction(values));
-          console.log('values', values);
         }}
       >
         {(props: FormikProps<FormikValues>) => (
@@ -186,7 +172,6 @@ const General = () => {
               </Field>
             </div>
             <h2 className='text-2xl border-b pb-1 mb-4'>Media</h2>
-            {/* AVATAR */}
             <div className="flex flex-col justify-center items-center">
             <h2 className='text-xl text-center'>Company Logo</h2>
               <div className="mt-8 ml-4 relative w-48 md:w-60">
@@ -213,7 +198,6 @@ const General = () => {
                 </Field>
               </div>
             </div>
-            {/* AVATAR */}
             <div className='w-full flex justify-center md:justify-end mt-10'>
               <Button
                 color='blue'

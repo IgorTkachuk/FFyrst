@@ -1,14 +1,7 @@
 import React from 'react'
 
-import { Header } from 'components/Header/Header';
 import { Tab, TabsList } from 'components/Tabs';
 import { General } from './General';
-
-const defaultUser = {
-  firstName: 'Antananis',
-  lastName: 'Papastatopuolous',
-  linkToAvatar: 'http://link-to-avatar/ivan-ivanov'
-}
 
 const PlatformEdit = () => {
   return (

@@ -47,8 +47,6 @@ const initTenantApi = (apiRouter: Router): Router => {
   });
 
   tenantRouter.put(TenantsApiPath.$ID, async (_req, res, next) => {
-    console.log(_req.body);
-
     try {
       await platformGeneralSchema.validate(_req.body);
       const tenantUpdateInfo = await tenantService.updateTenant(_req.params.id, _req.body);

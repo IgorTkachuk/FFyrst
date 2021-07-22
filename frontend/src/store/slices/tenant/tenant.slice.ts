@@ -38,18 +38,6 @@ const initialState: TenantState = {
   error: null,
 };
 
-const platformDetails = {
-  name: 'Super Medical Center',
-  domainURL: 'supermedical.fyrst.com',
-  supportEmail: 'support@supermedical.com',
-  industry: 'healthcare',
-  phoneNumber: '+380735556677',
-  invoiceAddress: 'GA 30309',
-  useCred: false,
-  credURL: '',
-  logoURL: 'https://image.freepik.com/free-vector/lion-head-logo-mascot_6427-342.jpg',
-}
-
 const { reducer, actions } = createSlice({
   name: ReducerName.TENANT,
   initialState,
@@ -64,13 +52,6 @@ const { reducer, actions } = createSlice({
     },
     requestSucceed: (state, action) => {
       state.loading = false;
-      // console.log(action.payload);
-
-      // const { name, logoUrl, legalAddress, domainUrl } = action.payload;
-      // state.tenant.name = name;
-      // state.tenant.logoURL = logoUrl;
-      // state.tenant.invoiceAddress = legalAddress;
-      // state.tenant.domainURL = domainUrl
       state.tenant = {...state.tenant, ...action.payload}
     },
     updateTenant: (state, action) => {

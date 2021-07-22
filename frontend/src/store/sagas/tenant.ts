@@ -12,7 +12,6 @@ function* determineTenant(action: AnyAction) {
 
   const determinationResponse: ITenant = yield call(apiService.httpRequest, url, HttpMethod.GET);
   yield put(TenantActionCreator.requestSucceed(determinationResponse))
-  console.log('resp:', determinationResponse);
 }
 
 function* updateTenant(action: AnyAction) {
@@ -25,7 +24,6 @@ function* updateTenant(action: AnyAction) {
       HttpMethod.PUT,
       { body: action.payload });
     yield put(TenantActionCreator.updateTenant(updatedTenant));
-    console.log('updatedTenant', updatedTenant);
 
   } catch (e) {
     yield put(TenantActionCreator.requestFailed(e.message));
