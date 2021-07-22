@@ -1,24 +1,52 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { ReducerName } from 'common/enums';
+import { ReducerName, TenantSagasTypes } from 'common/enums';
 import { stat } from 'fs';
 
 type TenantState = {
-  name: string;
-  logoUrl: string;
-  legalAddress: string;
-  domainUrl: string;
+  tenant: {
+    name: string;
+    domainURL: string;
+    supportEmail: string;
+    industry: string;
+    phoneNumber: string;
+    invoiceAddress: string;
+    useCred: boolean;
+    credURL: string;
+    logoURL: string;
+  }
+  status: string;
   loading: boolean;
   error: string | null;
 };
 
 const initialState: TenantState = {
-  name: '',
-  logoUrl: '',
-  legalAddress: '',
-  domainUrl:  '',
+  tenant: {
+    name: '',
+    domainURL: '',
+    supportEmail: '',
+    industry: '',
+    phoneNumber: '',
+    invoiceAddress: '',
+    useCred: false,
+    credURL: '',
+    logoURL: '',
+  },
+  status: '',
   loading: false,
   error: null,
 };
+
+const platformDetails = {
+  name: 'Super Medical Center',
+  domainURL: 'supermedical.fyrst.com',
+  supportEmail: 'support@supermedical.com',
+  industry: 'healthcare',
+  phoneNumber: '+380735556677',
+  invoiceAddress: 'GA 30309',
+  useCred: false,
+  credURL: '',
+  logoURL: 'https://image.freepik.com/free-vector/lion-head-logo-mascot_6427-342.jpg',
+}
 
 const { reducer, actions } = createSlice({
   name: ReducerName.TENANT,
@@ -37,12 +65,17 @@ const { reducer, actions } = createSlice({
       state.loading = false;
       console.log(action.payload);
 
-      const { name, logoUrl, legalAddress, domainUrl } = action.payload;
-      state.name = name;
-      state.logoUrl = logoUrl;
-      state.legalAddress = legalAddress;
-      state.domainUrl = domainUrl
-
+      // const { name, logoUrl, legalAddress, domainUrl } = action.payload;
+      // state.tenant.name = name;
+      // state.tenant.logoURL = logoUrl;
+      // state.tenant.invoiceAddress = legalAddress;
+      // state.tenant.domainURL = domainUrl
+      state.tenant = {...state.tenant, ...action.payload}
+    },
+    updateTenant: (state, action) => {
+      state.loading = false;
+      state.tenant = action.payload;
+      state.status = 'Updated'
     },
   },
 });
@@ -50,5 +83,10 @@ const { reducer, actions } = createSlice({
 const TenantActionCreator = {
   ...actions,
 };
+
+export const updateTenantAction = (data: any) => ({
+  type: TenantSagasTypes.UPDATE_TENANT,
+  payload: data,
+});
 
 export { TenantActionCreator, reducer };
