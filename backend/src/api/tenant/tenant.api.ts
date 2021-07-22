@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { ApiPath, HttpCode, TenantsApiPath } from 'shared';
 import { parseURL } from '~/helpers';
+import { getPlatform } from '~/middlewares';
 import { tenantService } from '~/services/services';
 
 const initTenantApi = (apiRouter: Router): Router => {
@@ -17,10 +18,9 @@ const initTenantApi = (apiRouter: Router): Router => {
     }
   });
 
-  tenantRouter.get(TenantsApiPath.DOMAINURL, async (_req, res, next) => {
+  tenantRouter.get(TenantsApiPath.DOMAINURL, getPlatform, async (_req, res, next) => {
     try {
-      const referer = parseURL(_req.headers.referer).host
-      const tenant = await tenantService.getTenantByDomainUrl(referer);
+      const tenant = _req.platform;
       res.status(HttpCode.OK).json(tenant);
     } catch(error) {
       next(error);

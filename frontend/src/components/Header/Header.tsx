@@ -30,8 +30,8 @@ const Header = ({
           </button>
         </div>
         <div className='logo w-1/3 px-2 flex items-center justify-center'>
-          <Link to='/platform-edit' className='block w-9 h-9 sm:w-10 sm:h-10 md:w-12 md:h-12'>
-            <img src={tenant.logoURL} alt='MainLogo' />
+          <Link to='/platform-edit' className='block w-9 h-9 sm:w-10 sm:h-10 md:w-12 md:h-12 overflow-hidden rounded-full flex justify-center items-center'>
+            <img src={tenant.logoURL}  alt='MainLogo' />
           </Link>
         </div>
         <div className='user w-1/3 cursor-pointer flex justify-end relative'>

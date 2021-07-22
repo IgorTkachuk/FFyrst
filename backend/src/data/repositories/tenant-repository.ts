@@ -8,8 +8,8 @@ class TenantRepository {
   public getById(id:string):Promise<ITenant | null>{
     return TenantModel.findByPk(id)
   }
-  public getByDomainUrl(domainUrl:string):Promise<ITenant | null>{
-    return TenantModel.findOne({ where: { domainUrl } });
+  public getByDomainUrl(domainURL:string):Promise<ITenant | null>{
+    return TenantModel.findOne({ where: { domainURL } });
   }
   public createTenant(user:ITenant):Promise<ITenant>{
     return TenantModel.create(user)

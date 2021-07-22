@@ -20,7 +20,7 @@ const platformDetails = {
   name: 'Super Medical',
   domainURL: 'supermedical.fyrst.com',
   supportEmail: 'support@supermedical.com',
-  industry: 'healthcare',
+  industry: 1,
   phoneNumber: '+380735556677',
   invoiceAddress: 'GA 30309',
   useCred: false,
@@ -29,14 +29,20 @@ const platformDetails = {
   logoURL: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Ikea_logo.svg/1280px-Ikea_logo.svg.png'
 }
 
+const tempMockIndustries = [
+  {
+    value: '1',
+    label: 'Healthcare'
+  },
+  {
+    value: '2',
+    label: 'Driving'
+  },
+]
+
 const General = () => {
   const platform = platformDetails;
-  const options = Object.values(Industries).map((industry, index) => (
-    {
-      value: industry,
-      label: industry.charAt(0).toUpperCase() + industry.slice(1)
-    }
-  ))
+  const options = tempMockIndustries;
   return (
     <Formik
         initialValues={platform}
