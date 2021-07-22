@@ -3,7 +3,7 @@ import { host, port, user, pass } from 'config/email.config';
 import { EmailType } from '~/common/enums';
 import { Transporter } from 'nodemailer';
 import { MailOptions } from '~/common/types';
-import { getFullUrl, createMail } from '~/helpers';
+import { urlHelper, createMail } from '~/helpers';
 import { compileFile } from 'pug';
 import path from 'path';
 
@@ -38,13 +38,13 @@ class MailService {
   }
 
   async sendActivationMail(email: string, token: string): Promise<Transporter> {
-    const link = getFullUrl(`/email-activation/${token}`);
+    const link = urlHelper.getFullUrl(`/email-activation/${token}`);
     const mailOptions = createMail('Confirm registration', link);
     return await this.sendMail(EmailType.ACTIVATION, email, mailOptions);
   }
 
   async sendResetPasswordMail(email: string, token: string): Promise<Transporter> {
-    const link = getFullUrl(`/verify-refresh/${token}`);
+    const link = urlHelper.getFullUrl(`/verify-refresh/${token}`);
     const mailOptions = createMail(
       `Reset password from ${email} account`,
       link

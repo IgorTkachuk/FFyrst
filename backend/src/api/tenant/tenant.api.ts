@@ -1,6 +1,5 @@
 import { Router } from 'express';
 import { ApiPath, HttpCode, TenantsApiPath } from 'shared';
-import { parseURL } from '~/helpers';
 import { getPlatform } from '~/middlewares';
 import { tenantService } from '~/services/services';
 
