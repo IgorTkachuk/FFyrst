@@ -10,6 +10,9 @@ import { Uploader } from 'components/Uploader';
 
 import iconEdit from 'assets/icons/icon-edit.svg';
 import { Spinner } from 'components/Spinner/Spinner';
+import { useTypedSelector } from 'hooks/useTypedSelector';
+import { useDispatch } from 'react-redux';
+import { updateTenantAction } from 'store/slices/tenant/tenant.slice';
 
 
 interface IPlatformGeneral {
@@ -41,14 +44,15 @@ const tempMockIndustries = [
 ]
 
 const General = () => {
-  const platform = platformDetails;
+  const dispatch = useDispatch();
+  const { tenant } = useTypedSelector(state => state.tenant);
   const options = tempMockIndustries;
   return (
     <Formik
-        initialValues={platform}
+        initialValues={tenant}
         validationSchema={platformGeneralSchema}
         onSubmit={(values, { resetForm }: FormikHelpers<IPlatformGeneral>) => {
-          // dispatch(updateUserAction({ user, token: token || '' }));
+          dispatch(updateTenantAction(values));
           console.log('values', values);
         }}
       >
@@ -111,7 +115,7 @@ const General = () => {
                     meta={meta}
                     field={field}
                     props={props}
-                    defaultValue={options.find(({value}) => value === field.value)}
+                    defaultValue={options.find(({value}) => value === field.value.toString())}
                   />
                 )}
               </Field>

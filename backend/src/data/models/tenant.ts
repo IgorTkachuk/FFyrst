@@ -2,7 +2,7 @@ import { Sequelize, DataTypes, ModelCtor, Model } from 'sequelize';
 import { ModelName } from '~/common/enums';
 import { ITenant } from '~/common/interfaces';
 
-interface TenantInstance extends ITenant, Model {}
+export interface TenantInstance extends ITenant, Model {}
 
 const createTenantModel = (orm: Sequelize): ModelCtor<TenantInstance> => {
   const TenantModel = orm.define<TenantInstance>(ModelName.TENANT, {

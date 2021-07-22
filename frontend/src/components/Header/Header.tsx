@@ -17,7 +17,6 @@ const Header = ({
   isCollapsed,
 }: IHeaderProps): ReactElement => {
   const { tenant } = useTypedSelector(state => state.tenant);
-  console.log(tenant);
 
   return (
     <header

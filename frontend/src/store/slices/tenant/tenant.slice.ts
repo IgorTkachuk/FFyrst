@@ -4,6 +4,7 @@ import { stat } from 'fs';
 
 type TenantState = {
   tenant: {
+    id: number,
     name: string;
     domainURL: string;
     supportEmail: string;
@@ -14,13 +15,14 @@ type TenantState = {
     credURL: string;
     logoURL: string;
   }
-  status: string;
+  status: boolean;
   loading: boolean;
   error: string | null;
 };
 
 const initialState: TenantState = {
   tenant: {
+    id: 0,
     name: '',
     domainURL: '',
     supportEmail: '',
@@ -31,7 +33,7 @@ const initialState: TenantState = {
     credURL: '',
     logoURL: '',
   },
-  status: '',
+  status: false,
   loading: false,
   error: null,
 };
@@ -52,10 +54,9 @@ const { reducer, actions } = createSlice({
   name: ReducerName.TENANT,
   initialState,
   reducers: {
-    requestStart: (state, action) => {
+    requestStart: (state) => {
       state.loading = true;
       state.error = null;
-      console.log(action.payload);
     },
     requestFailed: (state, action) => {
       state.loading = false;
@@ -63,7 +64,7 @@ const { reducer, actions } = createSlice({
     },
     requestSucceed: (state, action) => {
       state.loading = false;
-      console.log(action.payload);
+      // console.log(action.payload);
 
       // const { name, logoUrl, legalAddress, domainUrl } = action.payload;
       // state.tenant.name = name;
@@ -75,7 +76,7 @@ const { reducer, actions } = createSlice({
     updateTenant: (state, action) => {
       state.loading = false;
       state.tenant = action.payload;
-      state.status = 'Updated'
+      state.status = true;
     },
   },
 });

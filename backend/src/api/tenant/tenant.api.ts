@@ -2,6 +2,7 @@ import { Router } from 'express';
 import { ApiPath, HttpCode, TenantsApiPath } from 'shared';
 import { getPlatform } from '~/middlewares';
 import { tenantService } from '~/services/services';
+import { platformGeneralSchema } from './tenant.schema';
 
 const initTenantApi = (apiRouter: Router): Router => {
   const tenantRouter = Router();
@@ -46,9 +47,12 @@ const initTenantApi = (apiRouter: Router): Router => {
   });
 
   tenantRouter.put(TenantsApiPath.$ID, async (_req, res, next) => {
+    console.log(_req.body);
+
     try {
-      const user = await tenantService.updateTenant(_req.params.id, _req.body);
-      res.status(HttpCode.OK).json(user);
+      await platformGeneralSchema.validate(_req.body);
+      const tenantUpdateInfo = await tenantService.updateTenant(_req.params.id, _req.body);
+      res.status(HttpCode.OK).json(tenantUpdateInfo[0]);
     } catch (error) {
       next(error);
     }

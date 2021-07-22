@@ -1,16 +1,13 @@
 import { takeEvery, put, call } from 'redux-saga/effects';
-import { AppRoute, HttpMethod, TenantSagasTypes } from 'common/enums';
+import { HttpMethod, TenantSagasTypes } from 'common/enums';
 import ApiService from 'services/api/api.service';
 import { TenantActionCreator } from 'store/slices/tenant/tenant.slice';
-import { SagaAction } from 'common/types';
-import { PayloadAction } from '@reduxjs/toolkit';
+import { AnyAction } from '@reduxjs/toolkit';
 import { ApiPath, TenantsApiPath, ITenant } from 'shared';
-
-const {  REACT_APP_API_ORIGIN_URL } = process.env;
 
 const apiService = new ApiService();
 
-function* determineTenant(action: Record<string, string>) {
+function* determineTenant(action: AnyAction) {
   const url = ApiPath.TENANTS + TenantsApiPath.DOMAINURL;
 
   const determinationResponse: ITenant = yield call(apiService.httpRequest, url, HttpMethod.GET);
@@ -18,9 +15,21 @@ function* determineTenant(action: Record<string, string>) {
   console.log('resp:', determinationResponse);
 }
 
-function* updateTenant(action: PayloadAction) {
-  // yield put(TenantActionCreator.requestStart());
-  yield put(TenantActionCreator.updateTenant(action.payload));
+function* updateTenant(action: AnyAction) {
+  try {
+    yield put(TenantActionCreator.requestStart());
+    const url = `${ApiPath.TENANTS}/${action.payload.id}`;
+    const updatedTenant: ITenant = yield call(
+      apiService.httpRequest,
+      url,
+      HttpMethod.PUT,
+      { body: action.payload });
+    yield put(TenantActionCreator.updateTenant(updatedTenant));
+    console.log('updatedTenant', updatedTenant);
+
+  } catch (e) {
+    yield put(TenantActionCreator.requestFailed(e.message));
+  }
 }
 
 function* TenantSaga(): Generator {
