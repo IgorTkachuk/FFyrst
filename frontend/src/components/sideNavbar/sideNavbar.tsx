@@ -22,9 +22,11 @@ const SideNavbar: React.FC<IProps> = ({ isCollapsed, setCollapse }) => {
   };
 
   useEffect(() => {
-    document.addEventListener('click', e => dropdownStatus(e));
+    if(isCollapsed) {
+      document.addEventListener('click', e => dropdownStatus(e));
+    }
     return () => document.removeEventListener('click', e => dropdownStatus(e));
-  }, []);
+  }, [isCollapsed]);
 
   return (
     <>

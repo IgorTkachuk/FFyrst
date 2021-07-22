@@ -43,7 +43,7 @@ const App: React.FC = () => {
   }, [authState]);
 
   useEffect(() => {
-    dispatch(TenantActionCreator.requestStart('<p>'));
+    dispatch(TenantActionCreator.requestStart());
   }, []);
 
   return (

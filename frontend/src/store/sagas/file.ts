@@ -1,4 +1,4 @@
-import { takeEvery, put, call, takeLatest } from 'redux-saga/effects';
+import { takeEvery, put, call } from 'redux-saga/effects';
 import { FileActionCreator } from '../slices';
 import ApiService from '../../services/api/api.service';
 import { FileSagasTypes, LocalstorageKeys } from '../../common/enums';

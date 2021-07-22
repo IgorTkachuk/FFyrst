@@ -2,7 +2,7 @@ import { Sequelize, DataTypes, ModelCtor, Model } from 'sequelize';
 import { ModelName } from '~/common/enums';
 import { ITenant } from '~/common/interfaces';
 
-interface TenantInstance extends ITenant, Model {}
+export interface TenantInstance extends ITenant, Model {}
 
 const createTenantModel = (orm: Sequelize): ModelCtor<TenantInstance> => {
   const TenantModel = orm.define<TenantInstance>(ModelName.TENANT, {
@@ -10,17 +10,45 @@ const createTenantModel = (orm: Sequelize): ModelCtor<TenantInstance> => {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    logoUrl: {
+    domainURL: {
+      field: 'domain_url',
       type: DataTypes.STRING,
       allowNull: false,
     },
-    legalAddress: {
+    logoURL: {
+      field: 'logo_url',
       type: DataTypes.STRING,
       allowNull: false,
     },
-    domainUrl: {
+    supportEmail: {
+      field: 'support_email',
+      defaultValue: '',
       type: DataTypes.STRING,
+    },
+    industry: {
+      field: 'industry',
+      type: DataTypes.INTEGER,
       allowNull: false,
+    },
+    phoneNumber: {
+      field: 'phone_number',
+      defaultValue: '',
+      type: DataTypes.STRING,
+    },
+    invoiceAddress: {
+      field: 'invoice_address',
+      defaultValue: '',
+      type: DataTypes.STRING,
+    },
+    useCred: {
+      field: 'use_cred',
+      defaultValue: false,
+      type: DataTypes.BOOLEAN,
+    },
+    credURL: {
+      field: 'cred_url',
+      defaultValue: '',
+      type: DataTypes.STRING,
     },
     createdAt: DataTypes.DATE,
     updatedAt: DataTypes.DATE

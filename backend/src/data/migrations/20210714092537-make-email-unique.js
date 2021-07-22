@@ -7,7 +7,7 @@ module.exports = {
     queryInterface.changeColumn('users', 'email', {
       type: Sequelize.STRING,
       allowNull: false,
-      unique: true
+      // unique: true
     }, { transaction })
   ]))),
 
@@ -16,7 +16,7 @@ module.exports = {
       queryInterface.changeColumn('users', 'email', {
         type: Sequelize.STRING,
         allowNull: false,
-        unique: false
+        // unique: false
       }, { transaction })
     ]));
   }

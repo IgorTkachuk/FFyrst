@@ -1,21 +1,39 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { ReducerName } from 'common/enums';
+import { ReducerName, TenantSagasTypes } from 'common/enums';
 import { stat } from 'fs';
 
 type TenantState = {
-  name: string;
-  logoUrl: string;
-  legalAddress: string;
-  domainUrl: string;
+  tenant: {
+    id: number,
+    name: string;
+    domainURL: string;
+    supportEmail: string;
+    industry: string;
+    phoneNumber: string;
+    invoiceAddress: string;
+    useCred: boolean;
+    credURL: string;
+    logoURL: string;
+  }
+  status: boolean;
   loading: boolean;
   error: string | null;
 };
 
 const initialState: TenantState = {
-  name: '',
-  logoUrl: '',
-  legalAddress: '',
-  domainUrl:  '',
+  tenant: {
+    id: 0,
+    name: '',
+    domainURL: '',
+    supportEmail: '',
+    industry: '',
+    phoneNumber: '',
+    invoiceAddress: '',
+    useCred: false,
+    credURL: '',
+    logoURL: '',
+  },
+  status: false,
   loading: false,
   error: null,
 };
@@ -24,10 +42,9 @@ const { reducer, actions } = createSlice({
   name: ReducerName.TENANT,
   initialState,
   reducers: {
-    requestStart: (state, action) => {
+    requestStart: (state) => {
       state.loading = true;
       state.error = null;
-      console.log(action.payload);
     },
     requestFailed: (state, action) => {
       state.loading = false;
@@ -35,14 +52,12 @@ const { reducer, actions } = createSlice({
     },
     requestSucceed: (state, action) => {
       state.loading = false;
-      console.log(action.payload);
-
-      const { name, logoUrl, legalAddress, domainUrl } = action.payload;
-      state.name = name;
-      state.logoUrl = logoUrl;
-      state.legalAddress = legalAddress;
-      state.domainUrl = domainUrl
-
+      state.tenant = {...state.tenant, ...action.payload}
+    },
+    updateTenant: (state, action) => {
+      state.loading = false;
+      state.tenant = action.payload;
+      state.status = true;
     },
   },
 });
@@ -50,5 +65,10 @@ const { reducer, actions } = createSlice({
 const TenantActionCreator = {
   ...actions,
 };
+
+export const updateTenantAction = (data: any) => ({
+  type: TenantSagasTypes.UPDATE_TENANT,
+  payload: data,
+});
 
 export { TenantActionCreator, reducer };
