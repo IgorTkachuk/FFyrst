@@ -9,7 +9,7 @@ import { useDispatch } from 'react-redux';
 import { getUserAction } from './store/slices/user-data/user-data.slice';
 import SideNavbar from './components/sideNavbar/sideNavbar';
 import { BsList } from 'react-icons/bs';
-import { TenantActionCreator } from 'store/slices/tenant/tenant.slice';
+import { getAllIndustriesAction, TenantActionCreator } from 'store/slices/tenant/tenant.slice';
 
 import { Header } from './components/Header/Header';
 
@@ -44,6 +44,7 @@ const App: React.FC = () => {
 
   useEffect(() => {
     dispatch(TenantActionCreator.requestStart());
+    dispatch(getAllIndustriesAction());
   }, []);
 
   return (
