@@ -1,7 +1,7 @@
 import { ITemplateField } from './template-field.interface';
 
 export interface ITemplate {
-  id: string
-  industry_id: string
+  id?: string
+  industryId: number
   template: string | ITemplateField[]
 }
