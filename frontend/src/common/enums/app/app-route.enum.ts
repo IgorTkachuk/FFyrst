@@ -9,7 +9,7 @@ enum AppRoute {
   PLATFORM_EDIT = '/platform-edit',
   USER_PROFILE = '/profile',
   ACTIVATION = 'users/activation',
-  TENANT_DETERMINE = 'tenants/domainurl',
+  TENANT_DETERMINE = 'tenants/platform',
 }
 
 export { AppRoute };

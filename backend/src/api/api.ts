@@ -4,8 +4,10 @@ import { initUserApi } from './user/user.api';
 import { initTenantApi } from './tenant/tenant.api';
 import { initAuthApi } from '~/api/auth/auth.api';
 import { initFileUploadApi } from './file-upload/file-upload.api';
+import { initIndustryApi } from './industry/industry.api';
 
-const apis = [initUserApi, initAuthApi, initTenantApi, initFileUploadApi];
+
+const apis = [initUserApi, initAuthApi, initTenantApi, initFileUploadApi, initIndustryApi];
 
 const initApi = (app: Router): Router => {
   const apiRouter = Router();

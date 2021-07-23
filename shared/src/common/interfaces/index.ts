@@ -6,4 +6,4 @@ export * from './verify-password';
 export * from './messages';
 export * from './user-manage';
 export * from './profile';
-
+export * from './industry';

@@ -21,6 +21,12 @@ const initTenantApi = (apiRouter: Router): Router => {
   tenantRouter.get(TenantsApiPath.DOMAINURL, getPlatform, async (_req, res, next) => {
     try {
       const tenant = _req.platform;
+  tenantRouter.get(TenantsApiPath.PLATFORM, async (_req, res, next) => {
+    try {
+      const tenant = await tenantService.getTenantByDomainUrl(_req.hostname);
+      if(!tenant){
+        return res.status(HttpCode.NOT_FOUND).json({message: 'No matching tenant information found'});
+      }
       res.status(HttpCode.OK).json(tenant);
     } catch(error) {
       next(error);

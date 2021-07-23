@@ -10,8 +10,15 @@ const apiService = new ApiService();
 function* determineTenant(action: AnyAction) {
   const url = ApiPath.TENANTS + TenantsApiPath.DOMAINURL;
 
-  const determinationResponse: ITenant = yield call(apiService.httpRequest, url, HttpMethod.GET);
-  yield put(TenantActionCreator.requestSucceed(determinationResponse))
+  let determinationResponse: ITenant | undefined;
+
+  try {
+    determinationResponse = yield call(apiService.httpRequest, url, HttpMethod.GET);
+    yield put(TenantActionCreator.requestSucceed(determinationResponse));
+  } catch(error) {
+    yield put(TenantActionCreator.requestFailed(error.response.data.message));
+  }
+
 }
 
 function* updateTenant(action: AnyAction) {

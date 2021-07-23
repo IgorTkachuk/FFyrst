@@ -1,6 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { ReducerName, TenantSagasTypes } from 'common/enums';
-import { stat } from 'fs';
 
 type TenantState = {
   tenant: {
