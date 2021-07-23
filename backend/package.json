@@ -10,6 +10,7 @@
     "migrate:test": "cross-env NODE_ENV=test sequelize-cli db:migrate",
     "migrate:test:reset": "cross-env NODE_ENV=test sequelize-cli db:migrate:undo:all && npm run migrate:test",
     "seed:test": "cross-env NODE_ENV=test sequelize-cli db:seed:all",
+    "seed": "cross-env NODE_ENV=development sequelize-cli db:seed:all",
     "test": "cross-env NODE_ENV=test jest --testTimeout=30000 --forceExit",
     "pretest": "cross-env NODE_ENV=test npm run migrate:test:reset && npm run seed:test",
     "coverage": "npm run pretest && jest --coverage && cat ./coverage/lcov.info | coveralls",

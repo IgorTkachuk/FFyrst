@@ -18,7 +18,7 @@ const initTenantApi = (apiRouter: Router): Router => {
     }
   });
 
-  tenantRouter.get(TenantsApiPath.DOMAINURL, getPlatform, async (_req, res, next) => {
+  tenantRouter.get(TenantsApiPath.PLATFORM, getPlatform, async (_req, res, next) => {
     try {
       const tenant = _req.platform;
       res.status(HttpCode.OK).json(tenant);

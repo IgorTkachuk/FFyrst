@@ -8,6 +8,10 @@ import { LocalstorageKeys } from './common/enums';
 import { useDispatch } from 'react-redux';
 import { getUserAction } from './store/slices/user-data/user-data.slice';
 import SideNavbar from './components/sideNavbar/sideNavbar';
+import { TenantActionCreator } from 'store/slices/tenant/tenant.slice';
+import ReactNotification from 'react-notifications-component'
+import { store } from 'react-notifications-component';
+import 'react-notifications-component/dist/theme.css'
 import { BsList } from 'react-icons/bs';
 import { getAllIndustriesAction, TenantActionCreator } from 'store/slices/tenant/tenant.slice';
 
@@ -23,6 +27,7 @@ const defaultUser = {
 const App: React.FC = () => {
   const localstorageService = new LocalstorageService();
   const { authState, refreshToken, accessToken } = useTypedSelector(state => state.user);
+  const { error: tenantDetermineError } = useTypedSelector(state => state.tenant);
   const dispatch = useDispatch();
   const routes = useRoute(authState);
   const [isCollapsed, setIsCollapsed] = useState(false);
@@ -43,21 +48,42 @@ const App: React.FC = () => {
   }, [authState]);
 
   useEffect(() => {
+    if(tenantDetermineError){
+      store.addNotification({
+        title: "Error!",
+        message: tenantDetermineError,
+        type: "danger",
+        insert: "top",
+        container: "top-right",
+        animationIn: ["animate__animated", "animate__fadeIn"],
+        animationOut: ["animate__animated", "animate__fadeOut"],
+        dismiss: {
+          duration: 3000,
+          onScreen: true
+        }
+      });
+    }
+  },[tenantDetermineError]);
+
+  useEffect(() => {
     dispatch(TenantActionCreator.requestStart());
     dispatch(getAllIndustriesAction());
   }, []);
 
   return (
-    <div className='w-full min-h-screen max-w-full'>
-      { authState && <Header user={defaultUser} callback={burgerClick} isCollapsed={isCollapsed} />}
-      <div className={'flex'}>
-        {authState && <SideNavbar isCollapsed={isCollapsed} setCollapse={setIsCollapsed} />}
-        <div
-          className={`max-w-page-content ${isCollapsed ? 'def:mx-auto' : 'lg:mx-auto'} w-full sm:mx-4 sm:px-5 md:px-10`}>
-          {routes}
+    <>
+      <ReactNotification />
+      <div className='w-full min-h-screen max-w-full'>
+        { authState && <Header user={defaultUser} callback={burgerClick} isCollapsed={isCollapsed} />}
+        <div className={'flex'}>
+          {authState && <SideNavbar isCollapsed={isCollapsed} setCollapse={setIsCollapsed} />}
+          <div
+            className={`max-w-page-content ${isCollapsed ? 'def:mx-auto' : 'lg:mx-auto'} w-full sm:mx-4 px-10`}>
+            {routes}
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
