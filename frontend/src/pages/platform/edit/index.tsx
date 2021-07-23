@@ -5,7 +5,7 @@ import { General } from './General';
 
 const PlatformEdit = () => {
   return (
-    <div className="sm:p-3 md:p-5 bg-gray-50">
+    <div className="sm:p-3 md:p-10 shadow-xl bg-gray-50">
       <h1 className='mb-4 sm:mt-4 text-gray-700 text-2xl md:text-4xl tracking-wide'>Edit Platform</h1>
       <TabsList>
         <Tab label='General'>
