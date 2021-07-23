@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { ReducerName } from 'common/enums';
+import { FileSagasTypes, ReducerName } from 'common/enums';
 import { userReducer, activationReducer, fileReducer, userDataReducer, tenantReducer } from './slices';
 import createSagaMiddleware from 'redux-saga';
 import rootSaga from 'store/sagas';
@@ -14,7 +14,13 @@ const store = configureStore({
     [ReducerName.USER_DATA]: userDataReducer,
     [ReducerName.TENANT]: tenantReducer,
   },
-  middleware: (cdm) => cdm().concat(sagaMiddleware),
+  middleware: (cdm) => cdm(
+    {
+      serializableCheck: {
+        ignoredActions: [FileSagasTypes.LOAD_TO_CLOUD],
+      }
+    }
+  ).concat(sagaMiddleware),
 });
 
 sagaMiddleware.run(rootSaga);
