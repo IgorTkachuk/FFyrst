@@ -55,7 +55,7 @@ const { reducer, actions } = createSlice({
     },
     updateTenant: (state, action) => {
       state.loading = false;
-      state.tenant = action.payload;
+      state.tenant = {...state.tenant, ...action.payload};
       state.status = true;
     },
   },
