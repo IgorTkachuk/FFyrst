@@ -35,12 +35,12 @@ const createUserModel = (orm: Sequelize): ModelCtor<UserInstance> => {
       },
       birthDate: {
         field: 'birth_date',
-        allowNull: false,
+        allowNull: true,
         type: DataTypes.DATE,
       },
       avatar: {
         field: 'avatar',
-        allowNull: false,
+        allowNull: true,
         type: DataTypes.STRING,
       },
       isActive: {

@@ -1,5 +1,4 @@
 'use strict';
-
 module.exports = {
   up: async (queryInterface, Sequelize) =>
     queryInterface.sequelize.transaction((transaction) =>
@@ -23,7 +22,6 @@ module.exports = {
         ),
       ]),
     ),
-
   down: async (queryInterface) => {
     return queryInterface.sequelize.transaction((transaction) =>
       Promise.all([

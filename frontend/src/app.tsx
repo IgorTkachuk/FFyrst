@@ -64,7 +64,7 @@ const App: React.FC = () => {
   },[tenantDetermineError]);
 
   useEffect(() => {
-    dispatch(TenantActionCreator.requestStart('<p>'));
+    dispatch(TenantActionCreator.requestStart());
   }, []);
 
   return (

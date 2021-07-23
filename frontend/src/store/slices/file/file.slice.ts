@@ -14,7 +14,7 @@ const initialState: FileState = {
 };
 
 const { reducer, actions } = createSlice({
-  name: ReducerName.USER,
+  name: ReducerName.FILE,
   initialState,
   reducers: {
     requestStart: (state) => {

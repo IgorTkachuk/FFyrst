@@ -1,7 +1,13 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import './checkbox.css';
 
 interface CheckBoxProps {
+  id: string;
+  field: any;
+  meta?: {
+    touched: boolean;
+    error: string;
+  };
   boxColor?: 'blue' | 'red' | 'green' | 'black';
   textColor?: 'blue' | 'red' | 'green' | 'black';
   boxSize?: 'small' | 'medium' | 'big' | 'large';
@@ -46,8 +52,10 @@ export const CheckBox = ({
   label = '',
   rounded = false,
   checked = true,
+  field,
+  meta = { touched: false, error: '' },
   ...props
-}: CheckBoxProps) => {
+}: CheckBoxProps): ReactElement => {
   return (
     <label className={`inline-flex items-center`}>
       <input
@@ -58,6 +66,7 @@ export const CheckBox = ({
           BOX_COLORS[boxColor] + '-400'
         } hover:${BOX_COLORS[boxColor] + '-500'}`}
         defaultChecked={checked}
+        {...field}
         {...props}
       />
       <span
