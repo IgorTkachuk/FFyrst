@@ -5,7 +5,7 @@ import { IIndustry } from '~/common/interfaces';
 export interface IndustryInstance extends IIndustry, Model {}
 
 const createIndustryModel = (orm: Sequelize): ModelCtor<IndustryInstance> => {
-  const IndustryModel = orm.define<IndustryInstance>(ModelName.TENANT, {
+  const IndustryModel = orm.define<IndustryInstance>(ModelName.INDUSTRY, {
     name: {
       type: DataTypes.STRING,
       allowNull: false,
