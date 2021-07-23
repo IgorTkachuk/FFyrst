@@ -8,7 +8,7 @@ enum AppRoute {
   USER_MANAGE = '/user-manage',
   USER_PROFILE = '/profile',
   ACTIVATION = 'users/activation',
-  TENANT_DETERMINE = 'tenants/domainurl',
+  TENANT_DETERMINE = 'tenants/platform',
 }
 
 export { AppRoute };

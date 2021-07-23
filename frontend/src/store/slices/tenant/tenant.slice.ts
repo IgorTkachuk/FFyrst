@@ -1,6 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { ReducerName } from 'common/enums';
-import { stat } from 'fs';
 
 type TenantState = {
   name: string;
@@ -27,7 +26,6 @@ const { reducer, actions } = createSlice({
     requestStart: (state, action) => {
       state.loading = true;
       state.error = null;
-      console.log(action.payload);
     },
     requestFailed: (state, action) => {
       state.loading = false;
@@ -35,7 +33,6 @@ const { reducer, actions } = createSlice({
     },
     requestSucceed: (state, action) => {
       state.loading = false;
-      console.log(action.payload);
 
       const { name, logoUrl, legalAddress, domainUrl } = action.payload;
       state.name = name;

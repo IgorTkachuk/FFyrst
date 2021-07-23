@@ -12,6 +12,7 @@ import { useHistory } from 'react-router-dom';
 
 const Login: React.FC = () => {
   const { loading, error } = useTypedSelector(state => state.user);
+  const { logoUrl } = useTypedSelector(state => state.tenant);
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -22,6 +23,7 @@ const Login: React.FC = () => {
   return (
     <div className='container mx-auto h-screen flex justify-center items-center'>
       <div className='w-full max-w-xs'>
+        { logoUrl && <img src={logoUrl} className='mb-8'/> }
         <Formik
           initialValues={{ email: '', password: '' }}
           validationSchema={loginSchema}

@@ -20,8 +20,15 @@ export interface ITenant {
 function* determineTenant(action: Record<string, string>) {
   const url = `http://${window.location.host}/${REACT_APP_API_ORIGIN_URL}${AppRoute.TENANT_DETERMINE}`;
 
-  const determinationResponse: ITenant = yield call(apiService.httpRequest, url, HttpMethod.GET);
-  yield put(TenantActionCreator.requestSucceed(determinationResponse))
+  let determinationResponse: ITenant | undefined;
+
+  try {
+    determinationResponse = yield call(apiService.httpRequest, url, HttpMethod.GET);
+    yield put(TenantActionCreator.requestSucceed(determinationResponse));
+  } catch(error) {
+    yield put(TenantActionCreator.requestFailed(error.response.data.message));
+  }
+
 }
 
 function* TenantSaga(): Generator {
