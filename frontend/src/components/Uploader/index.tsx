@@ -107,7 +107,7 @@ const Uploader = (
       </fieldset>
       {
         file && isCropperVisible &&
-        <div className='cropper fixed z-50 w-full h-screen flex justify-center items-center inset-0 p-4'>
+        <div className='cropper fixed z-50 w-full h-screen flex justify-center items-center inset-0 p-4 bg-black bg-opacity-50'>
           <div className='cropper-container bg-gray-700 p-4 sm:p-6 lg:p-8 rounded'>
             <Cropper
               src={file.fileURL}
