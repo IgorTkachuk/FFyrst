@@ -1,7 +1,7 @@
 import axios, { Method } from 'axios';
 import { LocalstorageKeys } from '../../common/enums';
 import LocalstorageService from '../localstorage/localstorage.service';
-import { HttpCode } from 'shared';
+import { HttpCode, IUser } from 'shared';
 import { ApiPath, AuthApiPath } from 'shared';
 import { store } from '../../store/store';
 
@@ -39,7 +39,6 @@ class ApiService {
   ): Promise<any> => {
     const { body, params, headers } = options;
     const tokens = await this.refreshTokens();
-
     const res = await this.instance.request({
       url,
       data: body,

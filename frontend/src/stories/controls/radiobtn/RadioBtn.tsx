@@ -1,84 +1,36 @@
 import React from 'react';
 import './radiobtn.css';
+
 interface RadioBtnProps {
-  boxColor?: 'blue' | 'red' | 'green' | 'black';
-  textColor?: 'blue' | 'red' | 'green' | 'black';
-  boxSize?: 'small' | 'medium' | 'big' | 'large';
-  textSize?: 'small' | 'medium' | 'big' | 'large';
-  rounded?: boolean;
-  disabled?: boolean;
-  isSelected?: boolean;
-  value?: string;
-  label: string;
+  id: string;
+  checked: boolean,
+  title: string;
+  disabled?: boolean,
+  value: string | boolean;
   className?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   props?: Record<string, unknown>;
+  field: any;
+  meta?: {
+    touched: boolean;
+    error: string;
+  };
 }
 
-const BOX_SIZES = {
-  small: 'h-3 w-3 mr-2',
-  medium: 'h-4 w-4 mr-2.5',
-  big: 'h-6 w-6 mr-4',
-  large: 'h-8 w-8 mr-5',
-};
-const BOX_COLORS = {
-  blue: 'text-blue',
-  red: 'text-red',
-  green: 'text-green',
-  black: 'text-black',
-};
-const TEXT_SIZES = {
-  small: 'text-sm',
-  medium: 'text-lg',
-  big: 'text-2xl',
-  large: 'text-4xl',
-};
-const TEXT_COLORS = {
-  blue: 'text-blue',
-  red: 'text-red',
-  green: 'text-green',
-  black: 'text-black',
-};
-
-export const RadioBtn = ({
-  boxColor = 'blue',
-  textColor = 'black',
-  boxSize = 'medium',
-  textSize = 'medium',
-  label = '',
-  value = '',
-  rounded = true,
-  isSelected = true,
-  disabled = false,
-  ...props
-}: RadioBtnProps) => {
-  const boxClass: string =
-    'cursor-pointer rounded focus:ring-transparent ' +
-    (disabled ? 'opacity-60 bg-gray-300 ' : ' ') +
-    (rounded ? 'rounded-full ' : 'rounded-none') +
-    `${BOX_SIZES[boxSize]} ${BOX_COLORS[boxColor] + '-400 '}
-    hover:${BOX_COLORS[boxColor] + '-500 '}`;
-
+export const RadioBtn = ({ checked = false, id, title, value, field, disabled = false, ...props }: RadioBtnProps) => {
   return (
-    <label className={`inline-flex items-center`}>
+    <div
+      className={`${field.value === value ? 'border-custom-blue' : 'border-custom-gray'} flex max-w-small-input  border-2 rounded-lg h-10 items-center `}>
+      <label
+        className={`ml-4 flex order-2 text-custom-blue`}
+        htmlFor={id}>
+        {title}
+      </label>
+      {checked}
       <input
-        type="radio"
-        value={label}
-        disabled={disabled}
-        checked={isSelected}
-        onChange={props.onChange}
-        className={boxClass}
-        {...props}
-      />
-      <span
-        className={`cursor-pointer select-none ${
-          disabled
-            ? 'opacity-60 text-gray-400 '
-            : TEXT_COLORS[textColor] + '-400'
-        } ${TEXT_SIZES[textSize]} ${disabled && 'opacity-30 text-gray-500'}`}
-      >
-        {label}
-      </span>
-    </label>
+        className={`ml-2 flex order-1 focus:outline-none border-custom-gray focus:ring-0 mt-1 text-custom-blue active:text-custom-dark-blue`}
+        id={id} type='radio' disabled={disabled}
+        checked={field.value === value} onChange={()=>field.onChange(field.value)} {...field} {...props} />
+    </div>
   );
 };

@@ -37,6 +37,12 @@ const useRoute = (isAuth: boolean): React.ReactElement => {
         <Route path={AppRoute.USER_PROFILE}>
           <Pages.UserProfileDetails />
         </Route>
+        <Route path={AppRoute.CREATE_USER}>
+          <Pages.CreateUser />
+        </Route>
+        <Route path={AppRoute.UPDATE_USER}>
+          <Pages.UpdateUser />
+        </Route>
         <Redirect to={AppRoute.MAIN} />
       </Switch>
     );

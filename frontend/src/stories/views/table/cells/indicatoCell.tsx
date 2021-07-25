@@ -10,7 +10,7 @@ interface IProps {
 const IndicatorCell: React.FC<IProps> = ({ title, idx, prop, row }) => {
   return (
     <td
-      className={`py-1 ${row[prop] ? 'text-red-600' : 'text-green-600'}`}
+      className={`py-1 ${row[prop] ? 'text-green-600' : 'text-red-600'}`}
       key={idx}>
       {title}
     </td>

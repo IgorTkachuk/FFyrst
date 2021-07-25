@@ -1,9 +1,10 @@
 import React, { ReactNode } from 'react';
 import './button.css';
 
+type BtnStyle = 'primary' | 'secondary' | 'tertiary'
+
 interface ButtonProps {
-  color: 'blue' | 'red' | 'green';
-  size?: 'small' | 'medium' | 'big';
+  like: BtnStyle,
   label?: string;
   icon?: ReactNode | HTMLAllCollection | string,
   type?: 'button' | 'submit' | 'reset';
@@ -12,37 +13,17 @@ interface ButtonProps {
   [key: string]: any;
 }
 
-const BTN_COLORS = {
-  blue: 'bg-blue-500',
-  red: 'bg-red-500',
-  green: 'bg-green-500',
-};
-
-const BTN_COLORS_ON_HOVER = {
-  blue: 'bg-blue-400',
-  red: 'bg-red-400',
-  green: 'bg-green-400',
-};
-
-const BTN_SIZES = {
-  small: 'text-sm',
-  medium: 'text-lg',
-  big: 'text-2xl',
-};
-
-
-export const Button = ({ size = 'medium', color = 'green', label = '', type = 'button', icon, ...props }: ButtonProps) => {
-  return (
-    <button
-      type={type}
-      className={`${BTN_COLORS[color]} ${BTN_SIZES[size]} ${
-        props.disabled ? 'bg-opacity-70' : ''
-      } transform active:scale-95 font-roboto  text-white font-bold py-2 px-4 rounded active:  hover:${
-        BTN_COLORS_ON_HOVER[color]
-      }`}
-      {...props}
-    >
-      {icon} {label}
-    </button>
-  );
-};
+export const Button = ({ like = 'secondary', label = '', type = 'button', icon, ...props }: ButtonProps) => {
+    return (
+      <button
+        type={type}
+        className={`h-10 rounded-md max-w-btn-content w-full hover:shadow-md transition duration-200 flex place-content-center items-center
+          ${like === 'primary' && 'text-custom-white bg-custom-blue active:bg-custom-dark-blue focus:outline-none focus:ring-0 border-0'}
+          ${like === 'secondary' && `text-custom-blue bg-custom-background active:bg-custom-background focus:outline-none focus:ring-0 border-custom-blue border-2 active:border-custom-dark-blue active:text-custom-dark-blue `}' +
+          ${like === 'tertiary' && 'text-custom-blue focus:outline-none focus:ring-0 border-0 '} `}
+        {...props}>
+        {icon} {label}
+      </button>
+    );
+  }
+;

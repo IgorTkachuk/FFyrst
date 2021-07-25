@@ -11,7 +11,10 @@ export interface SagaUserAction
   type: string;
 }
 
-export interface SagaUsersPaginationAction extends Action,
-  PayloadAction<{ pagination: any, token: string }> {
+export interface SagaActionWithTokenAndPayload<T> extends Action, PayloadAction<T & { token: string }> {
+  type: string
+}
+
+export interface SagaActionWithToken extends Action, PayloadAction<{ token: string }> {
   type: string
 }

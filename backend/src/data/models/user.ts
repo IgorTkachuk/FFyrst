@@ -1,9 +1,10 @@
 import { Sequelize, DataTypes, ModelCtor, Model } from 'sequelize';
 
-import { IUser } from '~/common/interfaces';
-import { ModelName } from '~/common/enums';
+import { IUser } from 'shared';
+import { ModelName } from '../../common/enums';
 
-interface UserInstance extends IUser, Model {}
+interface UserInstance extends IUser, Model {
+}
 
 const createUserModel = (orm: Sequelize): ModelCtor<UserInstance> => {
   const UserModel = orm.define<UserInstance>(
@@ -35,12 +36,12 @@ const createUserModel = (orm: Sequelize): ModelCtor<UserInstance> => {
       },
       birthDate: {
         field: 'birth_date',
-        allowNull: false,
+        allowNull: true,
         type: DataTypes.DATE,
       },
       avatar: {
         field: 'avatar',
-        allowNull: false,
+        allowNull: true,
         type: DataTypes.STRING,
       },
       isActive: {
@@ -56,6 +57,36 @@ const createUserModel = (orm: Sequelize): ModelCtor<UserInstance> => {
       activationToken: {
         field: 'activation_token',
         type: DataTypes.STRING,
+      },
+      postalCode: {
+        field: 'postal_code',
+        type: DataTypes.STRING,
+        defaultValue: '',
+      },
+      stateAddress: {
+        field: 'state_address',
+        type: DataTypes.STRING,
+        defaultValue: '',
+      },
+      cityAddress: {
+        field: 'city_address',
+        type: DataTypes.STRING,
+        defaultValue: '',
+      },
+      streetAddress: {
+        field: 'street_address',
+        type: DataTypes.STRING,
+        defaultValue: '',
+      },
+      marriageStatus: {
+        field: 'marriage_status',
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+      },
+      dependantsAmount: {
+        field: 'dependants_amount',
+        type: DataTypes.NUMBER,
+        defaultValue: 0,
       },
       createdAt: DataTypes.DATE,
       updatedAt: DataTypes.DATE,

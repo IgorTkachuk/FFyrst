@@ -7,6 +7,8 @@ enum AppRoute {
   EMAIL_ACTIVATION = '/email-activation/:token',
   USER_MANAGE = '/user-manage',
   USER_PROFILE = '/profile',
+  UPDATE_USER = '/update-user/:id',
+  CREATE_USER = '/create-user'
 }
 
 export { AppRoute };

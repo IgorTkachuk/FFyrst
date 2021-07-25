@@ -1,4 +1,4 @@
-import { Op } from 'sequelize';
+import { Op, where, fn, col } from 'sequelize';
 
 import { UserModel } from '../models';
 import { IUser } from '~/common/interfaces';
@@ -50,35 +50,26 @@ class UserRepository {
     return result[1];
   }
 
-  public async getUsersWithPagination(limit: number, offset: number, filters: ISearchFilter): Promise<IUser[]> {
-    const { firstName, phone, isActive } = filters;
-    const words = firstName.split(' ');
-
-    function comparingName(words: string[]) {
-      const arr = [];
-      for (let i = 0; i < words.length; i++) {
-        arr.push({ [Op.substring]: words[i] });
-      }
-      return arr;
-    }
-
-    return await UserModel.findAll({
+  public async getUsersWithPagination(data: ISearchFilter): Promise<{ rows: IUser[]; count: number; }> {
+    const { filter, limit, page, search } = data;
+    const offset = (page - 1) * limit;
+    const isActive = filter === 'all' ? null : filter !== 'online';
+    return await UserModel.findAndCountAll({
       where: {
-        first_name: {
-          [Op.and]: comparingName(words),
-        },
-        phone_number: {
-          [Op.substring]: phone,
-        },
-        is_active: isActive,
-      }, offset, limit,
+        [Op.or]: [
+          { firstName: { [Op.iLike]: `%${search.trim()}%` } },
+          { lastName: { [Op.iLike]: `%${search.trim()}%` } },
+          { phoneNumber: { [Op.substring]: search.trim() } },
+        ],
+        isActive: { [Op.not]: isActive },
+      },
+      offset: +offset,
+      limit: +limit,
     });
   }
 
-  public async getUsersCount(): Promise<number> {
-    return await UserModel.count();
-  }
-
 }
+
+
 
 export { UserRepository };

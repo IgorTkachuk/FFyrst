@@ -1,10 +1,13 @@
 import { Router } from 'express';
-import { ActivationStatus } from 'shared';
+import { ActivationStatus, ISearchFilter } from 'shared';
 import { ApiPath, HttpCode, UsersApiPath } from 'shared';
 import { createActivationMessage } from '~/helpers';
 import { userService } from '~/services/services';
 import { userSchema } from './user.schema';
 import { jwtValidation } from '~/middlewares/jwt-validation/jwt-validation.middelware';
+import { yupValidation } from '~/middlewares/yup-validation/yup-validation.middelware';
+import { createUserSchema, updateUserSchema } from 'shared';
+import { ResponseMessages } from '~/common/enums/messages/response-messages.enum';
 
 const initUserApi = (apiRouter: Router): Router => {
   const userRouter = Router();
@@ -104,12 +107,38 @@ const initUserApi = (apiRouter: Router): Router => {
     }
   });
 
-  userRouter.post(UsersApiPath.PAG_USERS, jwtValidation, (_req, _res, next) => {
+  userRouter.post(UsersApiPath.PAG_USERS, jwtValidation, async (_req, _res, next) => {
     try {
-      const { limit, page, filter, search } = _req.body;
-      _res.status(200).json({ count: 20, data: [] });
+      const info = await userService.getUsersWithPagination(_req.body as ISearchFilter);
+      _res.status(200).json({ count: info.count, data: info.rows });
     } catch (error) {
       next(error);
+    }
+  });
+
+  userRouter.post(UsersApiPath.MANAGE, jwtValidation, yupValidation(createUserSchema), async (_req, _res, next) => {
+    try {
+      await userService.createNewUser(_req.body);
+      _res.status(HttpCode.OK).json({ message: ResponseMessages.CONFIRMED });
+    } catch (e) {
+      next(e);
+    }
+  });
+  userRouter.put(UsersApiPath.$MANAGE, jwtValidation, yupValidation(updateUserSchema), async (_req, _res, next) => {
+    try {
+      await userService.updateUserManage(_req.body, _req.params.id);
+      _res.status(HttpCode.OK).json({ message: ResponseMessages.CONFIRMED });
+    } catch (e) {
+      next(e);
+    }
+  });
+
+  userRouter.put(UsersApiPath.$MANAGE_ACTIVE, jwtValidation, async (_req, _res, next) => {
+    try {
+      await userService.setUserActive(_req.params.id);
+      _res.status(HttpCode.OK).json({ message: ResponseMessages.CONFIRMED });
+    } catch (e) {
+      next(e);
     }
   });
 

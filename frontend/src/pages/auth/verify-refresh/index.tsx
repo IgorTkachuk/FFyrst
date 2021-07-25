@@ -30,8 +30,8 @@ const VerifyRefresh = () => {
   }, [verifySucceed]);
 
   return (
-    <div className="container mx-auto h-screen flex justify-center items-center">
-      <div className="w-full max-w-xs">
+    <div className='container mx-auto h-screen flex justify-center items-center'>
+      <div className='w-full max-w-xs'>
         <Formik
           initialValues={{ verifiedPassword: '', password: '', token }}
           validationSchema={verifySchema}
@@ -49,16 +49,16 @@ const VerifyRefresh = () => {
               <ErrorBoundary message='Don`t match passwords' />}
               <Field name='password'>
                 {({ field, meta }: any) => (
-                  <Input id='password' title='Password' type='password' meta={meta} field={field} />
+                  <Input id='password' title='Password' type='password' meta={meta} field={field} placeholder={"Password"} />
                 )}
               </Field>
               <Field name='verifiedPassword'>
                 {({ field, meta }: any) => (
-                  <Input id='verifySucceed' title='Verify password' type='password' meta={meta} field={field} />
+                  <Input id='verifySucceed' title='Verify password' type='password' meta={meta} field={field} placeholder={'Verify password'} />
                 )}
               </Field>
               <div className='flex items-center justify-between mt-4'>
-                <Button color='blue' label='Send' type={'submit'} disabled={loading} />
+                <Button like='primary' label='Send' type={'submit'} disabled={loading} />
                 <div className='inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800'>
                   <NavLink to='/login'>Back to login</NavLink>
                 </div>
@@ -66,7 +66,7 @@ const VerifyRefresh = () => {
             </Form>
           )}
         </Formik>
-        <p className="text-center text-gray-500 text-xs">
+        <p className='text-center text-gray-500 text-xs'>
           &copy;2021 Radency. All rights reserved.
         </p>
       </div>

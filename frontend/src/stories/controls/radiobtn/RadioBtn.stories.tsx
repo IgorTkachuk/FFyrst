@@ -16,10 +16,6 @@ const Template: ComponentStory<typeof RadioBtn> = (args) => (
 //story
 export const RadioBtnExmpl = Template.bind({});
 RadioBtnExmpl.args = {
-  boxColor: 'blue',
-  textColor: 'blue',
-  label: 'Boolean',
-  isSelected: true,
   value: 'Boolean',
 };
 
@@ -35,31 +31,19 @@ export const RadioBtnGroupExample = () => {
 
   return (
     <div className="w-80 flex items-center justify-between">
-      <RadioBtn
-        boxColor="blue"
-        textColor="blue"
-        label="Boolean"
-        isSelected={type === 'Boolean'}
-        value="Boolean"
-        onChange={onChangeHandler}
-      />
-      <RadioBtn
-        boxColor="red"
-        textColor="red"
-        label="String"
-        isSelected={type === 'String'}
-        value="String"
-        onChange={onChangeHandler}
-      />
-      <RadioBtn
-        boxColor="green"
-        textColor="green"
-        label="Number"
-        disabled={true}
-        isSelected={type === 'Number'}
-        value="Number"
-        onChange={onChangeHandler}
-      />
+      {/*<RadioBtn*/}
+      {/*  value="Boolean"*/}
+      {/*  onChange={onChangeHandler}*/}
+      {/*/>*/}
+      {/*<RadioBtn*/}
+      {/*  value="String"*/}
+      {/*  onChange={onChangeHandler}*/}
+      {/*/>*/}
+      {/*<RadioBtn*/}
+      {/*  disabled={true}*/}
+      {/*  value="Number"*/}
+      {/*  onChange={onChangeHandler}*/}
+      {/*/>*/}
     </div>
   );
 };

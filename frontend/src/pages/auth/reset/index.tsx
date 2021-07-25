@@ -8,6 +8,7 @@ import { NavLink } from 'react-router-dom';
 import { Input } from '../../../stories/inputs/input/input';
 import { Button } from '../../../stories/controls/button/Button';
 import ErrorBoundary from '../../../components/errorBoundry/errorBoundry';
+import { AppRoute } from '../../../common/enums';
 
 const Reset = () => {
   const { loading, error, resetState } = useTypedSelector(state => state.user);
@@ -19,7 +20,7 @@ const Reset = () => {
 
   return (
     <div className='container mx-auto h-screen flex justify-center items-center'>
-      <div className='w-full max-w-xs'>
+      <div className='w-full max-w-md'>
         <Formik
           initialValues={{ email: '' }}
           validationSchema={resetSchema}
@@ -36,13 +37,13 @@ const Reset = () => {
               {resetState && <p className='font-semibold text-blue-500'>Message was sent to email</p>}
               <Field name='email'>
                 {({ field, meta }: any) => (
-                  <Input id='email' title='Email' type='text' meta={meta} field={field} />
+                  <Input id='email' title='Email' type='text' meta={meta} field={field} placeholder={"Email"} />
                 )}
               </Field>
               <div className='flex items-center justify-between mt-4'>
-                <Button color='blue' label='Send' type={'submit'} disabled={loading} />
+                <Button like={'primary'} label='Send' type={'submit'} disabled={loading} />
                 <div className='inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800'>
-                  <NavLink to='/login'>Back to Login</NavLink>
+                  <NavLink to={AppRoute.SIGN_IN}>Back to Login</NavLink>
                 </div>
               </div>
             </Form>

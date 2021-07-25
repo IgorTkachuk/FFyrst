@@ -1,5 +1,8 @@
+type Filter = 'all' | 'online' | 'offline'
+
 export interface ISearchFilter {
-  firstName: string;
-  phone: string;
-  isActive: boolean;
+  page: number,
+  filter: Filter,
+  search: string,
+  limit: number
 }
