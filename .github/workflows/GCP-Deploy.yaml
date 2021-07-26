@@ -76,7 +76,7 @@ jobs:
           env:
             DB_NAME: fyrst
             DB_USERNAME: postgres
-            DB_HOST: localhost
+            DB_HOST: 10.8.65.3
             DB_PORT: 5432
             DB_DIALECT: postgres
             SMTP_HOST: smtp.gmail.com
