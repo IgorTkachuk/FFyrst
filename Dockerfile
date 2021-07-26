@@ -9,6 +9,8 @@ WORKDIR /app
 # Copy all files from current directory to working dir in image
 COPY . .
 # install node modules and build assets
+ARG REACT_APP_API_ORIGIN_URL=api/v1/
+ARG REACT_APP_BACKEND_HOST=http://localhost:3001/
 RUN npm run install:all
 RUN npm run build:deploy
 
