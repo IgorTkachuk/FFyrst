@@ -85,8 +85,8 @@ jobs:
             LINK_HOST: localhost:3000/verify-refresh
             JWT_EXPIRE_TIME: 24h
             JWT_REFRESH_EXPIRE_TIME": "30d"
-            REDIS_HOST: redis-15611.c3.eu-west-1-2.ec2.cloud.redislabs.com
-            REDIS_PORT: 15611
+            REDIS_HOST: 10.8.64.3
+            REDIS_PORT: 6379
             APP_PROTOCOL: http
             APP_HOST: localhost
             APP_PORT: 3000
