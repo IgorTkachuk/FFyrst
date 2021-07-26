@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux';
 import { createUserSchema, updateUserSchema } from 'shared';
 import { useTypedSelector } from '../../../hooks/useTypedSelector';
 import { RadioBtn } from '../../../stories/controls/radiobtn/RadioBtn';
+import { RadioBtnGroup } from '../../../stories/controls/radioGroup/radioGroup';
 
 type FormType = 'create' | 'update'
 
@@ -113,19 +114,13 @@ const CUForm: React.FC<IProps> = ({ type, initialValues, loading, callback, id }
               </Field>
             </div>
             {type === 'update' && <>
-              <div id='my-radio-group'>Married</div>
-              <div role='group' aria-labelledby='my-radio-group'>
-                <Field name='marriageStatus' value={"true"}>
-                  {({ field }: FieldProps) => (
-                    <RadioBtn id='marryTrue' title='Yes' value={true} field={field} checked={initialValues.marriageStatus === true} />
-                  )}
-                </Field>
-                <Field name='marriageStatus' value={"false"}>
-                  {({ field }: any) => (
-                    <RadioBtn id='marryFalse' title='No' value={false} field={field} checked={initialValues.marriageStatus === false} />
-                  )}
-                </Field>
-              </div>
+              <p className='text-custom-blue'>Personal information</p>
+              <hr className='my-4 ' />
+              <Field name='marriageStatus'>
+                {({ field, meta, form }: any) => (
+                  <RadioBtnGroup title="Married :" btns={[{id:"1",label:"Yes",value:true},{value:false,label:"No",id:"2"}]} form={form} meta={meta} field={field} />
+                )}
+              </Field>
               <Field name='dependantsAmount'>
                 {({ field, meta }: any) => (
                   <Input id='dependantsAmount' title='Dependants amount' placeholder='Dependants amount' type='text' meta={meta} field={field} />

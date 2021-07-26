@@ -3,9 +3,10 @@ import './radiobtn.css';
 
 interface RadioBtnProps {
   id: string;
-  checked: boolean,
+  checked: boolean;
   title: string;
-  disabled?: boolean,
+  form: any;
+  disabled?: boolean;
   value: string | boolean;
   className?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -17,7 +18,7 @@ interface RadioBtnProps {
   };
 }
 
-export const RadioBtn = ({ checked = false, id, title, value, field, disabled = false, ...props }: RadioBtnProps) => {
+export const RadioBtn = ({ form, checked = false, id, title, value, field, disabled = false, ...props }: RadioBtnProps) => {
   return (
     <div
       className={`${field.value === value ? 'border-custom-blue' : 'border-custom-gray'} flex max-w-small-input  border-2 rounded-lg h-10 items-center `}>
@@ -30,7 +31,7 @@ export const RadioBtn = ({ checked = false, id, title, value, field, disabled = 
       <input
         className={`ml-2 flex order-1 focus:outline-none border-custom-gray focus:ring-0 mt-1 text-custom-blue active:text-custom-dark-blue`}
         id={id} type='radio' disabled={disabled}
-        checked={field.value === value} onChange={()=>field.onChange(field.value)} {...field} {...props} />
+        checked={field.value === value} onChange={() => form.setFieldValue(field.name, value)} {...field} {...props} />
     </div>
   );
 };
