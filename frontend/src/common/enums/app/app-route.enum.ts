@@ -12,6 +12,9 @@ enum AppRoute {
   CREATE_USER = '/create-user',
   ACTIVATION = 'users/activation',
   TENANT_DETERMINE = 'tenants/platform',
+  EDIT_PROFILE = '/profile/edit',
+  NOTIFICATION_PROFILE = '/profile/notification',
+  SECURITY_PROFILE = '/profile/security',
 }
 
 export { AppRoute };
