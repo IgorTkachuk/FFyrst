@@ -46,26 +46,26 @@ jobs:
             --set-env-vars "NODE_ENV=development" \
             --set-env-vars DB_NAME=${{ env.DB_NAME }} \
             --set-env-vars DB_USERNAME=${{ env.DB_USERNAME }} \
-            --set-env-vars DB_PASSWORD=${{ env.DB_PASSWORD }} \
+            --update-secrets=DB_PASSWORD=DB_PASSWORD:latest \
             --set-env-vars DB_HOST=${{ env.DB_HOST }} \
             --set-env-vars DB_PORT=${{ env.DB_PORT }} \
             --set-env-vars DB_DIALECT=${{ env.DB_DIALECT }} \
             --set-env-vars SMTP_HOST =${{ env.SMTP_HOST  }} \
             --set-env-vars SMTP_PORT =${{ env.SMTP_PORT  }} \
             --set-env-vars SMTP_USER =${{ env.SMTP_USER  }} \
-            --set-env-vars SMTP_PASS =${{ env.SMTP_PASS  }} \
+            --update-secrets=SMTP_PASS=SMTP_PASS:latest \
             --set-env-vars LINK_HOST =${{ env.LINK_HOST  }} \
-            --set-env-vars JWT_SECRET=${{ env.JWT_SECRET }} \
+            --update-secrets=JWT_SECRET=JWT_SECRET:latest \
             --set-env-vars JWT_EXPIRE_TIME=${{ env.JWT_EXPIRE_TIME }} \
-            --set-env-vars JWT_REFRESH_SECRET =${{ env.JWT_REFRESH_SECRET  }} \
+            --update-secrets=JWT_REFRESH_SECRET=JWT_REFRESH_SECRET:latest \
             --set-env-vars JWT_REFRESH_EXPIRE_TIME =${{ env.JWT_REFRESH_EXPIRE_TIME  }} \
             --set-env-vars REDIS_HOST=${{ env.REDIS_HOST }} \
             --set-env-vars REDIS_PORT=${{ env.REDIS_PORT }} \
-            --set-env-vars REDIS_PASSWORD=${{ env.REDIS_PASSWORD }} \
+            --update-secrets=REDIS_PASSWORD=REDIS_PASSWORD:latest \
             --set-env-vars APP_PROTOCOL=${{ env.APP_PROTOCOL }} \
             --set-env-vars APP_HOST=${{ env.APP_HOST }} \
             --set-env-vars APP_PORT=${{ env.APP_PORT }} \
             --set-env-vars CLOUDINARY_CLOUD_NAME=${{ env.CLOUDINARY_CLOUD_NAME }} \
-            --set-env-vars CLOUDINARY_API_KEY=${{ env.CLOUDINARY_API_KEY }} \
-            --set-env-vars CLOUDINARY_API_SECRET=${{ env.CLOUDINARY_API_SECRET }} \
+            --update-secrets=CLOUDINARY_API_KEY=CLOUDINARY_API_KEY:latest \
+            --update-secrets=CLOUDINARY_API_SECRET=CLOUDINARY_API_SECRET:latest \
             --set-env-vars IMAGE_UPLOAD_BYTE_LIMIT=${{ env.IMAGE_UPLOAD_BYTE_LIMIT }} 
