@@ -17,7 +17,9 @@ import { Button } from '../../../stories/controls/button/Button';
 const Registration: React.FC = () => {
   const { loading, error, registerState } = useTypedSelector(state => state.user);
   const dispatch = useDispatch();
-
+  interface dataInterface {
+    [key: string]: string;
+  }
 
   return (
     <>
@@ -34,7 +36,11 @@ const Registration: React.FC = () => {
             }}
             validationSchema={SignUpSchema}
             onSubmit={(data) => {
-              dispatch(signUpUserAction(data));
+              const dataTrim: dataInterface = data;
+              Object.keys(dataTrim).forEach(key => {
+                dataTrim[key]=dataTrim[key].trim();
+              })
+              dispatch(signUpUserAction(dataTrim));
             }}
           >
             {(form) => (
