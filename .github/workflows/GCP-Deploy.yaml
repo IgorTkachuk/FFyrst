@@ -38,6 +38,9 @@ jobs:
 
         - name: Deploy Docker image
           run: |
+            gcloud secrets delete DB_PASSWORD && \
+            gcloud secrets create DB_PASSWORD --replication-policy="automatic" && \
+            echo -n ${{ secrets.DB_PASSWORD }} | gcloud secrets versions add DB_PASSWORD --data-file=- && \
             gcloud run deploy ${{ secrets.GCP_PROJECT_ID }} --image $IMAGE_NAME \
             --region us-central1 \
             --platform managed \
