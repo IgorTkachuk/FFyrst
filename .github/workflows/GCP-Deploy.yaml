@@ -38,7 +38,7 @@ jobs:
 
         - name: Deploy Docker image
           run: |
-            gcloud secrets delete DB_PASSWORD --quiet && \
+            gcloud secrets delete DB_PASSWORD --quiet ; \
             gcloud secrets create DB_PASSWORD --replication-policy="automatic" && \
             gcloud secrets add-iam-policy-binding DB_PASSWORD --member="serviceAccount:${{ secrets.GCP_EMAIL }}" --role="roles/secretmanager.secretAccessor" && \
             echo -n ${{ secrets.DB_PASSWORD }} | gcloud secrets versions add DB_PASSWORD --data-file=- && \
