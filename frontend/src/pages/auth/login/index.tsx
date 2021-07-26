@@ -14,6 +14,7 @@ import App from '../../../app';
 
 const Login: React.FC = () => {
   const { loading, error } = useTypedSelector(state => state.user);
+  const { tenant } = useTypedSelector(state => state.tenant);
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -24,6 +25,11 @@ const Login: React.FC = () => {
   return (
     <div className='container mx-auto h-screen flex justify-center items-center'>
       <div className='w-full max-w-md'>
+        <div className="form-header flex justify-center items-center">
+          <div className="logo w-10 h-10 sm:w-20 sm:h-20 md:w-32 md:h-32">
+            { tenant.logoURL && <img src={tenant.logoURL} className='mb-8'/> }
+          </div>
+        </div>
         <Formik
           initialValues={{ email: '', password: '' }}
           validationSchema={loginSchema}

@@ -22,3 +22,7 @@ export {
   reducer as userManageReducer,
   UserManageActionCreator,
 } from './user-manage/user-manage.slice';
+
+export {
+  reducer as tenantReducer,
+} from './tenant/tenant.slice';

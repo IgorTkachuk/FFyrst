@@ -5,6 +5,7 @@ enum ReducerName {
   FILE = 'file',
   USER_MANAGE = 'user_manage',
   USER_DATA = 'userData',
+  TENANT = 'tenant',
 }
 
 export { ReducerName };

@@ -16,6 +16,7 @@ interface InputProps {
     touched: boolean;
     error: string;
   };
+  [key: string]: any;
 }
 
 export const Input = ({

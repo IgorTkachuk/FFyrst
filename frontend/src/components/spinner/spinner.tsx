@@ -1,6 +1,14 @@
-import React from 'react';
-import './spinner.css';
+import React, { ReactElement } from 'react';
+import './Spinner.css';
 
-const Spinner = () => <div className='loader'>Loading...</div>;
+interface SpinnerProps {
+  size: number;
+}
 
-export default Spinner;
+const Spinner = ({ size }: SpinnerProps): ReactElement => {
+  return (
+    <div className={`spinner w-${size} h-${size}`}></div>
+  )
+}
+
+export { Spinner };

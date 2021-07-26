@@ -1,6 +1,8 @@
 import { Router } from 'express';
 import { ApiPath, HttpCode, TenantsApiPath } from 'shared';
+import { getPlatform } from '~/middlewares';
 import { tenantService } from '~/services/services';
+import { platformGeneralSchema } from './tenant.schema';
 
 const initTenantApi = (apiRouter: Router): Router => {
   const tenantRouter = Router();
@@ -16,6 +18,15 @@ const initTenantApi = (apiRouter: Router): Router => {
     }
   });
 
+  tenantRouter.get(TenantsApiPath.PLATFORM, getPlatform, async (_req, res, next) => {
+    try {
+      const tenant = _req.platform;
+      res.status(HttpCode.OK).json(tenant);
+    } catch(error) {
+      next(error);
+    }
+  });
+
   tenantRouter.get(TenantsApiPath.$ID, async (_req, res, next) => {
     try {
       const user = await tenantService.getTenantById(_req.params.id);
@@ -24,6 +35,7 @@ const initTenantApi = (apiRouter: Router): Router => {
       next(error);
     }
   });
+
 
   tenantRouter.post(TenantsApiPath.ROOT, async (_req, res, next) => {
     try {
@@ -36,8 +48,9 @@ const initTenantApi = (apiRouter: Router): Router => {
 
   tenantRouter.put(TenantsApiPath.$ID, async (_req, res, next) => {
     try {
-      const user = await tenantService.updateTenant(_req.params.id, _req.body);
-      res.status(HttpCode.OK).json(user);
+      await platformGeneralSchema.validate(_req.body);
+      const tenantUpdateInfo = await tenantService.updateTenant(_req.params.id, _req.body);
+      res.status(HttpCode.OK).json(tenantUpdateInfo[0]);
     } catch (error) {
       next(error);
     }

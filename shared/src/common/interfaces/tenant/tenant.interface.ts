@@ -1,9 +1,14 @@
 export interface ITenant {
   id?: string
   name: string
-  logoUrl: string
-  legalAddress: string
-  domainUrl: string
+  domainURL: string;
+  supportEmail?: string;
+  industry: number;
+  phoneNumber?: string;
+  invoiceAddress?: string;
+  useCred?: boolean;
+  credURL?: string;
+  logoURL: string;
   createdAt: Date
   updatedAt: Date
 }

@@ -1,6 +1,7 @@
 enum TenantsApiPath {
   ROOT = '/',
-  $ID = '/:id'
+  $ID = '/:id',
+  PLATFORM = '/platform',
 }
 
 export { TenantsApiPath };
