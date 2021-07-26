@@ -9,7 +9,7 @@ export const SignUpSchema = Yup.object().shape({
     .matches(/^( ?)[A-Za-z]*( ?)$/, 'Enter correct data')
     .required('Last Name is required'),
   email: Yup.string().email('Email is invalid')
-    .matches(/([^([a-zA-Z0-9_\-.]+)@([a-zA-Z0-9_\-.]+)\.([a-zA-Z]{2,5})$/, 'Enter correct data')
+    .matches(/^[a-zA-Z0-9.]+@[a-zA-Z0-9]+(?:\.[a-zA-Z0-9-]+)*$/, 'Enter correct data')
     .required('Email is required'),
   phoneNumber: Yup.string()
     .matches(/^\+?\d{10,12}$/, 'Enter correct data')
