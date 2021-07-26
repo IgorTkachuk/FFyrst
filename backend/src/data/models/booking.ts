@@ -28,7 +28,7 @@ const createBookingModel = (orm:Sequelize): ModelCtor<BookingInstance> => {
         type: DataTypes.DECIMAL(10, 2)
       },
       createdBy: {
-        field: 'amount_to_pay',
+        field: 'created_by',
         allowNull: false,
         type: DataTypes.NUMBER
       },

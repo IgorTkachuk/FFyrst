@@ -6,6 +6,7 @@ import { initAuthApi } from '~/api/auth/auth.api';
 import { initFileUploadApi } from './file-upload/file-upload.api';
 import { initIndustryApi } from './industry/industry.api';
 import { initTemplateApi } from './template/template.api';
+import { initBookingApi } from './booking/booking.api';
 
 
 const apis = [
@@ -14,7 +15,8 @@ const apis = [
   initTenantApi,
   initFileUploadApi,
   initIndustryApi,
-  initTemplateApi
+  initTemplateApi,
+  initBookingApi,
 ];
 
 const initApi = (app: Router): Router => {

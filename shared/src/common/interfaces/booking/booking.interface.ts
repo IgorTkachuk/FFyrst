@@ -8,7 +8,10 @@ export interface IBooking {
   createdBy: number
   peopleRequired: number
   templateId: number
-  details: Record<string, any>
+  details: {
+    amountToPay: number
+    [key: string]: any
+  }
   createdAt: Date
   updatedAt: Date
 }

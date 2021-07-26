@@ -5,4 +5,4 @@ export * from './auth-api-path.enum';
 export * from './file-upload-api-path.enum';
 export * from './industries-api-path.enum';
 export * from './templates-api-path.enum';
-export * from './booking-api-path.enum';
+export * from './bookings-api-path.enum';

@@ -6,6 +6,7 @@ import { verifySchema, resetSchema, loginSchema } from 'shared';
 import { refreshTokenValidation } from '~/middlewares/jwt-validation/refresh-validation.middelware';
 import { getTokens } from '~/helpers';
 import { authService } from '~/services/services';
+import { getPlatform } from '~/middlewares';
 
 const initAuthApi = (apiRouter: Router): Router => {
   const authRouter = Router();
@@ -43,6 +44,7 @@ const initAuthApi = (apiRouter: Router): Router => {
 
   authRouter.post(
     AuthApiPath.RESET_PASSWORD,
+    getPlatform,
     yupValidation(resetSchema),
     async (_req, res) => {
       try {

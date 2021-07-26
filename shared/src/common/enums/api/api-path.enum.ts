@@ -5,7 +5,7 @@ enum ApiPath {
   FILE_UPLOAD='/file-upload',
   INDUSTRIES = '/industries',
   TEMPLATES = '/templates',
-  BOOKING = '/booking'
+  BOOKINGS = '/bookings'
 }
 
 export { ApiPath };

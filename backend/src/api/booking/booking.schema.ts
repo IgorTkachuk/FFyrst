@@ -9,11 +9,13 @@ const bookingSchema = Yup.object().shape({
     BookingStatus.CANCELLED,
     BookingStatus.COMPLETED
   ]),
-  amountToPay: Yup.number().required('Amount to pay is required'),
-  createdBy: Yup.number().required('User id is required'),
+
+  createdBy: Yup.number(),//.required('User id is required'),
   peopleRequired: Yup.number().required('People required is required'),
   templateId: Yup.number().required('Template id is required'),
-  details: Yup.object().required('Details are required'),
+  details: Yup.object().shape({
+    amountToPay: Yup.number().required('Amount to pay is required'),
+  }).required('Details are required'),
 });
 
 export { bookingSchema }
