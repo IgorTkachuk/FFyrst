@@ -4,3 +4,4 @@ export * from './tenants-api-path.enum';
 export * from './auth-api-path.enum';
 export * from './file-upload-api-path.enum';
 export * from './industries-api-path.enum';
+export * from './templates-api-path.enum';

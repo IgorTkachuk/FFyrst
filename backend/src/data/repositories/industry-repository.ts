@@ -8,11 +8,8 @@ class IndustryRepository {
   public getById(id:string):Promise<IIndustry | null>{
     return IndustryModel.findByPk(id)
   }
-  public getByDomainUrl(domainUrl:string):Promise<IIndustry | null>{
-    return IndustryModel.findOne({ where: { domainUrl } });
-  }
-  public createIndustry(user:IIndustry):Promise<IIndustry>{
-    return IndustryModel.create(user)
+  public createIndustry(industry:IIndustry):Promise<IIndustry>{
+    return IndustryModel.create(industry)
   }
   public async updateById(id:string, data:IIndustry):Promise<IIndustry[]>{
     const result = await IndustryModel.update(data, {
