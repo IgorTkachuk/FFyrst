@@ -27,15 +27,100 @@ jobs:
           uses: actions/checkout@v2
 
         - name: Build Docker image
-          run: docker build . -t $IMAGE_NAME
-
+          run: |
+            docker build \
+            --build-arg REACT_APP_API_ORIGIN_URL=${{ env.REACT_APP_API_ORIGIN_URL }} \
+            --build-arg REACT_APP_BACKEND_HOST=${{ env.REACT_APP_BACKEND_HOST }} \
+            . -t $IMAGE_NAME
         - name: Push Docker image
           run: docker push $IMAGE_NAME
-
+          
+        - name: Create secrets on GCP
+          run: |
+            gcloud secrets delete DB_PASSWORD --quiet ; \
+            gcloud secrets create DB_PASSWORD --replication-policy="automatic" && \
+            gcloud secrets add-iam-policy-binding DB_PASSWORD --member="serviceAccount:${{ secrets.GCP_EMAIL }}" --role="roles/secretmanager.secretAccessor" && \
+            echo -n ${{ secrets.DB_PASSWORD }} | gcloud secrets versions add DB_PASSWORD --data-file=- && \
+            \
+            gcloud secrets delete SMTP_PASS --quiet ; \
+            gcloud secrets create SMTP_PASS --replication-policy="automatic" && \
+            gcloud secrets add-iam-policy-binding SMTP_PASS --member="serviceAccount:${{ secrets.GCP_EMAIL }}" --role="roles/secretmanager.secretAccessor" && \
+            echo -n ${{ secrets.SMTP_PASS }} | gcloud secrets versions add SMTP_PASS --data-file=- && \  
+            \
+            gcloud secrets delete JWT_SECRET --quiet ; \
+            gcloud secrets create JWT_SECRET --replication-policy="automatic" && \
+            gcloud secrets add-iam-policy-binding JWT_SECRET --member="serviceAccount:${{ secrets.JWT_SECRET }}" --role="roles/secretmanager.secretAccessor" && \
+            echo -n ${{ secrets.JWT_SECRET }} | gcloud secrets versions add JWT_SECRET --data-file=- && \ 
+            \
+            gcloud secrets delete JWT_REFRESH_SECRET --quiet ; \
+            gcloud secrets create JWT_REFRESH_SECRET --replication-policy="automatic" && \
+            gcloud secrets add-iam-policy-binding JWT_REFRESH_SECRET --member="serviceAccount:${{ secrets.JWT_REFRESH_SECRET }}" --role="roles/secretmanager.secretAccessor" && \
+            echo -n ${{ secrets.JWT_REFRESH_SECRET }} | gcloud secrets versions add JWT_REFRESH_SECRET --data-file=- && \ 
+            \
+            gcloud secrets delete REDIS_PASSWORD --quiet ; \
+            gcloud secrets create REDIS_PASSWORD --replication-policy="automatic" && \
+            gcloud secrets add-iam-policy-binding REDIS_PASSWORD --member="serviceAccount:${{ secrets.REDIS_PASSWORD }}" --role="roles/secretmanager.secretAccessor" && \
+            echo -n ${{ secrets.REDIS_PASSWORD }} | gcloud secrets versions add REDIS_PASSWORD --data-file=- && \
+            \
+            gcloud secrets delete CLOUDINARY_API_KEY --quiet ; \
+            gcloud secrets create CLOUDINARY_API_KEY --replication-policy="automatic" && \
+            gcloud secrets add-iam-policy-binding CLOUDINARY_API_KEY --member="serviceAccount:${{ secrets.CLOUDINARY_API_KEY }}" --role="roles/secretmanager.secretAccessor" && \
+            echo -n ${{ secrets.CLOUDINARY_API_KEY }} | gcloud secrets versions add CLOUDINARY_API_KEY --data-file=- && \
+            \
+            gcloud secrets delete CLOUDINARY_API_SECRET --quiet ; \
+            gcloud secrets create CLOUDINARY_API_SECRET --replication-policy="automatic" && \
+            gcloud secrets add-iam-policy-binding CLOUDINARY_API_SECRET --member="serviceAccount:${{ secrets.CLOUDINARY_API_SECRET }}" --role="roles/secretmanager.secretAccessor" && \
+            echo -n ${{ secrets.CLOUDINARY_API_SECRET }} | gcloud secrets versions add CLOUDINARY_API_SECRET --data-file=- && \
+            
         - name: Deploy Docker image
+          env:
+            DB_NAME: fyrst
+            DB_USERNAME: postgres
+            DB_HOST: localhost
+            DB_PORT: 5432
+            DB_DIALECT: postgres
+            SMTP_HOST: smtp.gmail.com
+            SMTP_PORT: 587
+            SMTP_USER: RadencyFyrst@gmail.com
+            LINK_HOST: localhost:3000/verify-refresh
+            JWT_EXPIRE_TIME: 24h
+            JWT_REFRESH_EXPIRE_TIME": "30d"
+            REDIS_HOST: redis-15611.c3.eu-west-1-2.ec2.cloud.redislabs.com
+            REDIS_PORT: 15611
+            APP_PROTOCOL: http
+            APP_HOST: localhost
+            APP_PORT: 3000
+            CLOUDINARY_CLOUD_NAME: fyrst
+            IMAGE_UPLOAD_BYTE_LIMIT: 512000
           run: |
             gcloud run deploy ${{ secrets.GCP_PROJECT_ID }} --image $IMAGE_NAME \
             --region us-central1 \
             --platform managed \
             --allow-unauthenticated \
-            --memory 512M
+            --memory 512M \
+            --set-env-vars "NODE_ENV=development" \
+            --set-env-vars DB_NAME=${{ env.DB_NAME }} \
+            --set-env-vars DB_USERNAME=${{ env.DB_USERNAME }} \
+            --update-secrets=DB_PASSWORD=DB_PASSWORD:latest \
+            --set-env-vars DB_HOST=${{ env.DB_HOST }} \
+            --set-env-vars DB_PORT=${{ env.DB_PORT }} \
+            --set-env-vars DB_DIALECT=${{ env.DB_DIALECT }} \
+            --set-env-vars SMTP_HOST =${{ env.SMTP_HOST  }} \
+            --set-env-vars SMTP_PORT =${{ env.SMTP_PORT  }} \
+            --set-env-vars SMTP_USER =${{ env.SMTP_USER  }} \
+            --update-secrets=SMTP_PASS=SMTP_PASS:latest \
+            --set-env-vars LINK_HOST =${{ env.LINK_HOST  }} \
+            --update-secrets=JWT_SECRET=JWT_SECRET:latest \
+            --set-env-vars JWT_EXPIRE_TIME=${{ env.JWT_EXPIRE_TIME }} \
+            --update-secrets=JWT_REFRESH_SECRET=JWT_REFRESH_SECRET:latest \
+            --set-env-vars JWT_REFRESH_EXPIRE_TIME =${{ env.JWT_REFRESH_EXPIRE_TIME  }} \
+            --set-env-vars REDIS_HOST=${{ env.REDIS_HOST }} \
+            --set-env-vars REDIS_PORT=${{ env.REDIS_PORT }} \
+            --update-secrets=REDIS_PASSWORD=REDIS_PASSWORD:latest \
+            --set-env-vars APP_PROTOCOL=${{ env.APP_PROTOCOL }} \
+            --set-env-vars APP_HOST=${{ env.APP_HOST }} \
+            --set-env-vars APP_PORT=${{ env.APP_PORT }} \
+            --set-env-vars CLOUDINARY_CLOUD_NAME=${{ env.CLOUDINARY_CLOUD_NAME }} \
+            --update-secrets=CLOUDINARY_API_KEY=CLOUDINARY_API_KEY:latest \
+            --update-secrets=CLOUDINARY_API_SECRET=CLOUDINARY_API_SECRET:latest \
+            --set-env-vars IMAGE_UPLOAD_BYTE_LIMIT=${{ env.IMAGE_UPLOAD_BYTE_LIMIT }}
