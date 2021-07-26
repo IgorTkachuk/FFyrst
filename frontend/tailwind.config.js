@@ -1,6 +1,23 @@
 const Nth = require('tailwindcss-nth-child');
 const plugin = new Nth('even');
 
+const colors = {
+  'custom-gray': '#BCC3CE',
+  'custom-dark-gary': '#4C5767',
+  'custom-field': '#DBDBDB',
+  'custom-inactive': '#B4C0CD',
+  'custom-placeholder': '#BCC3CE',
+  'custom-black': '#202020',
+  'custom-background': '#FAFAFA',
+  'custom-blue': '#083D77',
+  'custom-green': '#1B9AAA',
+  'custom-orange': '#F87060',
+  'custom-red': '#BB1128',
+  'custom-white': '#FFFFFF',
+  'custom-dark-blue': '#052D58',
+  'custom-hover': '#17569C',
+};
+
 module.exports = {
   purge: ['./src/**/*.{js,jsx,ts,tsx}', './public/index.html'],
   darkMode: false, // or 'media' or 'class'
@@ -28,54 +45,10 @@ module.exports = {
         ...theme('borderColors'),
         dark: '#444444',
       }),
-      textColor: {
-        'custom-gray': '#BCC3CE',
-        'custom-dark-gary': '#4C5767',
-        'custom-field': '#DBDBDB',
-        'custom-inactive': '#B4C0CD',
-        'custom-placeholder': '#BCC3CE',
-        'custom-black': '#202020',
-        'custom-background': '#FAFAFA',
-        'custom-blue': '#083D77',
-        'custom-green': '#1B9AAA',
-        'custom-orange': '#F87060',
-        'custom-red': '#BB1128',
-        'custom-white': '#FFFFFF',
-        'custom-dark-blue': '#052D58',
-        'custom-hover': '#17569C',
-      },
-      backgroundColor: {
-        'custom-gray': '#BCC3CE',
-        'custom-dark-gary': '#4C5767',
-        'custom-field': '#DBDBDB',
-        'custom-inactive': '#B4C0CD',
-        'custom-placeholder': '#BCC3CE',
-        'custom-black': '#202020',
-        'custom-background': '#FAFAFA',
-        'custom-blue': '#083D77',
-        'custom-green': '#1B9AAA',
-        'custom-orange': '#F87060',
-        'custom-red': '#BB1128',
-        'custom-white': '#FFFFFF',
-        'custom-dark-blue': '#052D58',
-        'custom-hover': '#17569C',
-      },
-      borderColor: {
-        'custom-gray': '#BCC3CE',
-        'custom-dark-gary': '#4C5767',
-        'custom-field': '#DBDBDB',
-        'custom-inactive': '#B4C0CD',
-        'custom-placeholder': '#BCC3CE',
-        'custom-black': '#202020',
-        'custom-background': '#FAFAFA',
-        'custom-blue': '#083D77',
-        'custom-green': '#1B9AAA',
-        'custom-orange': '#F87060',
-        'custom-red': '#BB1128',
-        'custom-white': '#FFFFFF',
-        'custom-dark-blue': '#052D58',
-        'custom-hover': '#17569C',
-      },
+      textColor: { ...colors },
+      backgroundColor: { ...colors },
+      borderColor: { ...colors },
+      ringColor: { ...colors },
       minWidth: {
         'side-collapse-content': '50px',
         'sidebar-content': '220px',
@@ -109,6 +82,7 @@ module.exports = {
     fontFamily: {
       roboto: ['Roboto', 'sans-serif'],
     },
+
   },
   variants: {
     extend: {

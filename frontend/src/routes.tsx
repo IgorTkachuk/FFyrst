@@ -37,7 +37,7 @@ const useRoute = (isAuth: boolean): React.ReactElement => {
         <Route path={AppRoute.USER_MANAGE}>
           <Pages.UserManage />
         </Route>
-        <Route path={AppRoute.USER_PROFILE}>
+        <Route path={AppRoute.USER_PROFILE} exact>
           <Pages.UserProfileDetails />
         </Route>
         <Route path={AppRoute.CREATE_USER}>
@@ -45,6 +45,15 @@ const useRoute = (isAuth: boolean): React.ReactElement => {
         </Route>
         <Route path={AppRoute.UPDATE_USER}>
           <Pages.UpdateUser />
+        </Route>
+        <Route path={AppRoute.EDIT_PROFILE}>
+          <Pages.EditProfile />
+        </Route>
+        <Route path={AppRoute.NOTIFICATION_PROFILE}>
+          <Pages.NotificationProfile />
+        </Route>
+        <Route path={AppRoute.SECURITY_PROFILE}>
+          <Pages.SecurityProfile />
         </Route>
         <Redirect to={AppRoute.MAIN} />
       </Switch>
