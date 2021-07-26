@@ -35,13 +35,47 @@ jobs:
 
         - name: Push Docker image
           run: docker push $IMAGE_NAME
-
-        - name: Deploy Docker image
+          
+        - name: Create secrets
           run: |
             gcloud secrets delete DB_PASSWORD --quiet ; \
             gcloud secrets create DB_PASSWORD --replication-policy="automatic" && \
             gcloud secrets add-iam-policy-binding DB_PASSWORD --member="serviceAccount:${{ secrets.GCP_EMAIL }}" --role="roles/secretmanager.secretAccessor" && \
             echo -n ${{ secrets.DB_PASSWORD }} | gcloud secrets versions add DB_PASSWORD --data-file=- && \
+            \
+            gcloud secrets delete SMTP_PASS --quiet ; \
+            gcloud secrets create SMTP_PASS --replication-policy="automatic" && \
+            gcloud secrets add-iam-policy-binding SMTP_PASS --member="serviceAccount:${{ secrets.GCP_EMAIL }}" --role="roles/secretmanager.secretAccessor" && \
+            echo -n ${{ secrets.SMTP_PASS }} | gcloud secrets versions add SMTP_PASS --data-file=- && \  
+            \
+            gcloud secrets delete JWT_SECRET --quiet ; \
+            gcloud secrets create JWT_SECRET --replication-policy="automatic" && \
+            gcloud secrets add-iam-policy-binding JWT_SECRET --member="serviceAccount:${{ secrets.JWT_SECRET }}" --role="roles/secretmanager.secretAccessor" && \
+            echo -n ${{ secrets.JWT_SECRET }} | gcloud secrets versions add JWT_SECRET --data-file=- && \ 
+            \
+            gcloud secrets delete JWT_REFRESH_SECRET --quiet ; \
+            gcloud secrets create JWT_REFRESH_SECRET --replication-policy="automatic" && \
+            gcloud secrets add-iam-policy-binding JWT_REFRESH_SECRET --member="serviceAccount:${{ secrets.JWT_REFRESH_SECRET }}" --role="roles/secretmanager.secretAccessor" && \
+            echo -n ${{ secrets.JWT_REFRESH_SECRET }} | gcloud secrets versions add JWT_REFRESH_SECRET --data-file=- && \ 
+            \
+            gcloud secrets delete REDIS_PASSWORD --quiet ; \
+            gcloud secrets create REDIS_PASSWORD --replication-policy="automatic" && \
+            gcloud secrets add-iam-policy-binding REDIS_PASSWORD --member="serviceAccount:${{ secrets.REDIS_PASSWORD }}" --role="roles/secretmanager.secretAccessor" && \
+            echo -n ${{ secrets.REDIS_PASSWORD }} | gcloud secrets versions add REDIS_PASSWORD --data-file=- && \
+            \
+            gcloud secrets delete CLOUDINARY_API_KEY --quiet ; \
+            gcloud secrets create CLOUDINARY_API_KEY --replication-policy="automatic" && \
+            gcloud secrets add-iam-policy-binding CLOUDINARY_API_KEY --member="serviceAccount:${{ secrets.CLOUDINARY_API_KEY }}" --role="roles/secretmanager.secretAccessor" && \
+            echo -n ${{ secrets.CLOUDINARY_API_KEY }} | gcloud secrets versions add CLOUDINARY_API_KEY --data-file=- && \
+            \
+            gcloud secrets delete CLOUDINARY_API_SECRET --quiet ; \
+            gcloud secrets create CLOUDINARY_API_SECRET --replication-policy="automatic" && \
+            gcloud secrets add-iam-policy-binding CLOUDINARY_API_SECRET --member="serviceAccount:${{ secrets.CLOUDINARY_API_SECRET }}" --role="roles/secretmanager.secretAccessor" && \
+            echo -n ${{ secrets.CLOUDINARY_API_SECRET }} | gcloud secrets versions add CLOUDINARY_API_SECRET --data-file=- && \
+            
+
+        - name: Deploy Docker image
+          run: |
             gcloud run deploy ${{ secrets.GCP_PROJECT_ID }} --image $IMAGE_NAME \
             --region us-central1 \
             --platform managed \
