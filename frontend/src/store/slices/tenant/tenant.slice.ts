@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { ReducerName, TenantSagasTypes } from 'common/enums';
+import { IIndustry } from 'shared';
 
 type TenantState = {
   tenant: {
@@ -13,7 +14,8 @@ type TenantState = {
     useCred: boolean;
     credURL: string;
     logoURL: string;
-  }
+  };
+  industries: IIndustry[]
   status: boolean;
   loading: boolean;
   error: string | null;
@@ -32,6 +34,7 @@ const initialState: TenantState = {
     credURL: '',
     logoURL: '',
   },
+  industries: [],
   status: false,
   loading: false,
   error: null,
@@ -55,7 +58,12 @@ const { reducer, actions } = createSlice({
     },
     updateTenant: (state, action) => {
       state.loading = false;
-      state.tenant = {...state.tenant, ...action.payload};
+      state.tenant = {...state.tenant, ...action.payload}
+      state.status = true;
+    },
+    setAllIndustries: (state, action) => {
+      state.loading = false;
+      state.industries = [...action.payload];
       state.status = true;
     },
   },
@@ -68,6 +76,10 @@ const TenantActionCreator = {
 export const updateTenantAction = (data: any) => ({
   type: TenantSagasTypes.UPDATE_TENANT,
   payload: data,
+});
+
+export const getAllIndustriesAction = () => ({
+  type: TenantSagasTypes.GET_ALL_INDUSTRIES,
 });
 
 export { TenantActionCreator, reducer };

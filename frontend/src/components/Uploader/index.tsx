@@ -10,7 +10,7 @@ import { useDetectOutsideClick } from 'hooks/useDetectOutsideClick';
 import { useTypedSelector } from 'hooks/useTypedSelector';
 import { loadFileToCloudAction } from 'store/slices/file/file.slice';
 import { FormikProps } from 'formik';
-import {Spinner} from '../Spinner/spinner';
+import {Spinner} from '../Spinner/Spinner';
 
 interface UploaderProps {
   id: string,
@@ -32,8 +32,16 @@ const defaultLabel = (
 );
 
 
-const Uploader = ({ id, children = defaultLabel, field, meta = { touched: false, error: '' }, spinner = false, props }: UploaderProps): ReactElement => {
-
+const Uploader = (
+  {
+    id,
+    children = defaultLabel,
+    field,
+    meta = { touched: false, error: '' },
+    spinner = false,
+    props
+  }: UploaderProps
+): ReactElement => {
   const dispatch = useDispatch();
   const cropperRef = useRef<HTMLImageElement>(null);
   const [isCropperVisible, setIsCropperVisible] = useDetectOutsideClick('.cropper-container', false);
@@ -102,11 +110,11 @@ const Uploader = ({ id, children = defaultLabel, field, meta = { touched: false,
       </fieldset>
       {
         file && isCropperVisible &&
-        <div className='cropper fixed z-50 w-full h-screen flex justify-center items-center inset-0 p-4'>
-          <div className='cropper-container bg-gray-400 p-4 sm:p-6 lg:p-8 rounded-lg'>
+        <div className='cropper fixed z-50 w-full h-screen flex justify-center items-center inset-0 p-4 bg-black bg-opacity-50'>
+          <div className='cropper-container bg-gray-700 p-4 sm:p-6 lg:p-8 rounded'>
             <Cropper
               src={file.fileURL}
-              style={{ height: '100%', maxHeight: 600, width: '100%', maxWidth: 800, background: '#A1A1AA' }}
+              style={{ height:'100%', maxHeight: 400, width: '100%', maxWidth: 500, background: '#A1A1AA',}}
               background={false}
               modal={true}
               aspectRatio={1 / 1}
@@ -115,7 +123,7 @@ const Uploader = ({ id, children = defaultLabel, field, meta = { touched: false,
               highlight={false}
               viewMode={2}
             />
-            <div className='cropper-actions flex justify-between pt-6'>
+            <div className='cropper-actions flex justify-between pt-4'>
               <Button
                 like={'primary'}
                 label='Save profile photo'

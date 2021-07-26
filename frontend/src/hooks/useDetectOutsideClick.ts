@@ -15,10 +15,10 @@ export const useDetectOutsideClick = (
 
   useEffect(() => {
     if (isVisible) {
-      window.addEventListener('click', hide);
+      window.addEventListener('mousedown', hide);
     }
     return () => {
-      window.removeEventListener('click', hide);
+      window.removeEventListener('mousedown', hide);
     }
 
   }, [isVisible, closestSelector]);

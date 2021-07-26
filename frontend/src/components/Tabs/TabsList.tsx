@@ -15,7 +15,7 @@ const TabsList = ({ children, classNames = {} }: ITabsListProps): ReactElement =
 
   const defaultStyles = {
     navbar: 'flex bg-gray-100',
-    navItem: 'py-2 px-5 text-gray-500 cursor-pointer transition duration-300',
+    navItem: 'py-2 px-3 sm:px-5 text-sm text-gray-500 cursor-pointer transition duration-300',
     navItemActive: 'bg-white',
     navItemPassive: 'hover:bg-gray-200'
   }

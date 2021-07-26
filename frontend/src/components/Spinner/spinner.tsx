@@ -11,4 +11,4 @@ const Spinner = ({ size }: SpinnerProps): ReactElement => {
   )
 }
 
-export { Spinner };
+export { Spinner }

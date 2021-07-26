@@ -3,7 +3,7 @@ import { HttpMethod, TenantSagasTypes } from 'common/enums';
 import ApiService from 'services/api/api.service';
 import { TenantActionCreator } from 'store/slices/tenant/tenant.slice';
 import { AnyAction } from '@reduxjs/toolkit';
-import { ApiPath, TenantsApiPath, ITenant } from 'shared';
+import { ApiPath, TenantsApiPath, ITenant, IIndustry } from 'shared';
 
 const apiService = new ApiService();
 
@@ -38,9 +38,26 @@ function* updateTenant(action: AnyAction) {
   }
 }
 
+function* getAllIndustries() {
+  try {
+    yield put(TenantActionCreator.requestStart());
+    const url = ApiPath.INDUSTRIES;
+    const industriesList: IIndustry[] = yield call(
+      apiService.httpRequest,
+      url,
+      HttpMethod.GET
+    )
+    yield put(TenantActionCreator.setAllIndustries(industriesList));
+
+  } catch (e) {
+    yield put(TenantActionCreator.requestFailed(e.message));
+  }
+}
+
 function* TenantSaga(): Generator {
   yield takeEvery(TenantActionCreator.requestStart, determineTenant);
   yield takeEvery(TenantSagasTypes.UPDATE_TENANT, updateTenant);
+  yield takeEvery(TenantSagasTypes.GET_ALL_INDUSTRIES, getAllIndustries);
 }
 
 export default TenantSaga;

@@ -8,10 +8,11 @@ import { LocalstorageKeys } from './common/enums';
 import { useDispatch } from 'react-redux';
 import { getUserAction } from './store/slices/user-data/user-data.slice';
 import SideNavbar from './components/sideNavbar/sideNavbar';
-import { TenantActionCreator } from 'store/slices/tenant/tenant.slice';
 import ReactNotification from 'react-notifications-component'
 import { store } from 'react-notifications-component';
 import 'react-notifications-component/dist/theme.css'
+import { BsList } from 'react-icons/bs';
+import { getAllIndustriesAction, TenantActionCreator } from 'store/slices/tenant/tenant.slice';
 
 import { Header } from './components/Header/Header';
 
@@ -65,6 +66,7 @@ const App: React.FC = () => {
 
   useEffect(() => {
     dispatch(TenantActionCreator.requestStart());
+    dispatch(getAllIndustriesAction());
   }, []);
 
   return (
