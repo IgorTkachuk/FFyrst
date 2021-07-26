@@ -36,7 +36,7 @@ jobs:
         - name: Push Docker image
           run: docker push $IMAGE_NAME
           
-        - name: Create secrets
+        - name: Create secrets on GCP
           run: |
             gcloud secrets delete DB_PASSWORD --quiet ; \
             gcloud secrets create DB_PASSWORD --replication-policy="automatic" && \
@@ -75,6 +75,25 @@ jobs:
             
 
         - name: Deploy Docker image
+          env:
+            DB_NAME: fyrst
+            DB_USERNAME: postgres
+            DB_HOST: localhost
+            DB_PORT: 5432
+            DB_DIALECT: postgres
+            SMTP_HOST: smtp.gmail.com
+            SMTP_PORT: 587
+            SMTP_USER: RadencyFyrst@gmail.com
+            LINK_HOST: localhost:3000/verify-refresh
+            JWT_EXPIRE_TIME: 24h
+            JWT_REFRESH_EXPIRE_TIME": "30d"
+            REDIS_HOST: redis-15611.c3.eu-west-1-2.ec2.cloud.redislabs.com
+            REDIS_PORT: 15611
+            APP_PROTOCOL: http
+            APP_HOST: localhost
+            APP_PORT: 3000
+            CLOUDINARY_CLOUD_NAME: fyrst
+            IMAGE_UPLOAD_BYTE_LIMIT: 512000
           run: |
             gcloud run deploy ${{ secrets.GCP_PROJECT_ID }} --image $IMAGE_NAME \
             --region us-central1 \
