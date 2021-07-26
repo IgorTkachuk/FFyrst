@@ -26,4 +26,4 @@ RUN npm i
 ENV PORT 8080
 ENV HOST 0.0.0.0
 EXPOSE 8080
-CMD sh -c "cd /app && npm run start"
+CMD sh -c "cd /app && APP_SERVER_PORT=$PORT npm run start"
