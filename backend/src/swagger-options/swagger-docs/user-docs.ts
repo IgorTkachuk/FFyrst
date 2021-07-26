@@ -69,3 +69,4 @@
  *             example:
  *               message: Not authorized
  */
+export {};

@@ -54,3 +54,5 @@
  *             example:
  *               message: "Wrong token request"
  */
+
+export {};
