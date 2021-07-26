@@ -54,6 +54,8 @@ const initAuthApi = (apiRouter: Router): Router => {
     },
   );
 
+
+
   authRouter.post(
     AuthApiPath.VERIFY_PASSWORD,
     yupValidation(verifySchema),

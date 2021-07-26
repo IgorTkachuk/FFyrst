@@ -200,18 +200,17 @@ const General = () => {
               )}
               </Field>
             </div>
+            <div className='w-full flex justify-center md:justify-end mt-10'>
+              <Button
+                like={'primary'}
+                label='Update profile'
+                type='submit'
+              />
+            </div>
           </div>
-          <div className='w-full flex justify-center md:justify-end mt-10'>
-            <Button
-              color='blue'
-              label='Update profile'
-              size='big'
-              type='submit'
-            />
-          </div>
-        </Form>
-      )}
-    </Formik>
+          </Form>
+        )}
+      </Formik>
   )
 }
 

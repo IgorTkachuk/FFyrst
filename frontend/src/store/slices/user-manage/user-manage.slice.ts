@@ -1,5 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { ReducerName } from '../../../common/enums';
+import { ReducerName, UserManageSagaTypes } from '../../../common/enums';
+import { IUser } from 'shared';
+
+type Filter = 'all' | 'online' | 'offline'
 
 
 interface IState {
@@ -8,10 +11,12 @@ interface IState {
   count: number,
   activePage: number,
   search: string,
-  useFilter: boolean,
-  valueFilter: boolean
+  useFilter: Filter,
+  setActive: boolean,
   itemsPerPage: number,
-  data: any
+  data: any,
+  upDelStatus: boolean,
+  user: any
 }
 
 const initialState: IState = {
@@ -19,11 +24,13 @@ const initialState: IState = {
   error: null,
   activePage: 1,
   data: [],
-  useFilter: false,
+  useFilter: 'all',
+  setActive: false,
   itemsPerPage: 2,
   search: '',
-  valueFilter: false,
   count: 0,
+  user: {},
+  upDelStatus: false,
 };
 
 
@@ -32,30 +39,24 @@ const { reducer, actions } = createSlice({
   initialState,
   reducers: {
     changePage: (state, action) => {
-      const { page } = action.payload;
-      state.activePage = page;
+      state.activePage = action.payload;
     },
     changeItemsPerPage: (state, action) => {
-      const { count } = action.payload;
-      state.itemsPerPage = count;
+      state.itemsPerPage = action.payload;
     },
     changeFormState: (state, action) => {
-      const { value } = action.payload;
-      state.search = value;
+      state.search = action.payload;
     },
     changeUseFilter: (state, action) => {
-      const { value } = action.payload;
-      state.useFilter = value;
-    },
-    changeValueFilter: (state, action) => {
-      const { value } = action.payload;
-      state.valueFilter = value;
+      state.useFilter = action.payload;
     },
     startRequest: (state) => {
       state.count = 0;
       state.loading = true;
       state.error = null;
-      state.data = 0;
+      state.data = [];
+      state.upDelStatus = false;
+      state.user = {};
     },
     succeedRequest: (state, action) => {
       const { count, data } = action.payload;
@@ -63,11 +64,58 @@ const { reducer, actions } = createSlice({
       state.data = data;
       state.loading = false;
     },
+    startSetActiveUser: (state) => {
+      state.setActive = false;
+      state.loading = true;
+      state.error = null;
+    },
+    setActiveUser: (state) => {
+      state.loading = false;
+      state.setActive = true;
+    },
+    startGetUserRequest: (state) => {
+      state.loading = true;
+      state.error = null;
+      state.user = {};
+    },
+    succeedGetUser: (state, action) => {
+      state.user = action.payload;
+      state.loading = false;
+    },
+    succeedUpDel: (state) => {
+      state.upDelStatus = true;
+      state.loading = false;
+    },
     failedRequest: (state, action) => {
-      const { error } = action.payload;
-      state.error = error;
+      state.error = action.payload;
+      state.loading = false;
     },
   },
+});
+
+export const getPaginationUsersAction = (data: any) => ({
+  type: UserManageSagaTypes.MANAGE_GET_USERS_WITH_PAGINATION,
+  payload: data,
+});
+
+export const getUserForUpdateAction = (data: any) => ({
+  type: UserManageSagaTypes.MANAGE_GET_USER_TO_UPDATE,
+  payload: data,
+});
+
+export const updateUserAction = (data: any) => ({
+  type: UserManageSagaTypes.MANAGE_UPDATE_USER,
+  payload: data,
+});
+
+export const createUserAction = (data: any) => ({
+  type: UserManageSagaTypes.MANAGE_CREATE_USER,
+  payload: data,
+});
+
+export const setUserActiveAction = (data: any) => ({
+  type: UserManageSagaTypes.SET_USER_ACTIVE,
+  payload: data,
 });
 
 const UserManageActionCreator = {

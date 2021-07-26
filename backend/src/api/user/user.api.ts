@@ -1,10 +1,13 @@
 import { Router } from 'express';
-import { ActivationStatus } from 'shared';
+import { ActivationStatus, ISearchFilter } from 'shared';
 import { ApiPath, HttpCode, UsersApiPath } from 'shared';
 import { createActivationMessage } from '~/helpers';
 import { userService } from '~/services/services';
 import { userSchema } from './user.schema';
 import { jwtValidation } from '~/middlewares/jwt-validation/jwt-validation.middelware';
+import { yupValidation } from '~/middlewares/yup-validation/yup-validation.middelware';
+import { createUserSchema, updateUserSchema } from 'shared';
+import { ResponseMessages } from '~/common/enums/messages/response-messages.enum';
 
 const initUserApi = (apiRouter: Router): Router => {
   const userRouter = Router();
@@ -20,7 +23,7 @@ const initUserApi = (apiRouter: Router): Router => {
     }
   });
 
-  // -- get user profile --
+  // -- get auth profile --
   userRouter.get(UsersApiPath.PROFILE, jwtValidation, async (_req, res) => {
     try {
       const user = await userService.getUserById(_req.user.userId);
@@ -30,7 +33,7 @@ const initUserApi = (apiRouter: Router): Router => {
     }
   });
 
-  // -- update user profile --
+  // -- update auth profile --
   userRouter.put(UsersApiPath.PROFILE, jwtValidation, async (_req, res) => {
     try {
       const result = await userService.updateUserProfile(
@@ -104,22 +107,38 @@ const initUserApi = (apiRouter: Router): Router => {
     }
   });
 
-  userRouter.get(UsersApiPath.PAG_USERS, jwtValidation, async (_req, _res, next) => {
+  userRouter.post(UsersApiPath.PAG_USERS, jwtValidation, async (_req, _res, next) => {
     try {
-      const count = await userService.getUsersCount();
-      _res.status(HttpCode.OK).json({ count });
+      const info = await userService.getUsersWithPagination(_req.body as ISearchFilter);
+      _res.status(200).json({ count: info.count, data: info.rows });
     } catch (error) {
-      // next(error);
-      _res.status(400).json({ error });
+      next(error);
     }
   });
 
-  userRouter.post(UsersApiPath.PAG_USERS, jwtValidation, (_req, _res, next) => {
+  userRouter.post(UsersApiPath.MANAGE, jwtValidation, yupValidation(createUserSchema), async (_req, _res, next) => {
     try {
-      const { limit, offset, filters } = _req.body;
+      await userService.createNewUser(_req.body);
+      _res.status(HttpCode.OK).json({ message: ResponseMessages.CONFIRMED });
+    } catch (e) {
+      next(e);
+    }
+  });
+  userRouter.put(UsersApiPath.$MANAGE, jwtValidation, yupValidation(updateUserSchema), async (_req, _res, next) => {
+    try {
+      await userService.updateUserManage(_req.body, _req.params.id);
+      _res.status(HttpCode.OK).json({ message: ResponseMessages.CONFIRMED });
+    } catch (e) {
+      next(e);
+    }
+  });
 
-    } catch (error) {
-      next(error);
+  userRouter.put(UsersApiPath.$MANAGE_ACTIVE, jwtValidation, async (_req, _res, next) => {
+    try {
+      await userService.setUserActive(_req.params.id);
+      _res.status(HttpCode.OK).json({ message: ResponseMessages.CONFIRMED });
+    } catch (e) {
+      next(e);
     }
   });
 

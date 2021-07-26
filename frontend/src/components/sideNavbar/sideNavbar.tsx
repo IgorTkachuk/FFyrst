@@ -1,20 +1,24 @@
 import React, { useEffect } from 'react';
 import SideNavbarElement from './sideNavbarElement';
+import useMedia from 'use-media';
 import {
-  BsFillPersonFill,
-  BsFillInfoCircleFill,
-  BsBookmarkFill,
-  BsChatFill,
-  BsHouseDoorFill,
+  BsPerson,
+  BsPeople,
+  BsCardChecklist,
 } from 'react-icons/bs';
+import { AppRoute } from '../../common/enums';
 
 interface IProps {
   isCollapsed: boolean,
   setCollapse: (val: boolean) => void
 }
 
+
+const user = [{ link: '/profile/edit', name: 'Edit profile' }, { link: '/profile/notification', name: 'Notification', },{ link: '/profile/security', name: 'Security', }]
 const SideNavbar: React.FC<IProps> = ({ isCollapsed, setCollapse }) => {
 
+  const mob = useMedia({ minWidth: '1024px' });
+  console.log(mob);
   const dropdownStatus = (e: any) => {
     if (!e.target.closest('.sidebar') && !e.target.classList.contains('collapse-btn')) {
       setCollapse(false);
@@ -31,12 +35,13 @@ const SideNavbar: React.FC<IProps> = ({ isCollapsed, setCollapse }) => {
   return (
     <>
       <ul
-        className={`sidebar ${isCollapsed ? 'w-full' : ''} ${isCollapsed ? 'fixed left-0 top-0' : ''} ${isCollapsed ? '' : 'divide-y-2 divide-gray-300'}  max-w-sidebar-content pt-4 px-1 lg:static bg-gray-100 content-area ring-1 ring-gray-300  `}>
-        <SideNavbarElement icon={<BsFillPersonFill size={24} />} title={'Person page'} isCollapsed={isCollapsed} link={'/profile'} />
-        <SideNavbarElement icon={<BsFillInfoCircleFill size={24} />} title={'Info page'} isCollapsed={isCollapsed} link={'/user-manage'} />
-        <SideNavbarElement icon={<BsBookmarkFill size={24} />} title={'Bookmark page'} isCollapsed={isCollapsed} />
-        <SideNavbarElement icon={<BsChatFill size={24} />} title={'Chat page'} isCollapsed={isCollapsed} />
-        <SideNavbarElement icon={<BsHouseDoorFill size={24} />} title={'Home page'} isCollapsed={isCollapsed} />
+        className={`sidebar ${isCollapsed ? 'min-w-sidebar-content ' : 'min-w-side-collapse-content'} ${isCollapsed && !mob ? 'fixed left-0 top-10' : ''}} bg-white pt-4 px-1 content-area shadow z-20`}>
+        <div className={`
+        ${isCollapsed && mob ? 'sticky lg:top-20' : 'fixed'}`}>
+          <SideNavbarElement icon={<BsPerson size={24} />} title={'Person page'} isCollapsed={isCollapsed} link={AppRoute.USER_PROFILE} subLines={user} />
+          <SideNavbarElement icon={<BsPeople size={24} />} title={'Manage page'} isCollapsed={isCollapsed} link={AppRoute.USER_MANAGE}/>
+          <SideNavbarElement icon={<BsCardChecklist size={24} />} title={'Booking page'} isCollapsed={isCollapsed} link={"/main"}/>
+        </div>
       </ul>
     </>
   );

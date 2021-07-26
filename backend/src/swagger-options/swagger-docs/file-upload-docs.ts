@@ -21,7 +21,7 @@
  *   post:
  *     description: File upload
  *     tags: [File upload]
- *     security:
+ *     security-page:
  *       - bearerAuth: []
  *     requestBody:
  *       content:

@@ -39,6 +39,7 @@
     "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.0.2",
     "tailwindcss-nth-child": "^0.0.6",
     "tailwindcss-transitions": "^2.2.0",
+    "use-media": "^1.4.0",
     "yup": "^0.32.9",
     "yup-phone": "^1.2.19"
   },

@@ -135,3 +135,39 @@ describe('Login Endpoint', () => {
     expect(resLoginAgain.body.tokens).toHaveProperty('refreshToken')
   });
 })
+
+
+// describe('POST /templates', function() {
+//   afterAll(async () => {});
+//   it('for sending array of template fields shoud receive template from db', async () => {
+
+//     const reqBody = [
+//       {
+//         "name": "education",
+//         "type": "text",
+//         "isReadOnly": false,
+//         "label": "Education",
+//         "placeholder": "Education",
+//       },
+//       {
+//         "name": "vacancy",
+//         "type": "select",
+//         "isReadOnly": false,
+//         "label": "Vacancy",
+//         "options": ["nurse", "paramedic"],
+//         "placeholder": "Vacancy",
+//         "validation": "",
+//         "defaultValue": "nurse"
+//       }
+//     ]
+
+//     const res = await request
+//       .post('/api/v1/templates')
+//       .set('Referer', 'http://localhost:3000/test')
+//       .send(reqBody)
+//     expect(res.statusCode).toEqual(200)
+//     expect(res.body).toHaveProperty('id')
+//     expect(res.body).toHaveProperty('industryId')
+//     expect(res.body.template).toStrictEqual(reqBody)
+//   });
+// });

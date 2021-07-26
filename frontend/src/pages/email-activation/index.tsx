@@ -12,7 +12,7 @@ const EmailActivation: React.FC = () => {
   const history = useHistory();
 
   const activationStatus = useSelector((state: RootState) => state.activation);
-  const { token } = useParams<{token: string}>();
+  const { token } = useParams<{ token: string }>();
 
   const [message, setMessage] = useState('');
   const [label, setLabel] = useState('');
@@ -26,7 +26,7 @@ const EmailActivation: React.FC = () => {
     [ActivationStatus.EXPIRED]: {
       label: 'Send Link again',
       onClick: () => {
-        dispatch(ActivationActionCreator.request(email))
+        dispatch(ActivationActionCreator.request(email));
       },
     },
     [ActivationStatus.NOT_FOUND]: {
@@ -35,19 +35,19 @@ const EmailActivation: React.FC = () => {
     },
     [ActivationStatus.SENT]: {
       label: '',
-      onClick: () => ''
-    }
-  }
+      onClick: () => '',
+    },
+  };
 
   const handler = () => {
     const { status } = activationStatus;
     const { onClick } = BUTTONS_OPTIONS[status];
-    onClick()
-  }
+    onClick();
+  };
 
   useEffect(() => {
-    dispatch(ActivationActionCreator.activate(token))
-  }, [])
+    dispatch(ActivationActionCreator.activate(token));
+  }, []);
 
   useEffect(() => {
     const { status, message, email } = activationStatus;
@@ -55,22 +55,21 @@ const EmailActivation: React.FC = () => {
     setMessage(message);
     setLabel(label);
     setEmail(email);
-  }, [activationStatus])
+  }, [activationStatus]);
 
   return (
-    <div className="container mx-auto flex flex-col justify-center items-center p-20">
-      <div className="bg-white shadow-xl rounded px-8 pt-6 pb-8 mb-4 flex flex-col justify-center">
-        <h1 className="text-5xl text-gray-700 mb-10">{message}</h1>
-        <div className="mx-auto">
+    <div className='container mx-auto flex flex-col justify-center items-center p-20'>
+      <div className='bg-white shadow-xl rounded px-8 pt-6 pb-8 mb-4 flex flex-col justify-center'>
+        <h1 className='text-5xl text-gray-700 mb-10'>{message}</h1>
+        <div className='mx-auto'>
           {
             activationStatus.status !== ActivationStatus.SENT ?
-            <Button
-              size="big"
-              color="blue"
-              label={label}
-              onClick={handler}
-            />
-            : null
+              <Button
+                like={'primary'}
+                label={label}
+                onClick={handler}
+              />
+              : null
           }
 
         </div>
