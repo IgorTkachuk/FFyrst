@@ -5,7 +5,7 @@ class TemplateCheck {
   public required(template: ITemplateField[], data: Record<string, any>): void {
     template.forEach(field => {
       if(!Object.hasOwnProperty.call(data, field.name)) {
-        throw new Error(`Template Error: ${field} has missed from object`);
+        throw new Error(`Template Error: ${field.name} has missed from object`);
       }
     })
   }
@@ -15,7 +15,7 @@ class TemplateCheck {
       const {name, validation} = field;
       const regExp = new RegExp(validation || '.*', 'i');
       const isMatch = regExp.test(data[name]);
-      if(isMatch) {
+      if(!isMatch) {
         throw new Error(`Template Error: ${name} has invalid value`);
       }
     })
