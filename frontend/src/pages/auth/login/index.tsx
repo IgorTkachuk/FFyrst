@@ -39,7 +39,7 @@ const Login: React.FC = () => {
         >
           {(props: FormikProps<any>) => (
             <Form
-              className='bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col justify-center space-y-4 '
+              className=' form-box flex flex-col justify-center space-y-4 '
             >
               {error && <ErrorBoundary message={error} />}
               <Field name='email'>

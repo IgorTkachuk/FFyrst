@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import CUForm from '../CU-form';
+import CreateUpdateForm from '../CreateUpdate-form';
 import { useTypedSelector } from '../../../../hooks/useTypedSelector';
 import { useHistory, useParams } from 'react-router-dom';
 import { AppRoute } from '../../../../common/enums';
@@ -36,7 +36,7 @@ const UpdateUser = () => {
         <p className='font-semibold text-custom-dark-blue text-page-name'>Update user {id}</p>
         <div></div>
       </div>
-      <CUForm id={id} type={'update'} initialValues={user} loading={loading} callback={updateUserAction} />
+      <CreateUpdateForm id={id} type={'update'} initialValues={user} loading={loading} callback={updateUserAction} />
     </div>
   );
 };

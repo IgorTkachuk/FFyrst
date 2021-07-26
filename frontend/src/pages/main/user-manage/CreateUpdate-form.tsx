@@ -18,7 +18,7 @@ interface IProps {
   callback: (data: any) => void
 }
 
-const CUForm: React.FC<IProps> = ({ type, initialValues, loading, callback, id }) => {
+const CreateUpdateForm: React.FC<IProps> = ({ type, initialValues, loading, callback, id }) => {
   const label = type === 'create' ? 'Create' : 'Update';
   const dispatch = useDispatch();
   const schema = type === 'create' ? createUserSchema : updateUserSchema;
@@ -139,4 +139,4 @@ const CUForm: React.FC<IProps> = ({ type, initialValues, loading, callback, id }
   );
 };
 
-export default CUForm;
+export default CreateUpdateForm;

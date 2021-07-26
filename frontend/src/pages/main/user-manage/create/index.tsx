@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { useTypedSelector } from '../../../../hooks/useTypedSelector';
 import { createUserAction } from '../../../../store/slices/user-manage/user-manage.slice';
 import { AppRoute } from '../../../../common/enums';
-import CUForm from '../CU-form';
+import CreateUpdateForm from '../CreateUpdate-form';
 import { BsChevronLeft } from 'react-icons/bs';
 
 const user = {
@@ -42,7 +42,7 @@ const CreateUser = () => {
         <p className='font-semibold text-custom-dark-blue text-page-name'>Create user</p>
         <div></div>
       </div>
-      <CUForm type={'create'} initialValues={user} loading={loading} callback={createUserAction} />
+      <CreateUpdateForm type={'create'} initialValues={user} loading={loading} callback={createUserAction} />
     </div>
   );
 };

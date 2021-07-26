@@ -35,7 +35,7 @@ const Registration: React.FC = () => {
           >
             {(form) => (
               <Form
-                className='shadow-sm sm:shadow-lg px-8 pt-6 pb-8 mb-4 rounded-lg flex flex-col space-y-4'>
+                className='form-box flex flex-col space-y-4'>
                 {error && <ErrorBoundary message={error} />}
                 {registerState && <p className='font-semibold text-blue-500'>Message was sent to email</p>}
                 <Field name='firstName'>

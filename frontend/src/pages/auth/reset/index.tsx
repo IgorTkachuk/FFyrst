@@ -31,7 +31,7 @@ const Reset = () => {
           {(props: FormikProps<any>,
           ) => (
             <Form
-              className='bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4'
+              className='form-box'
             >
               {error && <ErrorBoundary message={error} />}
               {resetState && <p className='font-semibold text-blue-500'>Message was sent to email</p>}
