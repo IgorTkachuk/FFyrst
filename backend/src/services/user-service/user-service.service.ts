@@ -1,10 +1,11 @@
 import { userRepository } from '~/data/repositories';
-import { IUser, IActivationMessage, IProfile } from 'shared/common/interfaces';
+import { IUser, IActivationMessage, IProfile, ISearchFilter } from 'shared/common/interfaces';
 import { mailService, userService } from '../services';
 import { hashPassword, hashToken } from '~/helpers/bcrypt';
 import { createActivationMessage as message, getUpdatedUser } from '~/helpers';
 import { ActivationStatus } from 'shared/common/enums';
 import { userSchema } from '~/api/user/user.schema';
+import { adminUpdatedUser } from '~/helpers/user/get-updated-user/admin-updateuser';
 
 class UserService {
   public getAllUsers(): Promise<IUser[]> {
@@ -90,8 +91,37 @@ class UserService {
     return message(ActivationStatus.SUCCESS, 'Successful activation.');
   }
 
-  public async getUsersCount(): Promise<number> {
-    return await userRepository.getUsersCount();
+  public async getUsersWithPagination(data: ISearchFilter) {
+    return await userRepository.getUsersWithPagination(data);
+  }
+
+  public async updateUserManage(data: IUser, id: string) {
+    try {
+      const user = await userService.getUserById(id);
+      if (!user) {
+        return null;
+      }
+      const updatedUser = adminUpdatedUser(user, data);
+      await userSchema.validate(updatedUser, { context: { required: true } });
+      const result = await userRepository.updateById(id, updatedUser);
+      return result;
+    } catch {
+      return null;
+    }
+  }
+
+  public async setUserActive(id: string) {
+    try {
+      const user = await userService.getUserById(id);
+      if (!user) {
+        return null;
+      }
+      const upUser = { ...user, isActive: !user.isActive };
+      await userRepository.updateById(id, upUser);
+
+    } catch (e) {
+      throw new Error(e);
+    }
   }
 
 }

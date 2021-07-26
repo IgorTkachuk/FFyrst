@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { IListItem, IHeaderProps } from './types';
 import Avatar from 'assets/images/avatar-example.png';
 import { useDispatch } from 'react-redux';
-import { logoutUserAction } from 'store/slices/user/user.slice';
+import { logoutUserAction } from 'store/slices/auth/auth.slice';
 import { useDetectOutsideClick } from 'hooks/useDetectOutsideClick';
 
 const UserHeaderMenu = ({user}: IHeaderProps): React.ReactElement => {
@@ -40,7 +40,7 @@ const UserHeaderMenu = ({user}: IHeaderProps): React.ReactElement => {
   return (
     <>
       <div
-        className="inline-flex items-center py-1 md:py-2 sm:px-2 md:px-4 sm:hover:bg-blue-700 transition duration-200"
+        className="inline-flex items-center py-1 md:py-2 sm:px-2 md:px-4 sm:hover:bg-custom-dark-blue transition duration-200"
         onClick={() => setMenuVisible(true)}
       >
         <div className="w-8 sm:w-9 md:w-10 md:mr-2 lg:mr-4 overflow-hidden border border-gray-400 rounded-full">

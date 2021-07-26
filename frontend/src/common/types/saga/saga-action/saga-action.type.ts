@@ -10,3 +10,11 @@ export interface SagaUserAction
     PayloadAction<{ user: IProfile } & { token: string }> {
   type: string;
 }
+
+export interface SagaActionWithTokenAndPayload<T> extends Action, PayloadAction<T & { token: string }> {
+  type: string
+}
+
+export interface SagaActionWithToken extends Action, PayloadAction<{ token: string }> {
+  type: string
+}

@@ -8,6 +8,12 @@ export interface IUser {
   birthDate?: Date;
   avatar: string;
   isActive: boolean;
+  postalCode?: string,
+  stateAddress?: string,
+  cityAddress?: string,
+  streetAddress?: string,
+  marriageStatus?: boolean,
+  dependantsAmount?: number,
   activationTokenExpiration: Date;
   activationToken: string;
   createdAt: Date;

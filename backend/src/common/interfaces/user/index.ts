@@ -1,1 +1,1 @@
-export type { IUser } from 'shared/common/interfaces';
+export type {IUser}  from 'shared/common/interfaces';

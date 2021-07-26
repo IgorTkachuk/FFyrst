@@ -1,14 +1,16 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import './input.css';
+import { BsEyeSlash, BsEye } from 'react-icons/bs';
 
 interface InputProps {
   id: string;
   title: string;
+  type: string,
+  disabled?: boolean,
   size?: 'small' | 'medium' | 'big' | 'widthAuto';
   placeholder?: string;
-  type: string;
+  props?: Record<string, unknown>;
   className?: string;
-  disabled?: boolean;
   field: any;
   meta?: {
     touched: boolean;
@@ -17,49 +19,51 @@ interface InputProps {
   [key: string]: any;
 }
 
-const INPUT_SIZES = {
-  small: 'text-sm w-40',
-  medium: 'text-lg w-60',
-  big: 'text-2xl w-80',
-  widthAuto: 'text-lg w-full',
-};
-
 export const Input = ({
-  id,
-  title = '',
-  size = 'medium',
-  placeholder = '',
-  type = 'text',
-  className = '',
-  field,
-  meta = { touched: false, error: '' },
-  ...props
-}: InputProps) => {
+                        id, title = '', size = 'medium', placeholder = '', className = '',
+                        disabled, field, type, meta = { touched: false, error: '' }, ...props
+                      }: InputProps) => {
+
+  const [isType, setType] = useState(type);
+  const [isActive, setIsActive] = useState(false);
+  const input = useRef<HTMLInputElement>(null);
   return (
-    <div className="flex flex-col">
-      <label
-        className={`${INPUT_SIZES[size]} font-bold py-0.5 px-0.5`}
-        htmlFor={id}
-      >
-        {title}
-      </label>
-      <input
-        className={`${INPUT_SIZES[size]} ${
-          meta.touched && meta.error
-            ? 'bg-red-100 focus:border-red-300'
-            : 'focus:border-blue-300'
-        } shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none ${className}`}
-        id={id}
-        type={type}
-        placeholder={placeholder}
-        {...props}
-        {...field}
-      />
-      {meta.touched && meta.error ? (
-        <div className="w-full text-red-400 text-sm py-0.5">{meta.error}</div>
-      ) : (
-        ''
-      )}
+    <div
+      onClick={() => input.current?.focus()}
+      className={`flex flex-col w-full ${size === 'small' && 'max-w-small-input'} ${size === 'medium' && 'max-w-medium-input'} ${size === 'big' && 'max-w-big-input'} ${size === 'widthAuto' && 'max-w-max'}`}>
+      <div
+        className={`border-2 ${(meta.touched && meta.error && !disabled && isActive) ? 'border-custom-red' : (!disabled && isActive) ? 'border-custom-blue' : 'border-custom-gray'}  ${disabled && 'bg-custom-field'}  border- rounded-lg flex flex-col h-10 ${(!field.value || field.value !== 0) && 'justify-center'}`}>
+        {(field.value || field.value === 0) &&
+        <label className={`ml-1 text-custom-placeholder text-ss px-2`} htmlFor={id}>
+          {title}
+        </label>}
+        <div className='flex items-center space-x-4 px-2'>
+          <input
+            ref={input}
+            className={`ml-1 h-5 border-0 pl-0 focus:ring-0 focus:outline-none ${disabled && 'bg-custom-field'} text-custom-blue text-xs w-full`}
+            id={id}
+            onFocus={() => {
+              console.log('focus');
+              setIsActive(true);
+            }}
+            onBlur={() => {
+              console.log('blur');
+              setIsActive(false);
+            }}
+            disabled={disabled}
+            type={isType}
+            placeholder={placeholder}
+            {...props}
+            {...field}
+          />
+          {isType === 'password' && type === 'password' &&
+          <BsEyeSlash onClick={() => setType('text')} className={`${field.value && 'mb-2'} text-custom-dark-gary `} />}
+          {isType === 'text' && type === 'password' &&
+          <BsEye onClick={() => setType('password')} className={`${field.value && 'mb-2'} text-custom-dark-gary `} />}
+        </div>
+      </div>
+      {(meta.touched && meta.error && !disabled) && (
+        <div className='text-red-400 text-ss pl-2 py-0.5'>{meta.error}</div>)}
     </div>
   );
 };

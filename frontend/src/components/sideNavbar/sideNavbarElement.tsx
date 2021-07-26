@@ -16,9 +16,9 @@ const SideNavbarElement: React.FC<IProps> = ({ icon, title, isCollapsed, link })
       onClick={() => {
         link && history.push(link);
       }}
-      className={` ${isCollapsed && 'space-x-4'} relative group flex justify-between p-2 hover:bg-gray-200 active:ring-1 active:ring-blue-700 active:rounded my-1 items-center text-dark-txt font-semibold hover:text-blue-400`}>
+      className={` ${isCollapsed && 'space-x-4'} relative group flex justify-between p-2 hover:shadow active:ring-1 bg-custom-blue rounded my-1 items-center text-custom-white font-semibold hover:text-blue-400`}>
       <div className={`absolute left-9 hidden mx-2 ${!isCollapsed && 'group-hover:block'}`}>
-        <div className='bg-black text-white text-xs rounded py-1 px-4 right-0 bottom-full'>
+        <div className='bg-custom-background text-custom-blue text-xs rounded py-1 px-4 right-0 bottom-full border-2 border-custom-blue min-w-min w-full'>
           {title}
         </div>
       </div>

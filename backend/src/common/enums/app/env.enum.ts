@@ -1,4 +1,4 @@
-import { AppEnvironment } from '~/common/enums/app/app-environment.enum';
+import { AppEnvironment } from '../../enums/app/app-environment.enum';
 
 const { NODE_ENV, APP_SERVER_PORT } = process.env;
 

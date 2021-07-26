@@ -7,6 +7,8 @@ import UserHeaderMenu from './UserHeaderMenu';
 import { useTypedSelector } from 'hooks/useTypedSelector';
 
 
+
+
 const Header = ({
   user = {
     firstName: '',
@@ -20,10 +22,10 @@ const Header = ({
 
   return (
     <header
-      className='sticky z-50 top-0 left-0 w-full border-b border-gray-200 bg-blue-600 shadow-md self-start z-50'>
+      className='sticky z-50 top-0 left-0 w-full border-b border-gray-200 bg-custom-blue shadow-md self-start z-50'>
       <nav className='flex justify-between'>
         <div className="w-1/3">
-          <button className={`collapse-btn text-gray-50 hover:bg-blue-700 h-full px-4 transition duration-200`} onClick={callback}>
+          <button className={`collapse-btn text-gray-50 hover:bg-custom-dark-blue h-full px-4 transition duration-200`} onClick={callback}>
             {isCollapsed ? <BsX className={'collapse-btn'} size={36} /> :
               <BsList className={'collapse-btn'} size={36} />}
           </button>

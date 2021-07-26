@@ -1,20 +1,19 @@
 import { IProfile, IUser } from 'shared';
-
-const getUpdatedUser = (user: IUser, newUserData: IProfile): IUser => {
+const adminUpdatedUser = (user: IUser, newUserData: IUser): IUser => {
   return {
     id: user.id,
     firstName: newUserData.firstName,
     lastName: newUserData.lastName,
     email: newUserData.email,
     phoneNumber: newUserData.phoneNumber,
-    birthDate: new Date(newUserData.birthDate),
+    birthDate: new Date(newUserData.birthDate as Date),
     avatar: user.avatar,
-    cityAddress: user.cityAddress,
-    dependantsAmount: user.dependantsAmount,
-    marriageStatus: user.marriageStatus,
-    postalCode: user.postalCode,
-    stateAddress: user.stateAddress,
-    streetAddress: user.streetAddress,
+    cityAddress: newUserData.cityAddress,
+    dependantsAmount: newUserData.dependantsAmount,
+    marriageStatus: newUserData.marriageStatus,
+    postalCode: newUserData.postalCode,
+    stateAddress: newUserData.stateAddress,
+    streetAddress: newUserData.streetAddress,
     updatedAt: user.updatedAt,
     activationTokenExpiration: user.activationTokenExpiration,
     activationToken: user.activationToken,
@@ -24,4 +23,4 @@ const getUpdatedUser = (user: IUser, newUserData: IProfile): IUser => {
   };
 };
 
-export { getUpdatedUser };
+export { adminUpdatedUser };
