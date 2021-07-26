@@ -10,7 +10,7 @@ import { useDetectOutsideClick } from 'hooks/useDetectOutsideClick';
 import { useTypedSelector } from 'hooks/useTypedSelector';
 import { loadFileToCloudAction } from 'store/slices/file/file.slice';
 import { FormikProps } from 'formik';
-import { Spinner } from 'components/spinner/Spinner';
+import {Spinner} from '../Spinner/spinner';
 
 interface UploaderProps {
   id: string,

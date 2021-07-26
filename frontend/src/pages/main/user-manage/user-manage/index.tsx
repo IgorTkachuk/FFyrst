@@ -16,7 +16,6 @@ import { useTypedSelector } from '../../../../hooks/useTypedSelector';
 import { useDispatch } from 'react-redux';
 import CustomSelectForPagination from '../select';
 import { getPaginationUsersAction, setUserActiveAction } from '../../../../store/slices/user-manage/user-manage.slice';
-import Spinner from '../../../../components/spinner/spinner';
 import ErrorBoundary from '../../../../components/errorBoundry/errorBoundry';
 import { useHistory } from 'react-router-dom';
 import { AppRoute } from '../../../../common/enums';

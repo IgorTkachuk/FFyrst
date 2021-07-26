@@ -198,9 +198,8 @@ const General = () => {
             </div>
             <div className='w-full flex justify-center md:justify-end mt-10'>
               <Button
-                color='blue'
+                like={'primary'}
                 label='Update profile'
-                size='big'
                 type='submit'
               />
             </div>

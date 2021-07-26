@@ -128,8 +128,6 @@ const CUForm: React.FC<IProps> = ({ type, initialValues, loading, callback, id }
               </Field>
             </>}
             <hr />
-            {JSON.stringify(form.values)}
-            {JSON.stringify(form.errors)}
             <div className='flex justify-end mt-10 space-x-4'>
               <Button like={'primary'} label={label} type={'submit'} disabled={loading} />
               <Button like={'secondary'} label='Reset' type={'reset'} />
