@@ -1,5 +1,5 @@
-import { cloud_name, api_key, api_secret } from 'config/cloudinary.config';
-import { image_size_limit } from 'config/file-ipload.config';
+import { cloud_name, api_key, api_secret } from '../../../config/cloudinary.config';
+import { image_size_limit } from '../../../config/file-ipload.config';
 import { nanoid } from 'nanoid';
 import { v2 as Cloudinary } from 'cloudinary';
 import { CloudinaryStorage } from 'multer-storage-cloudinary';
