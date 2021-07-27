@@ -109,6 +109,9 @@ jobs:
             gcloud secrets add-iam-policy-binding CLOUDINARY_API_SECRET --member="serviceAccount:${{ secrets.GCP_EMAIL }}" --role="roles/secretmanager.secretAccessor" && \
             echo -n ${{ secrets.CLOUDINARY_API_SECRET }} | gcloud secrets versions add CLOUDINARY_API_SECRET --data-file=-
             
+        - name: Install gcloud components beta
+          run: gcloud components install beta --quiet
+            
         - name: Deploy Docker image
           env:
             DB_NAME: fyrst
