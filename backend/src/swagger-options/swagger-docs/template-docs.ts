@@ -210,3 +210,4 @@
  *                 message:
  *                   type:string
  */
+export {};
