@@ -39,6 +39,7 @@ jobs:
           run: docker push $IMAGE_NAME
           
         - name: Create secrets on GCP
+          continue-on-error: true
           run: |
             gcloud secrets delete DB_PASSWORD --quiet ; \
             gcloud secrets create DB_PASSWORD --replication-policy="automatic" && \
