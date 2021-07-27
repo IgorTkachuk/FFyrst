@@ -35,6 +35,7 @@ jobs:
             --build-arg REACT_APP_API_ORIGIN_URL=${{ env.REACT_APP_API_ORIGIN_URL }} \
             --build-arg REACT_APP_BACKEND_HOST=${{ env.REACT_APP_BACKEND_HOST }} \
             . -t $IMAGE_NAME
+            
         - name: Push Docker image
           run: docker push $IMAGE_NAME
         
@@ -67,7 +68,6 @@ jobs:
           run: gcloud secrets delete CLOUDINARY_API_SECRET --quiet
         
         - name: Create secrets on GCP
-          continue-on-error: true
           run: |
             gcloud secrets create DB_PASSWORD --replication-policy="automatic" && \
             gcloud secrets add-iam-policy-binding DB_PASSWORD --member="serviceAccount:${{ secrets.GCP_EMAIL }}" --role="roles/secretmanager.secretAccessor" && \
