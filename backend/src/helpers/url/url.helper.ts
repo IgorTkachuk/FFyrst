@@ -1,4 +1,4 @@
-import { protocol, host, port } from 'config/url.config';
+import { protocol, host, port } from '../../../config/url.config';
 
 class UrlHelper {
   private _appHost: string;
