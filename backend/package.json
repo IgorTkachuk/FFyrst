@@ -15,14 +15,13 @@
     "pretest": "cross-env NODE_ENV=test npm run migrate:test:reset && npm run seed:test",
     "coverage": "npm run pretest && jest --coverage && cat ./coverage/lcov.info | coveralls",
     "start:dev": "nodemon --exec ts-node -r dotenv/config -r tsconfig-paths/register ./src/server.ts",
-    "start": "node -r dotenv/config ./src/server.js",
+    "start": "npm run migrate && node -r dotenv/config ./src/server.js",
     "build:ts": "tsc && tscpaths -p tsconfig.json --src . --out build",
     "build:copy": "cp -r shared build && cp -r public build",
     "build": "npm run build:ts && npm run build:copy"
   },
   "dependencies": {
     "@types/cors": "^2.8.12",
-    "@types/nodemailer": "^6.4.2",
     "bcrypt": "5.0.1",
     "cloudinary": "^1.26.2",
     "cors": "^2.8.5",
@@ -50,6 +49,7 @@
   },
   "devDependencies": {
     "@types/bcrypt": "5.0.0",
+    "@types/nodemailer": "^6.4.2",
     "@types/express": "4.17.11",
     "@types/jest": "^26.0.24",
     "@types/jsonwebtoken": "8.5.3",

@@ -13,7 +13,7 @@ class UrlHelper {
 
   public getFullUrl(path: string): string {
     const trimmedPath = path.replace(/(^\/)|(\/$)/g, '');
-    return protocol + '://' + this._appHost + '/' + trimmedPath
+    return protocol + '://' + host + '/' + trimmedPath;
   }
 
   public getFullApiUrl(path: string): string {
@@ -24,14 +24,16 @@ class UrlHelper {
     return new URL(url);
   }
 
-  public parseURL (url: string | undefined): URL {
-    if(url) {
+  public parseURL(url: string | undefined): URL {
+    if (url) {
       return new URL(url);
     }
-    throw new TypeError(`UrlHelper: Cannot parse non-url ${url} with type ${typeof url}`)
+    throw new TypeError(
+      `UrlHelper: Cannot parse non-url ${url} with type ${typeof url}`,
+    );
   }
 }
 
 const urlHelper = new UrlHelper();
 
-export { urlHelper }
+export { urlHelper };

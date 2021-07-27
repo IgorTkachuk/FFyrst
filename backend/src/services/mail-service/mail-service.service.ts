@@ -24,17 +24,19 @@ class MailService {
     });
   }
 
-  async sendMail(type: string, email: string, options: MailOptions): Promise<Transporter> {
-    return this.transporter.sendMail(
-      {
-        from: user,
-        to: email,
-        subject: options?.mailTheme,
-        html: compileFile(path.resolve(`${__dirname}/templates/${type}.pug`))({
-          ...options?.data,
-        }),
-      },
-    );
+  async sendMail(
+    type: string,
+    email: string,
+    options: MailOptions,
+  ): Promise<Transporter> {
+    return this.transporter.sendMail({
+      from: user,
+      to: email,
+      subject: options?.mailTheme,
+      html: compileFile(path.resolve(`${__dirname}/templates/${type}.pug`))({
+        ...options?.data,
+      }),
+    });
   }
 
   async sendActivationMail(email: string, token: string): Promise<Transporter> {
@@ -43,11 +45,14 @@ class MailService {
     return await this.sendMail(EmailType.ACTIVATION, email, mailOptions);
   }
 
-  async sendResetPasswordMail(email: string, token: string): Promise<Transporter> {
+  async sendResetPasswordMail(
+    email: string,
+    token: string,
+  ): Promise<Transporter> {
     const link = urlHelper.getFullUrl(`/verify-refresh/${token}`);
     const mailOptions = createMail(
       `Reset password from ${email} account`,
-      link
+      link,
     );
     return await this.sendMail(EmailType.RESET_PASSWORD, email, mailOptions);
   }
