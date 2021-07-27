@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-import { host, port, user, pass } from 'config/email.config';
+import { host, port, user, pass } from '../../../config/email.config';
 import { EmailType } from '~/common/enums';
 import { Transporter } from 'nodemailer';
 import { MailOptions } from '~/common/types';
