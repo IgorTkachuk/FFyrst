@@ -130,7 +130,7 @@ jobs:
             CLOUDINARY_CLOUD_NAME: fyrst
             IMAGE_UPLOAD_BYTE_LIMIT: 512000
           run: |
-            gcloud run deploy ${{ secrets.GCP_PROJECT_ID }} --image $IMAGE_NAME \
+            gcloud beta run deploy ${{ secrets.GCP_PROJECT_ID }} --image $IMAGE_NAME \
             --region us-central1 \
             --platform managed \
             --allow-unauthenticated \
