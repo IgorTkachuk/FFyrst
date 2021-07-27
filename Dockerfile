@@ -19,7 +19,7 @@ FROM node:14.17.3-alpine
 # Set working directory
 WORKDIR /app
 # Copy all files from build directory to working dir in image
-COPY --from=builder ./build .
+COPY --from=builder /app/build .
 # install node modules
 RUN npm i
 
