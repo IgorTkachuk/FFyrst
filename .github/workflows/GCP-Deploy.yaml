@@ -131,7 +131,7 @@ jobs:
             SMTP_USER: RadencyFyrst@gmail.com
             LINK_HOST: nyp.fyrst.site/verify-refresh
             JWT_EXPIRE_TIME: 24h
-            JWT_REFRESH_EXPIRE_TIME": 30d
+            JWT_REFRESH_EXPIRE_TIME: 30d
             REDIS_HOST: 10.8.64.3
             REDIS_PORT: 6379
             APP_PROTOCOL: http
