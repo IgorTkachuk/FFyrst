@@ -160,4 +160,5 @@ jobs:
             --set-env-vars CLOUDINARY_CLOUD_NAME=${{ env.CLOUDINARY_CLOUD_NAME }} \
             --update-secrets=CLOUDINARY_API_KEY=CLOUDINARY_API_KEY:latest \
             --update-secrets=CLOUDINARY_API_SECRET=CLOUDINARY_API_SECRET:latest \
-            --set-env-vars IMAGE_UPLOAD_BYTE_LIMIT=${{ env.IMAGE_UPLOAD_BYTE_LIMIT }}
+            --set-env-vars IMAGE_UPLOAD_BYTE_LIMIT=${{ env.IMAGE_UPLOAD_BYTE_LIMIT }} \
+            --quiet
