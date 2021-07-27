@@ -163,7 +163,6 @@ jobs:
             --set-env-vars JWT_REFRESH_EXPIRE_TIME=${{ env.JWT_REFRESH_EXPIRE_TIME  }} \
             --set-env-vars REDIS_HOST=${{ env.REDIS_HOST }} \
             --set-env-vars REDIS_PORT=${{ env.REDIS_PORT }} \
-            --update-secrets=REDIS_PASSWORD=REDIS_PASSWORD:latest \
             --set-env-vars APP_PROTOCOL=${{ env.APP_PROTOCOL }} \
             --set-env-vars APP_HOST=${{ env.APP_HOST }} \
             --set-env-vars APP_PORT=${{ env.APP_PORT }} \
