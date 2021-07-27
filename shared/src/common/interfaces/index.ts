@@ -8,3 +8,4 @@ export * from './user-manage';
 export * from './profile';
 export * from './industry';
 export * from './template';
+export * from './booking';

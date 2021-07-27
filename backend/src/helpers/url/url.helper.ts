@@ -28,7 +28,7 @@ class UrlHelper {
     if(url) {
       return new URL(url);
     }
-    throw new TypeError(`Cannot parse non-url with type ${typeof url}`)
+    throw new TypeError(`UrlHelper: Cannot parse non-url ${url} with type ${typeof url}`)
   }
 }
 
