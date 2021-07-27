@@ -142,15 +142,15 @@ jobs:
             --set-env-vars DB_HOST=${{ env.DB_HOST }} \
             --set-env-vars DB_PORT=${{ env.DB_PORT }} \
             --set-env-vars DB_DIALECT=${{ env.DB_DIALECT }} \
-            --set-env-vars SMTP_HOST =${{ env.SMTP_HOST  }} \
-            --set-env-vars SMTP_PORT =${{ env.SMTP_PORT  }} \
-            --set-env-vars SMTP_USER =${{ env.SMTP_USER  }} \
+            --set-env-vars SMTP_HOST=${{ env.SMTP_HOST  }} \
+            --set-env-vars SMTP_PORT=${{ env.SMTP_PORT  }} \
+            --set-env-vars SMTP_USER=${{ env.SMTP_USER  }} \
             --update-secrets=SMTP_PASS=SMTP_PASS:latest \
-            --set-env-vars LINK_HOST =${{ env.LINK_HOST  }} \
+            --set-env-vars LINK_HOST=${{ env.LINK_HOST  }} \
             --update-secrets=JWT_SECRET=JWT_SECRET:latest \
             --set-env-vars JWT_EXPIRE_TIME=${{ env.JWT_EXPIRE_TIME }} \
             --update-secrets=JWT_REFRESH_SECRET=JWT_REFRESH_SECRET:latest \
-            --set-env-vars JWT_REFRESH_EXPIRE_TIME =${{ env.JWT_REFRESH_EXPIRE_TIME  }} \
+            --set-env-vars JWT_REFRESH_EXPIRE_TIME=${{ env.JWT_REFRESH_EXPIRE_TIME  }} \
             --set-env-vars REDIS_HOST=${{ env.REDIS_HOST }} \
             --set-env-vars REDIS_PORT=${{ env.REDIS_PORT }} \
             --update-secrets=REDIS_PASSWORD=REDIS_PASSWORD:latest \
