@@ -66,7 +66,7 @@ jobs:
         - name: Rereate secrets JWT_SECRET on GCP
           run: |
             gcloud secrets create JWT_SECRET --replication-policy="automatic" && \
-            gcloud secrets add-iam-policy-binding JWT_SECRET --member="serviceAccount:${{ secrets.JWT_SECRET }}" --role="roles/secretmanager.secretAccessor" && \
+            gcloud secrets add-iam-policy-binding JWT_SECRET --member="serviceAccount:${{ secrets.GCP_EMAIL }}" --role="roles/secretmanager.secretAccessor" && \
             echo -n ${{ secrets.JWT_SECRET }} | gcloud secrets versions add JWT_SECRET --data-file=-
 
         - name: Drop GCP secret JWT_REFRESH_SECRET
@@ -76,7 +76,7 @@ jobs:
         - name: Rereate secret JWT_REFRESH_SECRET on GCP
           run: |
             gcloud secrets create JWT_REFRESH_SECRET --replication-policy="automatic" && \
-            gcloud secrets add-iam-policy-binding JWT_REFRESH_SECRET --member="serviceAccount:${{ secrets.JWT_REFRESH_SECRET }}" --role="roles/secretmanager.secretAccessor" && \
+            gcloud secrets add-iam-policy-binding JWT_REFRESH_SECRET --member="serviceAccount:${{ secrets.GCP_EMAIL }}" --role="roles/secretmanager.secretAccessor" && \
             echo -n ${{ secrets.JWT_REFRESH_SECRET }} | gcloud secrets versions add JWT_REFRESH_SECRET --data-file=-
 
         - name: Drop GCP secret REDIS_PASSWORD
@@ -86,7 +86,7 @@ jobs:
         - name: Rereate secret REDIS_PASSWORD on GCP
           run: |
             gcloud secrets create REDIS_PASSWORD --replication-policy="automatic" && \
-            gcloud secrets add-iam-policy-binding REDIS_PASSWORD --member="serviceAccount:${{ secrets.REDIS_PASSWORD }}" --role="roles/secretmanager.secretAccessor" && \
+            gcloud secrets add-iam-policy-binding REDIS_PASSWORD --member="serviceAccount:${{ secrets.GCP_EMAIL }}" --role="roles/secretmanager.secretAccessor" && \
             echo -n ${{ secrets.REDIS_PASSWORD }} | gcloud secrets versions add REDIS_PASSWORD --data-file=-
 
         - name: Drop GCP secret CLOUDINARY_API_KEY
@@ -96,7 +96,7 @@ jobs:
         - name: Rereate secret CLOUDINARY_API_KEY on GCP
           run: |
             gcloud secrets create CLOUDINARY_API_KEY --replication-policy="automatic" && \
-            gcloud secrets add-iam-policy-binding CLOUDINARY_API_KEY --member="serviceAccount:${{ secrets.CLOUDINARY_API_KEY }}" --role="roles/secretmanager.secretAccessor" && \
+            gcloud secrets add-iam-policy-binding CLOUDINARY_API_KEY --member="serviceAccount:${{ secrets.GCP_EMAIL }}" --role="roles/secretmanager.secretAccessor" && \
             echo -n ${{ secrets.CLOUDINARY_API_KEY }} | gcloud secrets versions add CLOUDINARY_API_KEY --data-file=-
 
         - name: Drop GCP secret CLOUDINARY_API_SECRET
@@ -106,7 +106,7 @@ jobs:
         - name: Rereate secret CLOUDINARY_API_SECRET on GCP
           run: |
             gcloud secrets create CLOUDINARY_API_SECRET --replication-policy="automatic" && \
-            gcloud secrets add-iam-policy-binding CLOUDINARY_API_SECRET --member="serviceAccount:${{ secrets.CLOUDINARY_API_SECRET }}" --role="roles/secretmanager.secretAccessor" && \
+            gcloud secrets add-iam-policy-binding CLOUDINARY_API_SECRET --member="serviceAccount:${{ secrets.GCP_EMAIL }}" --role="roles/secretmanager.secretAccessor" && \
             echo -n ${{ secrets.CLOUDINARY_API_SECRET }} | gcloud secrets versions add CLOUDINARY_API_SECRET --data-file=-
             
         - name: Deploy Docker image
