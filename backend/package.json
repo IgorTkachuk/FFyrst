@@ -17,7 +17,7 @@
     "start:dev": "nodemon --exec ts-node -r dotenv/config -r tsconfig-paths/register ./src/server.ts",
     "start": "npm run migrate && node -r dotenv/config ./src/server.js",
     "build:ts": "tsc && tscpaths -p tsconfig.json --src . --out build",
-    "build:copy": "cp -r shared build && cp -r backend/src/services/mail-service/templates build/src/services/mail-service/templates && cp -r public build",
+    "build:copy": "cp -r shared build && cp -r src/services/mail-service/templates build/src/services/mail-service/templates && cp -r public build",
     "build": "npm run build:ts && npm run build:copy"
   },
   "dependencies": {
