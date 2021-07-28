@@ -29,7 +29,7 @@ jobs:
         - name: Build Docker image
           env:
             REACT_APP_API_ORIGIN_URL: api/v1/
-            REACT_APP_BACKEND_HOST: https://fyrst.site
+            REACT_APP_BACKEND_HOST: https://fyrst.site/
           run: |
             docker build \
             --build-arg REACT_APP_API_ORIGIN_URL=${{ env.REACT_APP_API_ORIGIN_URL }} \
